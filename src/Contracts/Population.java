@@ -1,0 +1,72 @@
+package Contracts;
+
+import Exceptions.EmptyPopulationException;
+import Util.RandomUtilities;
+
+import java.util.ArrayList;
+
+abstract public class Population {
+    protected ArrayList<Individual> individuals = null;
+
+    public Population () {
+        individuals = new ArrayList<>();
+    }
+
+    public Integer size () {
+        return this.individuals.size();
+    }
+
+    public void insertIndividual (Individual individual) {
+        individuals.add(individual);
+    }
+
+    public void generateInitialPopulation (Integer size) {
+        individuals.clear();
+        for (Integer i = 0; i < size; i++) {
+            Individual individual = generateIndividual();
+            individuals.add(individual);
+        }
+    }
+
+    private void checkNonEmptyPopulation () throws EmptyPopulationException {
+        Integer popSize = individuals.size();
+        if (popSize < 1) {
+            throw new EmptyPopulationException();
+        }
+    }
+
+    public Individual getRandomIndividual () throws EmptyPopulationException {
+        checkNonEmptyPopulation();
+        Integer popSize = individuals.size();
+        Integer randomIndex = RandomUtilities.integerBetween(0, popSize - 1);
+        return individuals.get(randomIndex);
+    }
+
+    public Individual getBetter (FitnessCalculator fitnessCalculator) throws EmptyPopulationException {
+        checkNonEmptyPopulation();
+        Double maxFitnessValue = Double.NEGATIVE_INFINITY;
+        Individual maxFitnessIndividual = null;
+        for (Individual individual : individuals) {
+            Double fitnessOfThisElement = fitnessCalculator.getFitness(individual);
+            if (fitnessOfThisElement > maxFitnessValue) {
+                maxFitnessValue = fitnessOfThisElement;
+                maxFitnessIndividual = individual;
+            }
+        }
+        return maxFitnessIndividual;
+    }
+
+    public void reset () {
+        individuals.clear();
+    }
+
+    public void pushIndividual (Individual individual) {
+        individuals.add(individual);
+    }
+
+    public abstract Population cloneEmpty ();
+
+    public abstract Population clone ();
+
+    public abstract Individual generateIndividual ();
+}
