@@ -6,10 +6,10 @@ import Individuals.QuadriGaussianValue;
 import Util.RandomUtilities;
 
 public class QuadriGaussianPopulation extends Population {
-    public static final Double MIN_X = -5.0;
-    public static final Double MAX_X = 5.0;
-    public static final Double MIN_Y = -5.0;
-    public static final Double MAX_Y = 5.0;
+    private static final Double MIN_X = -5.0;
+    private static final Double MAX_X = 5.0;
+    private static final Double MIN_Y = -5.0;
+    private static final Double MAX_Y = 5.0;
 
     @Override
     public Population cloneEmpty () {

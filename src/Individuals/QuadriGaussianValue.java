@@ -46,4 +46,9 @@ public class QuadriGaussianValue implements Individual {
     public Individual clone () {
         return new QuadriGaussianValue(this.x, this.y);
     }
+
+    @Override
+    public String toString () {
+        return "{ \"x\":" + this.x + ", \"y\":" + this.y + ", \"z\":" + this.value + " }";
+    }
 }

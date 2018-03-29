@@ -5,4 +5,5 @@ public interface Individual {
     public Double getValue();
     public Boolean isBetterThan(Individual individual, FitnessCalculator fitnessFunction);
     public Individual clone();
+    public String toString();
 }

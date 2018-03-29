@@ -10,6 +10,6 @@ public class RandomUtilities {
 
     public static Integer integerBetween (Integer min, Integer max) {
         Random r = new Random();
-        return min + r.nextInt() * (max - min);
+        return min + r.nextInt(max + 1 - min);
     }
 }
