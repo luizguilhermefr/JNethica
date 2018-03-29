@@ -18,6 +18,9 @@ public class QuadriGaussianValue implements Individual {
     }
 
     private void calculate () {
+        // 0.97 * e^(-((x+3)^2 + (y+3)^2) / 5) + 0.98 * e^(-((x+3)^2 + (y-3)^2) / 5) + 0.99 * e^(-((x-3)^2 + (y+3)^2) / 5) + 1 * e^(-((x-3)^2 + (y-3)^2) / 5)
+        // Max 1 between -5 and 5: x = -2.99538, y = -2.99543, z = 0.971479
+        // Max 2 between -5 and 5: x = -2.99557, y = -2.99520, z = 1.00148
         Double exp1 = Math.exp(-(Math.pow((x + 3), 2) + Math.pow((y + 3), 2)) / 5);
         Double exp2 = Math.exp(-(Math.pow((x + 3), 2) + Math.pow((y - 3), 2)) / 5);
         Double exp3 = Math.exp(-(Math.pow((x - 3), 2) + Math.pow((y + 3), 2)) / 5);
