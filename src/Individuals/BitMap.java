@@ -54,20 +54,10 @@ public class BitMap implements Individual {
         return set.get(index);
     }
 
-    public BitMap cutBefore (Integer cutSize) {
-        BitSet nextSet = new BitSet(cutSize);
-        for (Integer i = 0; i < cutSize; i++) {
+    public BitMap splice (Integer fromIndex, Integer toIndex) {
+        BitSet nextSet = new BitSet(toIndex - fromIndex);
+        for (Integer i = fromIndex; i <= toIndex; i++) {
             nextSet.set(i, set.get(i));
-        }
-        return new BitMap(nextSet);
-    }
-
-    public BitMap cutAfter (Integer cutSize) {
-        BitSet nextSet = new BitSet(cutSize);
-        Integer j = cutSize - 1;
-        for (Integer i = set.length() - 1; i >= cutSize; i--) {
-            nextSet.set(j, set.get(i));
-            j--;
         }
         return new BitMap(nextSet);
     }
@@ -84,6 +74,10 @@ public class BitMap implements Individual {
     }
 
     public String toString () {
-        return set.toString();
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < set.length(); i++) {
+            s.append(set.get(i) ? '1' : '0');
+        }
+        return s.toString();
     }
 }

@@ -33,10 +33,9 @@ public class Crossover extends Strategy {
     }
 
     private BitMap cross (BitMap first, BitMap second) {
-        Integer minSize = Integer.min(first.size(), second.size());
-        Integer crossPoint = RandomUtilities.integerBetween(0, minSize);
-        BitMap partOfFirst = first.cutBefore(crossPoint);
-        BitMap partOfSecond = second.cutAfter(crossPoint);
+        Integer crossPoint = RandomUtilities.integerBetween(0, second.size() - 2); // -1 of index, -1 to avoid copy
+        BitMap partOfFirst = first.splice(0, crossPoint);
+        BitMap partOfSecond = second.splice(crossPoint + 1, second.size() - 1);
         partOfFirst.append(partOfSecond);
         return partOfFirst;
     }

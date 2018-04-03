@@ -4,7 +4,7 @@ public class Main {
 
     private static final int ARGS_COUNT = 2;
     private static final int DEFAULT_POP_SIZE = 10;
-    private static final int DEFAULT_GENERATIONS_NUMBER = 100;
+    private static final int DEFAULT_GENERATIONS_NUMBER = 1000;
 
     private static Boolean validNumberArgument (String argument) {
         try {
@@ -33,7 +33,8 @@ public class Main {
             populationSize = Integer.valueOf(args[0]);
             generations = Integer.valueOf(args[1]);
         }
-        NaturalSelectionMethodsComparator comparator = new NaturalSelectionMethodsComparator(populationSize, generations);
+//        NaturalSelectionMethodsComparator comparator = new NaturalSelectionMethodsComparator(populationSize, generations);
+        MaxOnesComparator comparator = new MaxOnesComparator(populationSize, generations);
         comparator.compare();
         System.exit(0);
     }
