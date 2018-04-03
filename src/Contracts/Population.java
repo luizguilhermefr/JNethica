@@ -64,6 +64,10 @@ abstract public class Population {
         individuals.add(individual);
     }
 
+    public void sort (FitnessCalculator fitnessCalculator) {
+        individuals.sort((o1, o2) -> o1.isBetterThan(o2, fitnessCalculator) ? 1 : 0);
+    }
+
     public abstract Population cloneEmpty ();
 
     public abstract Population clone ();
