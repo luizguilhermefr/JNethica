@@ -12,4 +12,9 @@ public class RandomUtilities {
         Random r = new Random();
         return min + r.nextInt(max + 1 - min);
     }
+
+    public static Boolean randomBoolean () {
+        Random r = new Random();
+        return r.nextBoolean();
+    }
 }

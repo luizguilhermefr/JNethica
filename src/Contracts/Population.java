@@ -56,6 +56,14 @@ abstract public class Population {
         return maxFitnessIndividual;
     }
 
+    public Double sumOfFitness (FitnessCalculator fitnessCalculator) {
+        Double count = 0.0;
+        for (Individual individual : individuals) {
+            count += fitnessCalculator.getFitness(individual);
+        }
+        return count;
+    }
+
     public void reset () {
         individuals.clear();
     }
@@ -66,6 +74,10 @@ abstract public class Population {
 
     public void sort (FitnessCalculator fitnessCalculator) {
         individuals.sort((o1, o2) -> o1.isBetterThan(o2, fitnessCalculator) ? 1 : 0);
+    }
+
+    public ArrayList<Individual> getIndividuals () {
+        return individuals;
     }
 
     public abstract Population cloneEmpty ();

@@ -10,8 +10,12 @@ public class BitMap implements Individual {
 
     private BitSet set;
 
-    BitMap (BitSet set) {
+    public BitMap (BitSet set) {
         this.set = set;
+    }
+
+    public Integer size () {
+        return set.size();
     }
 
     @Override
@@ -44,5 +48,42 @@ public class BitMap implements Individual {
     public Individual clone () {
         BitSet nextSet = (BitSet) set.clone();
         return new BitMap(nextSet);
+    }
+
+    public Boolean get (Integer index) {
+        return set.get(index);
+    }
+
+    public BitMap cutBefore (Integer cutSize) {
+        BitSet nextSet = new BitSet(cutSize);
+        for (Integer i = 0; i < cutSize; i++) {
+            nextSet.set(i, set.get(i));
+        }
+        return new BitMap(nextSet);
+    }
+
+    public BitMap cutAfter (Integer cutSize) {
+        BitSet nextSet = new BitSet(cutSize);
+        Integer j = cutSize - 1;
+        for (Integer i = set.length() - 1; i >= cutSize; i--) {
+            nextSet.set(j, set.get(i));
+            j--;
+        }
+        return new BitMap(nextSet);
+    }
+
+    public void append (BitMap map) {
+        BitSet nextSet = new BitSet(this.size() + map.size());
+        for (Integer i = 0; i < this.size(); i++) {
+            nextSet.set(i, this.get(i));
+        }
+        for (Integer i = 0; i < map.size(); i++) {
+            nextSet.set(i, map.get(i));
+        }
+        this.set = nextSet;
+    }
+
+    public String toString () {
+        return set.toString();
     }
 }

@@ -8,6 +8,8 @@ import Exceptions.EmptyPopulationException;
 
 public class OnePlusOne extends Strategy {
 
+    private static final double MUTATION_RATE = 0.2;
+
     public OnePlusOne (Population initialPopulation, FitnessCalculator fitnessCalculator) {
         super(initialPopulation, fitnessCalculator);
     }
@@ -21,7 +23,7 @@ public class OnePlusOne extends Strategy {
                 Individual firstSelected = this.initialPopulation.getRandomIndividual();
                 Individual secondSelected = this.initialPopulation.generateIndividual();
                 Individual betterOfSelecteds = tournament(firstSelected, secondSelected);
-                nextGeneration.pushIndividual(betterOfSelecteds.clone());
+                nextGeneration.pushIndividual(betterOfSelecteds.mutate(MUTATION_RATE));
             }
         }
         return nextGeneration.getBetter(fitnessCalculator);
