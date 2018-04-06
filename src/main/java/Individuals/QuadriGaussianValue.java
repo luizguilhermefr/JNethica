@@ -1,8 +1,8 @@
-package Individuals;
+package main.java.Individuals;
 
-import Contracts.FitnessCalculator;
-import Contracts.Individual;
-import Util.RandomUtilities;
+import main.java.Contracts.FitnessCalculator;
+import main.java.Contracts.Individual;
+import main.java.Util.RandomUtilities;
 
 public class QuadriGaussianValue implements Individual {
     private Double x;

@@ -1,15 +1,16 @@
-package Strategies;
+package main.java.Strategies;
 
-import Contracts.FitnessCalculator;
-import Contracts.Individual;
-import Contracts.Strategy;
-import Exceptions.EmptyPopulationException;
-import Individuals.BitMap;
-import Populations.BitMapPopulation;
-import Util.RandomUtilities;
+import main.java.Contracts.FitnessCalculator;
+import main.java.Contracts.Individual;
+import main.java.Contracts.Strategy;
+import main.java.Exceptions.EmptyPopulationException;
+import main.java.Individuals.BitMap;
+import main.java.Populations.BitMapPopulation;
+import main.java.Util.RandomUtilities;
 
 import java.util.ArrayList;
 
+// Refere-se a 1a aula de geneticos...
 public class Crossover extends Strategy {
 
     private static final double MUTATION_RATE = 2.0;

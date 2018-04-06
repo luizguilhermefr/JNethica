@@ -1,11 +1,12 @@
-package Individuals;
+package main.java.Individuals;
 
-import Contracts.FitnessCalculator;
-import Contracts.Individual;
-import Util.RandomUtilities;
+import main.java.Contracts.FitnessCalculator;
+import main.java.Contracts.Individual;
+import main.java.Util.RandomUtilities;
 
 import java.util.BitSet;
 
+// Refere-se a 1a aula de geneticos...
 public class BitMap implements Individual {
 
     private BitSet set;

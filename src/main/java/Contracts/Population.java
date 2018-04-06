@@ -1,7 +1,7 @@
-package Contracts;
+package main.java.Contracts;
 
-import Exceptions.EmptyPopulationException;
-import Util.RandomUtilities;
+import main.java.Exceptions.EmptyPopulationException;
+import main.java.Util.RandomUtilities;
 
 import java.util.ArrayList;
 

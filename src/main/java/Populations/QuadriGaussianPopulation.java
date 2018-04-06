@@ -1,9 +1,9 @@
-package Populations;
+package main.java.Populations;
 
-import Contracts.Individual;
-import Contracts.Population;
-import Individuals.QuadriGaussianValue;
-import Util.RandomUtilities;
+import main.java.Contracts.Individual;
+import main.java.Contracts.Population;
+import main.java.Individuals.QuadriGaussianValue;
+import main.java.Util.RandomUtilities;
 
 public class QuadriGaussianPopulation extends Population {
     private static final Double MIN_X = -5.0;

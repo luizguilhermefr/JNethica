@@ -1,9 +1,9 @@
-package Strategies;
+package main.java.Strategies;
 
-import Contracts.FitnessCalculator;
-import Contracts.Individual;
-import Contracts.Population;
-import Contracts.Strategy;
+import main.java.Contracts.FitnessCalculator;
+import main.java.Contracts.Individual;
+import main.java.Contracts.Population;
+import main.java.Contracts.Strategy;
 
 public class MiPlusMi extends Strategy {
 

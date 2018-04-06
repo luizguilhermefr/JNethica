@@ -1,4 +1,4 @@
-package Exceptions;
+package main.java.Exceptions;
 
 public class EmptyPopulationException extends Exception {
     public EmptyPopulationException () {

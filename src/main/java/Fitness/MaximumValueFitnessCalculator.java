@@ -1,7 +1,7 @@
-package Fitness;
+package main.java.Fitness;
 
-import Contracts.FitnessCalculator;
-import Contracts.Individual;
+import main.java.Contracts.FitnessCalculator;
+import main.java.Contracts.Individual;
 
 public class MaximumValueFitnessCalculator implements FitnessCalculator {
     @Override

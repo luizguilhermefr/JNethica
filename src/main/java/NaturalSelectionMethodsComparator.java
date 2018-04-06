@@ -1,11 +1,13 @@
-import Contracts.FitnessCalculator;
-import Contracts.Individual;
-import Contracts.Population;
-import Contracts.Strategy;
-import Exceptions.EmptyPopulationException;
-import Fitness.MaximumValueFitnessCalculator;
-import Populations.QuadriGaussianPopulation;
-import Strategies.OnePlusOne;
+package main.java;
+
+import main.java.Contracts.FitnessCalculator;
+import main.java.Contracts.Individual;
+import main.java.Contracts.Population;
+import main.java.Contracts.Strategy;
+import main.java.Exceptions.EmptyPopulationException;
+import main.java.Fitness.MaximumValueFitnessCalculator;
+import main.java.Populations.QuadriGaussianPopulation;
+import main.java.Strategies.OnePlusOne;
 
 class NaturalSelectionMethodsComparator {
 

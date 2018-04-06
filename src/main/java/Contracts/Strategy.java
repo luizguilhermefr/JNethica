@@ -1,6 +1,6 @@
-package Contracts;
+package main.java.Contracts;
 
-import Exceptions.EmptyPopulationException;
+import main.java.Exceptions.EmptyPopulationException;
 
 public abstract class Strategy {
     protected Population initialPopulation;

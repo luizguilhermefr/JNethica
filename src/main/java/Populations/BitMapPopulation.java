@@ -1,12 +1,13 @@
-package Populations;
+package main.java.Populations;
 
-import Contracts.Individual;
-import Contracts.Population;
-import Individuals.BitMap;
-import Util.RandomUtilities;
+import main.java.Contracts.Individual;
+import main.java.Contracts.Population;
+import main.java.Individuals.BitMap;
+import main.java.Util.RandomUtilities;
 
 import java.util.BitSet;
 
+// Refere-se a 1a aula de geneticos...
 public class BitMapPopulation extends Population {
     private static int MAX_SIZE = 20;
 

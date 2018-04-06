@@ -1,11 +1,14 @@
-import Contracts.FitnessCalculator;
-import Contracts.Individual;
-import Contracts.Strategy;
-import Exceptions.EmptyPopulationException;
-import Fitness.MaximumValueFitnessCalculator;
-import Populations.BitMapPopulation;
-import Strategies.Crossover;
+package main.java;
 
+import main.java.Contracts.FitnessCalculator;
+import main.java.Contracts.Individual;
+import main.java.Contracts.Strategy;
+import main.java.Exceptions.EmptyPopulationException;
+import main.java.Fitness.MaximumValueFitnessCalculator;
+import main.java.Populations.BitMapPopulation;
+import main.java.Strategies.Crossover;
+
+// Refere-se a 1a aula de geneticos...
 class MaxOnesComparator {
 
     private Integer generations;

@@ -1,4 +1,6 @@
-import Exceptions.EmptyPopulationException;
+package main.java;
+
+import main.java.Exceptions.EmptyPopulationException;
 
 public class Main {
 
@@ -33,8 +35,7 @@ public class Main {
             populationSize = Integer.valueOf(args[0]);
             generations = Integer.valueOf(args[1]);
         }
-//        NaturalSelectionMethodsComparator comparator = new NaturalSelectionMethodsComparator(populationSize, generations);
-        MaxOnesComparator comparator = new MaxOnesComparator(populationSize, generations);
+        NaturalSelectionMethodsComparator comparator = new NaturalSelectionMethodsComparator(populationSize, generations);
         comparator.compare();
         System.exit(0);
     }
