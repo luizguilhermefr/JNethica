@@ -23,7 +23,7 @@ public class BitMap implements Individual {
     public Individual mutate (Double mutationRate) {
         BitSet nextSet = (BitSet) set.clone();
         for (Integer i = 0; i < set.length(); ++i) {
-            Boolean mustMutateThisBit = RandomUtilities.floatBetween(0.0, 100.0) <= mutationRate;
+            Boolean mustMutateThisBit = RandomUtilities.doubleBetween(0.0, 100.0) <= mutationRate;
             if (mustMutateThisBit) {
                 nextSet.flip(i);
             }

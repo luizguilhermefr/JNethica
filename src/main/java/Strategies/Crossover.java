@@ -21,7 +21,7 @@ public class Crossover extends Strategy {
 
     private Individual roulette (BitMapPopulation currentPopulation) {
         Double countFitness = currentPopulation.sumOfFitness(fitnessCalculator);
-        Double fitness = RandomUtilities.floatBetween(0.0, countFitness);
+        Double fitness = RandomUtilities.doubleBetween(0.0, countFitness);
         Double accumulatedFitness = 0.0;
         ArrayList<Individual> individuals = currentPopulation.getIndividuals();
         for (Individual individual : individuals) {

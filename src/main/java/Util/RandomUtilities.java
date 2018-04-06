@@ -3,7 +3,7 @@ package main.java.Util;
 import java.util.Random;
 
 public class RandomUtilities {
-    public static Double floatBetween (Double min, Double max) {
+    public static Double doubleBetween (Double min, Double max) {
         Random r = new Random();
         return min + r.nextDouble() * (max - min);
     }

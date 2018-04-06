@@ -5,6 +5,14 @@ import main.java.Contracts.Individual;
 import main.java.Util.RandomUtilities;
 
 public class QuadriGaussianValue implements Individual {
+    private static final Double MIN_X = -5.0;
+
+    private static final Double MAX_X = 5.0;
+
+    private static final Double MIN_Y = -5.0;
+
+    private static final Double MAX_Y = 5.0;
+
     private Double x;
 
     private Double y;
@@ -17,10 +25,15 @@ public class QuadriGaussianValue implements Individual {
         calculate();
     }
 
+    public static Individual random () {
+        Double x = RandomUtilities.doubleBetween(MIN_X, MAX_X);
+        Double y = RandomUtilities.doubleBetween(MIN_Y, MAX_Y);
+        return new QuadriGaussianValue(x, y);
+    }
+
     private void calculate () {
         // 0.97 * e^(-((x+3)^2 + (y+3)^2) / 5) + 0.98 * e^(-((x+3)^2 + (y-3)^2) / 5) + 0.99 * e^(-((x-3)^2 + (y+3)^2) / 5) + 1 * e^(-((x-3)^2 + (y-3)^2) / 5)
         // Max 1 between -5 and 5: x = -2.99538, y = -2.99543, z = 0.971479
-        // Max 2 between -5 and 5: x = -2.99557, y = -2.99520, z = 1.00148
         Double exp1 = Math.exp(-(Math.pow((x + 3), 2) + Math.pow((y + 3), 2)) / 5);
         Double exp2 = Math.exp(-(Math.pow((x + 3), 2) + Math.pow((y - 3), 2)) / 5);
         Double exp3 = Math.exp(-(Math.pow((x - 3), 2) + Math.pow((y + 3), 2)) / 5);
@@ -28,10 +41,22 @@ public class QuadriGaussianValue implements Individual {
         this.value = .97 * exp1 + .98 * exp2 + .99 * exp3 + 1 * exp4;
     }
 
+    public Double getX () {
+        return x;
+    }
+
+    public Double getY () {
+        return y;
+    }
+
     @Override
     public Individual mutate (final Double mutationRate) {
-        Double nextX = this.x + RandomUtilities.floatBetween(-mutationRate, mutationRate);
-        Double nextY = this.y + RandomUtilities.floatBetween(-mutationRate, mutationRate);
+        Double nextX = this.x + RandomUtilities.doubleBetween(-mutationRate, mutationRate);
+        Double nextY = this.y + RandomUtilities.doubleBetween(-mutationRate, mutationRate);
+        nextX = nextX > MAX_X ? MAX_X : nextX;
+        nextY = nextY > MAX_Y ? MAX_Y : nextY;
+        nextX = nextX < MIN_X ? MIN_X : nextX;
+        nextY = nextY < MIN_Y ? MIN_Y : nextY;
         return new QuadriGaussianValue(nextX, nextY);
     }
 
