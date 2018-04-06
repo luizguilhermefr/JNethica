@@ -30,7 +30,7 @@ class NaturalSelectionMethodsComparator {
     }
 
     private void printInitializer () {
-        System.out.println("<< Comparing methods using " + populationSize + " pop. size and " + generations + " generations");
+        System.out.println("<-<-< Comparing methods using " + populationSize + " pop. size and " + generations + " generations >->->");
     }
 
     private void printResults () {

@@ -28,7 +28,6 @@ public class Main {
         Integer populationSize;
         Integer generations;
         if (!validArgs(args)) {
-            System.out.println("Incorrect or insufficient parameters. Using default values...");
             populationSize = DEFAULT_POP_SIZE;
             generations = DEFAULT_GENERATIONS_NUMBER;
         } else {

@@ -80,6 +80,12 @@ abstract public class Population {
         return individuals;
     }
 
+    public void mutateAll(Double mutationRate) {
+        for (Integer i = 0; i < individuals.size(); i++) {
+            individuals.set(i, individuals.get(i).mutate(mutationRate));
+        }
+    }
+
     public abstract Population cloneEmpty ();
 
     public abstract Population clone ();

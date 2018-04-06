@@ -16,7 +16,6 @@ class QuadriGaussianValueTest {
         assertNotSame(quadriGaussian, mutated);
         assertTrue(xBetweenMutationRate);
         assertTrue(yBetweenMutationRate);
-
     }
 
     @Test
