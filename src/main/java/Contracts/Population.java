@@ -4,6 +4,7 @@ import main.java.Exceptions.EmptyPopulationException;
 import main.java.Util.RandomUtilities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 abstract public class Population {
     protected ArrayList<Individual> individuals = null;
@@ -78,7 +79,7 @@ abstract public class Population {
     }
 
     public Population sort (FitnessCalculator fitnessCalculator) {
-        individuals.sort((o1, o2) -> o1.isBetterThan(o2, fitnessCalculator) ? 1 : 0);
+        Collections.sort(individuals, fitnessCalculator);
         return this;
     }
 
