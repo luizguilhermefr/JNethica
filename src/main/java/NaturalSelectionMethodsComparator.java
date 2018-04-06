@@ -7,6 +7,7 @@ import main.java.Contracts.Strategy;
 import main.java.Exceptions.EmptyPopulationException;
 import main.java.Fitness.MaximumValueFitnessCalculator;
 import main.java.Populations.QuadriGaussianPopulation;
+import main.java.Strategies.MiPlusMi;
 import main.java.Strategies.OnePlusOne;
 
 class NaturalSelectionMethodsComparator {
@@ -20,6 +21,8 @@ class NaturalSelectionMethodsComparator {
     private FitnessCalculator fitnessCalculator;
 
     private Individual bestOfOnePlusOne;
+
+    private Individual bestOfMiPlusMi;
 
     NaturalSelectionMethodsComparator (Integer populationSize, Integer generations) {
         this.populationSize = populationSize;
@@ -35,6 +38,7 @@ class NaturalSelectionMethodsComparator {
 
     private void printResults () {
         System.out.println("1+1:\t" + bestOfOnePlusOne);
+        System.out.println("µ+µ:\t" + bestOfMiPlusMi);
         System.out.println("<< -- END -- >>");
     }
 
@@ -42,6 +46,8 @@ class NaturalSelectionMethodsComparator {
         printInitializer();
         Strategy onePlusOne = new OnePlusOne(initialPopulation, fitnessCalculator);
         bestOfOnePlusOne = onePlusOne.run(generations);
+        Strategy miPlusMi = new MiPlusMi(initialPopulation, fitnessCalculator);
+        bestOfMiPlusMi = miPlusMi.run(generations);
         printResults();
     }
 }

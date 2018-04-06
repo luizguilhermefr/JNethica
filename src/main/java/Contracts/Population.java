@@ -16,23 +16,26 @@ abstract public class Population {
         return this.individuals.size();
     }
 
-    public void insertIndividual (Individual individual) {
+    public Population insertIndividual (Individual individual) {
         individuals.add(individual);
+        return this;
     }
 
-    public void generateInitialPopulation (Integer size) {
+    public Population generateInitialPopulation (Integer size) {
         individuals.clear();
         for (Integer i = 0; i < size; i++) {
             Individual individual = generateIndividual();
             individuals.add(individual);
         }
+        return this;
     }
 
-    private void checkNonEmptyPopulation () throws EmptyPopulationException {
+    private Population checkNonEmptyPopulation () throws EmptyPopulationException {
         Integer popSize = individuals.size();
         if (popSize < 1) {
             throw new EmptyPopulationException();
         }
+        return this;
     }
 
     public Individual getRandomIndividual () throws EmptyPopulationException {
@@ -64,26 +67,30 @@ abstract public class Population {
         return count;
     }
 
-    public void reset () {
+    public Population reset () {
         individuals.clear();
+        return this;
     }
 
-    public void pushIndividual (Individual individual) {
+    public Population pushIndividual (Individual individual) {
         individuals.add(individual);
+        return this;
     }
 
-    public void sort (FitnessCalculator fitnessCalculator) {
+    public Population sort (FitnessCalculator fitnessCalculator) {
         individuals.sort((o1, o2) -> o1.isBetterThan(o2, fitnessCalculator) ? 1 : 0);
+        return this;
     }
 
     public ArrayList<Individual> getIndividuals () {
         return individuals;
     }
 
-    public void mutateAll(Double mutationRate) {
+    public Population mutateAll (Double mutationRate) {
         for (Integer i = 0; i < individuals.size(); i++) {
             individuals.set(i, individuals.get(i).mutate(mutationRate));
         }
+        return this;
     }
 
     public abstract Population cloneEmpty ();

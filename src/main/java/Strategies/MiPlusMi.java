@@ -6,6 +6,8 @@ import main.java.Contracts.Population;
 import main.java.Contracts.Strategy;
 import main.java.Exceptions.EmptyPopulationException;
 
+import java.util.ArrayList;
+
 public class MiPlusMi extends Strategy {
 
     private static final double MUTATION_RATE = 0.2;
@@ -14,13 +16,29 @@ public class MiPlusMi extends Strategy {
         super(initialPopulation, fitnessCalculator);
     }
 
-    @Override
-    public Individual run (Integer maxGenerations) throws EmptyPopulationException {
-        Population currentGeneration = initialPopulation.clone();
+    private Population combine (Population ascendent, Population descendent) throws IllegalArgumentException {
+        if (!ascendent.size().equals(descendent.size())) {
+            throw new IllegalArgumentException("Different population sizes.");
+        }
+        ArrayList<Individual> ascendentIndividuals = ascendent.getIndividuals();
+        ArrayList<Individual> descendentIndividuals = descendent.getIndividuals();
+        Population nextPopulation = ascendent.cloneEmpty();
+        for (Integer i = 0; i < (int) Math.floor(ascendent.size() / 2); i++) {
+            nextPopulation.pushIndividual(ascendentIndividuals.get(i));
+        }
+        for (Integer i = (int) Math.floor(ascendentIndividuals.size() / 2); i < descendent.size(); i++) {
+            nextPopulation.pushIndividual(descendentIndividuals.get(i));
+        }
+        return nextPopulation;
+    }
 
+    @Override
+    public Individual run (Integer maxGenerations) throws IllegalArgumentException, EmptyPopulationException {
+        Population currentGeneration = initialPopulation.clone();
         for (Integer i = 0; i < maxGenerations; i++) {
-            currentGeneration.mutateAll(MUTATION_RATE);
             currentGeneration.sort(fitnessCalculator);
+            Population descendents = currentGeneration.clone().mutateAll(MUTATION_RATE).sort(fitnessCalculator);
+            currentGeneration = combine(currentGeneration, descendents);
         }
 
         return currentGeneration.getBetter(fitnessCalculator);

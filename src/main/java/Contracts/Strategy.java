@@ -15,5 +15,5 @@ public abstract class Strategy {
         this.fitnessCalculator = fitnessCalculator;
     }
 
-    public abstract Individual run (Integer maxGenerations) throws EmptyPopulationException;
+    public abstract Individual run (Integer maxGenerations) throws IllegalArgumentException, EmptyPopulationException;
 }
