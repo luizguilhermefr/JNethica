@@ -6,4 +6,6 @@ public interface Fxy extends Individual {
     Double getY ();
 
     Double getValue ();
+
+    Fxy mutate (final Double xRate, final Double yRate);
 }

@@ -45,9 +45,20 @@ public class QuadriGaussianValue implements Fxy {
     }
 
     @Override
-    public Individual mutate (final Double mutationRate) {
+    public QuadriGaussianValue mutate (final Double mutationRate) {
         Double nextX = this.x + RandomUtilities.doubleBetween(-mutationRate, mutationRate);
         Double nextY = this.y + RandomUtilities.doubleBetween(-mutationRate, mutationRate);
+        nextX = nextX > MAX_X ? MAX_X : nextX;
+        nextY = nextY > MAX_Y ? MAX_Y : nextY;
+        nextX = nextX < MIN_X ? MIN_X : nextX;
+        nextY = nextY < MIN_Y ? MIN_Y : nextY;
+        return new QuadriGaussianValue(nextX, nextY);
+    }
+
+    @Override
+    public QuadriGaussianValue mutate (Double xRate, Double yRate) {
+        Double nextX = this.x + RandomUtilities.doubleBetween(-xRate, xRate);
+        Double nextY = this.y + RandomUtilities.doubleBetween(-yRate, yRate);
         nextX = nextX > MAX_X ? MAX_X : nextX;
         nextY = nextY > MAX_Y ? MAX_Y : nextY;
         nextX = nextX < MIN_X ? MIN_X : nextX;
@@ -66,7 +77,7 @@ public class QuadriGaussianValue implements Fxy {
     }
 
     @Override
-    public Individual clone () {
+    public QuadriGaussianValue clone () {
         return new QuadriGaussianValue(this.x, this.y);
     }
 

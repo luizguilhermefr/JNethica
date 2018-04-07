@@ -8,6 +8,7 @@ import main.java.Factories.QuadriGaussianValueFactory;
 import main.java.Fitness.MaximumValueFitnessCalculator;
 import main.java.Individuals.QuadriGaussianValue;
 import main.java.Population.Population;
+import main.java.Strategies.MetaEvolutionary;
 import main.java.Strategies.MiPlusMi;
 import main.java.Strategies.OnePlusOne;
 
@@ -17,13 +18,15 @@ class NaturalSelectionMethodsComparator {
 
     private Integer generations;
 
-    private Population initialPopulation;
+    private Population<QuadriGaussianValue> initialPopulation;
 
     private FitnessCalculator fitnessCalculator;
 
     private Individual bestOfOnePlusOne;
 
     private Individual bestOfMiPlusMi;
+
+    private Individual bestOfMetaEvolutionary;
 
     NaturalSelectionMethodsComparator (Integer populationSize, Integer generations) {
         this.populationSize = populationSize;
@@ -40,6 +43,7 @@ class NaturalSelectionMethodsComparator {
     private void printResults () {
         System.out.println("1+1:\t" + bestOfOnePlusOne);
         System.out.println("µ+µ:\t" + bestOfMiPlusMi);
+        System.out.println("ME:\t" + bestOfMetaEvolutionary);
         System.out.println("<< -- END -- >>");
     }
 
@@ -49,6 +53,8 @@ class NaturalSelectionMethodsComparator {
         bestOfOnePlusOne = onePlusOne.run(generations);
         Strategy miPlusMi = new MiPlusMi(initialPopulation, fitnessCalculator);
         bestOfMiPlusMi = miPlusMi.run(generations);
+        Strategy metaEvolutionary = new MetaEvolutionary(initialPopulation, fitnessCalculator);
+        bestOfMetaEvolutionary = metaEvolutionary.run(generations);
         printResults();
     }
 }

@@ -16,7 +16,7 @@ public class MiPlusMi extends Strategy {
         super(initialPopulation, fitnessCalculator);
     }
 
-    private Population combine (Population ascendent, Population descendent) throws IllegalArgumentException {
+    Population combine (Population ascendent, Population descendent) throws IllegalArgumentException {
         if (!ascendent.size().equals(descendent.size())) {
             throw new IllegalArgumentException("Different population sizes.");
         }
