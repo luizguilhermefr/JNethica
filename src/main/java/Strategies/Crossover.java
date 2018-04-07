@@ -5,7 +5,7 @@ import main.java.Contracts.Individual;
 import main.java.Contracts.Strategy;
 import main.java.Exceptions.EmptyPopulationException;
 import main.java.Individuals.BitMap;
-import main.java.Populations.BitMapPopulation;
+import main.java.Population.Population;
 import main.java.Util.RandomUtilities;
 
 import java.util.ArrayList;
@@ -15,15 +15,15 @@ public class Crossover extends Strategy {
 
     private static final double MUTATION_RATE = 2.0;
 
-    public Crossover (BitMapPopulation initialPopulation, FitnessCalculator fitnessCalculator) {
+    public Crossover (Population<BitMap> initialPopulation, FitnessCalculator fitnessCalculator) {
         super(initialPopulation, fitnessCalculator);
     }
 
-    private Individual roulette (BitMapPopulation currentPopulation) {
+    private Individual roulette (Population<BitMap> currentPopulation) {
         Double countFitness = currentPopulation.sumOfFitness(fitnessCalculator);
         Double fitness = RandomUtilities.doubleBetween(0.0, countFitness);
         Double accumulatedFitness = 0.0;
-        ArrayList<Individual> individuals = currentPopulation.getIndividuals();
+        ArrayList<BitMap> individuals = currentPopulation.getIndividuals();
         for (Individual individual : individuals) {
             accumulatedFitness += fitnessCalculator.getFitness(individual);
             if (accumulatedFitness >= fitness) {
@@ -43,9 +43,9 @@ public class Crossover extends Strategy {
 
     @Override
     public Individual run (Integer maxGenerations) throws EmptyPopulationException {
-        BitMapPopulation nextPopulation = (BitMapPopulation) initialPopulation;
+        Population<BitMap> nextPopulation = initialPopulation;
         for (Integer i = 0; i < maxGenerations; i++) {
-            BitMapPopulation currentPopulation = (BitMapPopulation) nextPopulation.clone();
+            Population<BitMap> currentPopulation = nextPopulation.clone();
             for (Integer j = 0; j < fixedSize; j++) {
                 BitMap firstDrawn = (BitMap) roulette(currentPopulation);
                 BitMap secondDrawn = null;

@@ -1,13 +1,15 @@
-package main.java.Contracts;
+package main.java.Population;
 
+import main.java.Contracts.FitnessCalculator;
+import main.java.Contracts.Individual;
+import main.java.Contracts.IndividualFactory;
 import main.java.Exceptions.EmptyPopulationException;
 import main.java.Util.RandomUtilities;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-abstract public class Population {
-    protected ArrayList<Individual> individuals = null;
+public class Population<T extends Individual> {
+    protected ArrayList<T> individuals = null;
 
     public Population () {
         individuals = new ArrayList<>();
@@ -17,21 +19,21 @@ abstract public class Population {
         return this.individuals.size();
     }
 
-    public Population insertIndividual (Individual individual) {
+    public Population<T> insertIndividual (T individual) {
         individuals.add(individual);
         return this;
     }
 
-    public Population generateInitialPopulation (Integer size) {
+    public Population<T> generateInitialPopulation (Integer size, IndividualFactory factory) {
         individuals.clear();
         for (Integer i = 0; i < size; i++) {
-            Individual individual = generateIndividual();
+            T individual = (T) factory.generate();
             individuals.add(individual);
         }
         return this;
     }
 
-    private Population checkNonEmptyPopulation () throws EmptyPopulationException {
+    private Population<T> checkNonEmptyPopulation () throws EmptyPopulationException {
         Integer popSize = individuals.size();
         if (popSize < 1) {
             throw new EmptyPopulationException();
@@ -39,18 +41,18 @@ abstract public class Population {
         return this;
     }
 
-    public Individual getRandomIndividual () throws EmptyPopulationException {
+    public T getRandomIndividual () throws EmptyPopulationException {
         checkNonEmptyPopulation();
         Integer popSize = individuals.size();
         Integer randomIndex = RandomUtilities.integerBetween(0, popSize - 1);
         return individuals.get(randomIndex);
     }
 
-    public Individual getBetter (FitnessCalculator fitnessCalculator) throws EmptyPopulationException {
+    public T getBetter (FitnessCalculator fitnessCalculator) throws EmptyPopulationException {
         checkNonEmptyPopulation();
         Double maxFitnessValue = Double.NEGATIVE_INFINITY;
-        Individual maxFitnessIndividual = null;
-        for (Individual individual : individuals) {
+        T maxFitnessIndividual = null;
+        for (T individual : individuals) {
             Double fitnessOfThisElement = fitnessCalculator.getFitness(individual);
             if (fitnessOfThisElement > maxFitnessValue) {
                 maxFitnessValue = fitnessOfThisElement;
@@ -62,41 +64,47 @@ abstract public class Population {
 
     public Double sumOfFitness (FitnessCalculator fitnessCalculator) {
         Double count = 0.0;
-        for (Individual individual : individuals) {
+        for (T individual : individuals) {
             count += fitnessCalculator.getFitness(individual);
         }
         return count;
     }
 
-    public Population reset () {
+    public Population<T> reset () {
         individuals.clear();
         return this;
     }
 
-    public Population pushIndividual (Individual individual) {
+    public Population<T> pushIndividual (T individual) {
         individuals.add(individual);
         return this;
     }
 
-    public Population sort (FitnessCalculator fitnessCalculator) {
-        Collections.sort(individuals, fitnessCalculator);
+    public Population<T> sort (FitnessCalculator fitnessCalculator) {
+        individuals.sort(fitnessCalculator);
         return this;
     }
 
-    public ArrayList<Individual> getIndividuals () {
+    public ArrayList<T> getIndividuals () {
         return individuals;
     }
 
-    public Population mutateAll (Double mutationRate) {
+    public Population<T> mutateAll (Double mutationRate) {
         for (Integer i = 0; i < individuals.size(); i++) {
-            individuals.set(i, individuals.get(i).mutate(mutationRate));
+            individuals.set(i, (T) individuals.get(i).mutate(mutationRate));
         }
         return this;
     }
 
-    public abstract Population cloneEmpty ();
+    public Population<T> cloneEmpty () {
+        return new Population<T>();
+    }
 
-    public abstract Population clone ();
-
-    public abstract Individual generateIndividual ();
+    public Population<T> clone () {
+        Population<T> next = new Population<T>();
+        for (T individual : individuals) {
+            next.pushIndividual(individual);
+        }
+        return next;
+    }
 }

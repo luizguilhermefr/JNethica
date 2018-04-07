@@ -2,9 +2,9 @@ package main.java.Strategies;
 
 import main.java.Contracts.FitnessCalculator;
 import main.java.Contracts.Individual;
-import main.java.Contracts.Population;
 import main.java.Contracts.Strategy;
 import main.java.Exceptions.EmptyPopulationException;
+import main.java.Population.Population;
 
 public class OnePlusOne extends Strategy {
 
@@ -21,7 +21,7 @@ public class OnePlusOne extends Strategy {
             nextGeneration = initialPopulation.cloneEmpty();
             for (Integer j = 0; j < fixedSize; j++) {
                 Individual firstSelected = this.initialPopulation.getRandomIndividual();
-                Individual secondSelected = this.initialPopulation.generateIndividual();
+                Individual secondSelected = this.initialPopulation.getRandomIndividual();
                 Individual betterOfSelecteds = tournament(firstSelected, secondSelected);
                 nextGeneration.pushIndividual(betterOfSelecteds.mutate(MUTATION_RATE));
             }

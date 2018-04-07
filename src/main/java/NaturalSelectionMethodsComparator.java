@@ -2,11 +2,12 @@ package main.java;
 
 import main.java.Contracts.FitnessCalculator;
 import main.java.Contracts.Individual;
-import main.java.Contracts.Population;
 import main.java.Contracts.Strategy;
 import main.java.Exceptions.EmptyPopulationException;
+import main.java.Factories.QuadriGaussianValueFactory;
 import main.java.Fitness.MaximumValueFitnessCalculator;
-import main.java.Populations.QuadriGaussianPopulation;
+import main.java.Individuals.QuadriGaussianValue;
+import main.java.Population.Population;
 import main.java.Strategies.MiPlusMi;
 import main.java.Strategies.OnePlusOne;
 
@@ -27,8 +28,8 @@ class NaturalSelectionMethodsComparator {
     NaturalSelectionMethodsComparator (Integer populationSize, Integer generations) {
         this.populationSize = populationSize;
         this.generations = generations;
-        this.initialPopulation = new QuadriGaussianPopulation();
-        this.initialPopulation.generateInitialPopulation(populationSize);
+        this.initialPopulation = new Population<QuadriGaussianValue>();
+        this.initialPopulation.generateInitialPopulation(populationSize, new QuadriGaussianValueFactory());
         this.fitnessCalculator = new MaximumValueFitnessCalculator();
     }
 

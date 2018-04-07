@@ -2,9 +2,8 @@ package main.java.Strategies;
 
 import main.java.Contracts.FitnessCalculator;
 import main.java.Contracts.Individual;
-import main.java.Contracts.Population;
 import main.java.Contracts.Strategy;
-import main.java.Exceptions.EmptyPopulationException;
+import main.java.Population.Population;
 
 public class LocalIterativeFastSearch extends Strategy {
     public LocalIterativeFastSearch (Population initialPopulation, FitnessCalculator fitnessCalculator) {
@@ -12,7 +11,7 @@ public class LocalIterativeFastSearch extends Strategy {
     }
 
     @Override
-    public Individual run (Integer maxGenerations) throws IllegalArgumentException, EmptyPopulationException {
+    public Individual run (Integer maxGenerations) throws IllegalArgumentException {
         //TODO
         return null;
     }

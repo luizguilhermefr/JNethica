@@ -1,17 +1,18 @@
 package main.java.Individuals;
 
 import main.java.Contracts.FitnessCalculator;
+import main.java.Contracts.Fxy;
 import main.java.Contracts.Individual;
 import main.java.Util.RandomUtilities;
 
-public class QuadriGaussianValue implements Individual {
-    private static final Double MIN_X = -5.0;
+public class QuadriGaussianValue implements Fxy {
+    public static final Double MIN_X = -5.0;
 
-    private static final Double MAX_X = 5.0;
+    public static final Double MAX_X = 5.0;
 
-    private static final Double MIN_Y = -5.0;
+    public static final Double MIN_Y = -5.0;
 
-    private static final Double MAX_Y = 5.0;
+    public static final Double MAX_Y = 5.0;
 
     private Double x;
 
@@ -23,12 +24,6 @@ public class QuadriGaussianValue implements Individual {
         this.x = x;
         this.y = y;
         calculate();
-    }
-
-    public static Individual random () {
-        Double x = RandomUtilities.doubleBetween(MIN_X, MAX_X);
-        Double y = RandomUtilities.doubleBetween(MIN_Y, MAX_Y);
-        return new QuadriGaussianValue(x, y);
     }
 
     private void calculate () {
