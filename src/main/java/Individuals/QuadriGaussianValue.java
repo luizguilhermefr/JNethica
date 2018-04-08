@@ -83,6 +83,6 @@ public class QuadriGaussianValue implements Fxy {
 
     @Override
     public String toString () {
-        return "{ \"x\":" + this.x + ", \"y\":" + this.y + ", \"z\":" + this.value + " }";
+        return this.x + "\t" + this.y + "\t" + this.value;
     }
 }

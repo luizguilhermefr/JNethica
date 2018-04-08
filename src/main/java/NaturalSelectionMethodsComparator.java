@@ -11,6 +11,7 @@ import main.java.Population.Population;
 import main.java.Strategies.MetaEvolutionary;
 import main.java.Strategies.MiPlusMi;
 import main.java.Strategies.OnePlusOne;
+import main.java.Strategies.QuickIteratedLocalSearch;
 
 class NaturalSelectionMethodsComparator {
 
@@ -28,33 +29,46 @@ class NaturalSelectionMethodsComparator {
 
     private Individual bestOfMetaEvolutionary;
 
+    private Individual bestOfQuickIterated;
+
     NaturalSelectionMethodsComparator (Integer populationSize, Integer generations) {
         this.populationSize = populationSize;
         this.generations = generations;
-        this.initialPopulation = new Population<QuadriGaussianValue>();
+        this.initialPopulation = new Population<>();
         this.initialPopulation.generateInitialPopulation(populationSize, new QuadriGaussianValueFactory());
         this.fitnessCalculator = new MaximumValueFitnessCalculator();
     }
 
     private void printInitializer () {
-        System.out.println("<-<-< Comparing methods using " + populationSize + " pop. size and " + generations + " generations >->->");
+        System.out.println("--- Comparing methods using " + populationSize + " pop. size and " + generations + " generations ---");
     }
 
     private void printResults () {
-        System.out.println("1+1:\t" + bestOfOnePlusOne);
-        System.out.println("µ+µ:\t" + bestOfMiPlusMi);
-        System.out.println("ME:\t" + bestOfMetaEvolutionary);
-        System.out.println("<< -- END -- >>");
+        System.out.println("1+1\t" + bestOfOnePlusOne);
+        System.out.println("µ+µ\t" + bestOfMiPlusMi);
+        System.out.println("MEv\t" + bestOfMetaEvolutionary);
+        System.out.println("ILC\t" + bestOfQuickIterated);
     }
 
     void compare () throws EmptyPopulationException {
         printInitializer();
+
         Strategy onePlusOne = new OnePlusOne(initialPopulation, fitnessCalculator);
-        bestOfOnePlusOne = onePlusOne.run(generations);
+        onePlusOne.run(generations);
+        bestOfOnePlusOne = onePlusOne.getGlobalOptimum();
+
         Strategy miPlusMi = new MiPlusMi(initialPopulation, fitnessCalculator);
-        bestOfMiPlusMi = miPlusMi.run(generations);
+        miPlusMi.run(generations);
+        bestOfMiPlusMi = miPlusMi.getGlobalOptimum();
+
         Strategy metaEvolutionary = new MetaEvolutionary(initialPopulation, fitnessCalculator);
-        bestOfMetaEvolutionary = metaEvolutionary.run(generations);
+        metaEvolutionary.run(generations);
+        bestOfMetaEvolutionary = metaEvolutionary.getGlobalOptimum();
+
+        Strategy quickIterated = new QuickIteratedLocalSearch(initialPopulation, fitnessCalculator);
+        quickIterated.run(generations);
+        bestOfQuickIterated = quickIterated.getGlobalOptimum();
+
         printResults();
     }
 }

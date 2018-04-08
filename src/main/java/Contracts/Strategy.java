@@ -10,11 +10,17 @@ public abstract class Strategy {
 
     protected FitnessCalculator fitnessCalculator;
 
+    protected Individual globalOptimum;
+
     public Strategy (final Population initialPopulation, FitnessCalculator fitnessCalculator) {
         this.initialPopulation = initialPopulation;
         this.fixedSize = initialPopulation.size();
         this.fitnessCalculator = fitnessCalculator;
     }
 
-    public abstract Individual run (Integer maxGenerations) throws IllegalArgumentException, EmptyPopulationException;
+    public Individual getGlobalOptimum () {
+        return globalOptimum;
+    }
+
+    public abstract void run (Integer maxGenerations) throws IllegalArgumentException, EmptyPopulationException;
 }

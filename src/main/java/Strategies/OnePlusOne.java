@@ -14,9 +14,21 @@ public class OnePlusOne extends Strategy {
         super(initialPopulation, fitnessCalculator);
     }
 
+    private Individual tournament (Individual a, Individual b) {
+        if (a.isBetterThan(b, fitnessCalculator)) {
+            return a;
+        } else {
+            return b;
+        }
+    }
+
     @Override
-    public Individual run (Integer maxGenerations) throws EmptyPopulationException {
+    public void run (Integer maxGenerations) throws EmptyPopulationException {
+        Individual localOptimum = null;
         Population nextGeneration = null;
+
+        globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+
         for (Integer i = 0; i < maxGenerations; i++) {
             nextGeneration = initialPopulation.cloneEmpty();
             for (Integer j = 0; j < fixedSize; j++) {
@@ -25,15 +37,10 @@ public class OnePlusOne extends Strategy {
                 Individual betterOfSelecteds = tournament(firstSelected, secondSelected);
                 nextGeneration.pushIndividual(betterOfSelecteds.mutate(MUTATION_RATE));
             }
-        }
-        return nextGeneration.getBetter(fitnessCalculator);
-    }
-
-    private Individual tournament (Individual a, Individual b) {
-        if (a.isBetterThan(b, fitnessCalculator)) {
-            return a;
-        } else {
-            return b;
+            localOptimum = nextGeneration.getBetter(fitnessCalculator);
+            if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {
+                globalOptimum = localOptimum;
+            }
         }
     }
 }

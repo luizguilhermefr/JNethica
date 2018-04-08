@@ -33,15 +33,19 @@ public class MiPlusMi extends Strategy {
     }
 
     @Override
-    public Individual run (Integer maxGenerations) throws IllegalArgumentException, EmptyPopulationException {
+    public void run (Integer maxGenerations) throws IllegalArgumentException, EmptyPopulationException {
+        globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+        Individual localOptimum = null;
         Population currentGeneration = initialPopulation.clone();
         for (Integer i = 0; i < maxGenerations; i++) {
             currentGeneration.sort(fitnessCalculator);
             Population descendents = currentGeneration.clone().mutateAll(MUTATION_RATE).sort(fitnessCalculator);
             currentGeneration = combine(currentGeneration, descendents);
+            localOptimum = currentGeneration.getBetter(fitnessCalculator);
+            if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {
+                globalOptimum = localOptimum;
+            }
         }
-
-        return currentGeneration.getBetter(fitnessCalculator);
     }
 
 }
