@@ -24,12 +24,13 @@ public class OnePlusOne extends Strategy {
 
     @Override
     public void run (Integer maxGenerations) throws EmptyPopulationException {
+        globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+        globalGeneration = 0;
+
         Individual localOptimum = null;
         Population nextGeneration = null;
 
-        globalOptimum = initialPopulation.getBetter(fitnessCalculator);
-
-        for (Integer i = 0; i < maxGenerations; i++) {
+        for (Integer i = 1; i <= maxGenerations; i++) {
             nextGeneration = initialPopulation.cloneEmpty();
             for (Integer j = 0; j < fixedSize; j++) {
                 Individual firstSelected = this.initialPopulation.getRandomIndividual();
@@ -40,6 +41,7 @@ public class OnePlusOne extends Strategy {
             localOptimum = nextGeneration.getBetter(fitnessCalculator);
             if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {
                 globalOptimum = localOptimum;
+                globalGeneration = i;
             }
         }
     }

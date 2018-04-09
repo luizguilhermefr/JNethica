@@ -33,9 +33,12 @@ public class MetaEvolutionary extends MiPlusMi {
     @Override
     public void run (Integer maxGenerations) throws IllegalArgumentException, EmptyPopulationException {
         globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+        globalGeneration = 0;
+
         Individual localOptimum = null;
         Population currentGeneration = initialPopulation.clone();
-        for (Integer i = 0; i < maxGenerations; i++) {
+
+        for (Integer i = 1; i <= maxGenerations; i++) {
             currentGeneration.sort(fitnessCalculator);
             Population descendents = currentGeneration.clone();
             ArrayList<Fxy> individuals = descendents.getIndividuals();
@@ -50,6 +53,7 @@ public class MetaEvolutionary extends MiPlusMi {
             localOptimum = currentGeneration.getBetter(fitnessCalculator);
             if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {
                 globalOptimum = localOptimum;
+                globalGeneration = i;
             }
         }
     }

@@ -19,10 +19,13 @@ public class QuickIteratedLocalSearch extends Strategy {
     @Override
     public void run (Integer maxGenerations) throws IllegalArgumentException, EmptyPopulationException {
         Individual starter = this.initialPopulation.getBetter(fitnessCalculator);
+
         globalOptimum = starter;
+        globalGeneration = 0;
+
         Individual localBetter = starter;
 
-        for (Integer i = 0; i < maxGenerations; i++) {
+        for (Integer i = 1; i <= maxGenerations; i++) {
             do {
                 Individual neighbor = localBetter.mutate(SMALL_MUTATION_RATE);
                 if (neighbor.isBetterThan(globalOptimum, fitnessCalculator)) {
@@ -34,6 +37,7 @@ public class QuickIteratedLocalSearch extends Strategy {
             localBetter = localBetter.mutate(BIG_MUTATION_RATE);
             if (localBetter.isBetterThan(globalOptimum, fitnessCalculator)) {
                 globalOptimum = localBetter;
+                globalGeneration = i;
             }
         }
     }
