@@ -55,7 +55,7 @@ class NaturalSelectionMethodsComparator {
         System.out.println("1+1\t" + bestOfOnePlusOne + "\t" + bestOfOnePlusOneGeneration);
         System.out.println("µ+µ\t" + bestOfMiPlusMi + "\t" + bestOfMiPlusMiGeneration);
         System.out.println("MEv\t" + bestOfMetaEvolutionary + "\t" + bestOfMetaEvolutionaryGeneration);
-        System.out.println("ILC\t" + bestOfQuickIterated + "\t" + bestOfQuickIteratedGeneration);
+        System.out.println("ILS\t" + bestOfQuickIterated + "\t" + bestOfQuickIteratedGeneration);
     }
 
     void compare () throws EmptyPopulationException {
