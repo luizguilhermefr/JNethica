@@ -1,7 +1,6 @@
 package main.java.Strategies;
 
 import main.java.Contracts.FitnessCalculator;
-import main.java.Contracts.Individual;
 import main.java.Contracts.Strategy;
 import main.java.Exceptions.EmptyPopulationException;
 import main.java.Individuals.Bits;
@@ -18,12 +17,12 @@ public class Crossover extends Strategy {
         super(initialPopulation, fitnessCalculator);
     }
 
-    private Individual roulette (Population<Bits> currentPopulation) {
+    private Bits roulette (Population<Bits> currentPopulation) {
         Double countFitness = currentPopulation.sumOfFitness(fitnessCalculator);
         Double fitness = RandomUtilities.doubleBetween(0.0, countFitness);
         Double accumulatedFitness = 0.0;
         ArrayList<Bits> individuals = currentPopulation.getIndividuals();
-        for (Individual individual : individuals) {
+        for (Bits individual : individuals) {
             accumulatedFitness += fitnessCalculator.getFitness(individual);
             if (accumulatedFitness >= fitness) {
                 return individual;
@@ -50,10 +49,10 @@ public class Crossover extends Strategy {
         for (Integer i = 1; i <= maxGenerations; i++) {
             Population<Bits> currentPopulation = nextPopulation.clone();
             for (Integer j = 0; j < fixedSize; j++) {
-                Bits firstDrawn = (Bits) roulette(currentPopulation);
+                Bits firstDrawn = roulette(currentPopulation);
                 Bits secondDrawn = null;
                 do {
-                    secondDrawn = (Bits) roulette(currentPopulation);
+                    secondDrawn = roulette(currentPopulation);
                 } while (secondDrawn == firstDrawn);
                 Bits crossed = cross(firstDrawn, secondDrawn);
                 crossed.mutate(MUTATION_RATE);

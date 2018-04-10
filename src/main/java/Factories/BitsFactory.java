@@ -7,13 +7,8 @@ import main.java.Util.RandomUtilities;
 import java.util.BitSet;
 
 public class BitsFactory implements IndividualFactory {
-    private static int DEFAULT_SIZE = 20;
 
     private Integer size;
-
-    public BitsFactory () {
-        this.size = DEFAULT_SIZE;
-    }
 
     public BitsFactory (Integer size) {
         this.size = size;
