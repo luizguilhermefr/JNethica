@@ -4,13 +4,13 @@ import main.java.Contracts.FitnessCalculator;
 import main.java.Contracts.Individual;
 import main.java.Util.RandomUtilities;
 
-import java.util.BitSet;
+import java.util.ArrayList;
 
 public class Bits implements Individual {
 
-    private BitSet set;
+    private ArrayList<Boolean> set;
 
-    public Bits (BitSet set) {
+    public Bits (ArrayList<Boolean> set) {
         this.set = set;
     }
 
@@ -20,11 +20,13 @@ public class Bits implements Individual {
 
     @Override
     public Individual mutate (Double mutationRate) {
-        BitSet nextSet = (BitSet) set.clone();
-        for (Integer i = 0; i < set.length(); ++i) {
+        ArrayList<Boolean> nextSet = new ArrayList<>();
+        for (Boolean aSet : set) {
             Boolean mustMutateThisBit = RandomUtilities.doubleBetween(0.0, 100.0) <= mutationRate;
             if (mustMutateThisBit) {
-                nextSet.flip(i);
+                nextSet.add(!aSet);
+            } else {
+                nextSet.add(aSet);
             }
         }
         return new Bits(nextSet);
@@ -33,7 +35,7 @@ public class Bits implements Individual {
     @Override
     public Double getValue () {
         Long value = 0L;
-        for (Integer i = 0; i < set.length(); ++i) {
+        for (Integer i = 0; i < set.size(); ++i) {
             value += set.get(i) ? (1L << i) : 0L;
         }
         return value.doubleValue();
@@ -46,7 +48,7 @@ public class Bits implements Individual {
 
     @Override
     public Individual clone () {
-        BitSet nextSet = (BitSet) set.clone();
+        ArrayList<Boolean> nextSet = new ArrayList<>(set);
         return new Bits(nextSet);
     }
 
@@ -55,30 +57,28 @@ public class Bits implements Individual {
     }
 
     public Bits splice (Integer fromIndex, Integer toIndex) {
-        BitSet nextSet = new BitSet(toIndex - fromIndex);
+        ArrayList<Boolean> nextSet = new ArrayList<>();
         for (Integer i = fromIndex; i <= toIndex; i++) {
-            nextSet.set(i, set.get(i));
+            nextSet.add(set.get(i));
         }
         return new Bits(nextSet);
     }
 
     public void append (Bits bits) {
-        BitSet nextSet = new BitSet(this.size() + bits.size());
+        ArrayList<Boolean> nextSet = new ArrayList<>();
         for (Integer i = 0; i < this.size(); i++) {
-            nextSet.set(i, this.get(i));
+            nextSet.add(this.get(i));
         }
-        Integer aux = 0;
-        for (Integer i = this.size(); i < this.size() + bits.size(); i++) {
-            nextSet.set(i, bits.get(aux));
-            aux++;
+        for (Integer i = 0; i < this.size() + bits.size(); i++) {
+            nextSet.add(bits.get(i));
         }
         this.set = nextSet;
     }
 
     public String toString () {
         StringBuilder s = new StringBuilder();
-        for (int i = 0; i < set.length(); i++) {
-            s.append(set.get(i) ? '1' : '0');
+        for (Boolean aSet : set) {
+            s.append(aSet ? '1' : '0');
         }
         return s.toString();
     }

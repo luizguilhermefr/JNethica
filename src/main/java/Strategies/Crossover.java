@@ -50,7 +50,7 @@ public class Crossover extends Strategy {
             Population<Bits> currentPopulation = nextPopulation.clone();
             for (Integer j = 0; j < fixedSize; j++) {
                 Bits firstDrawn = roulette(currentPopulation);
-                Bits secondDrawn = null;
+                Bits secondDrawn;
                 do {
                     secondDrawn = roulette(currentPopulation);
                 } while (secondDrawn == firstDrawn);

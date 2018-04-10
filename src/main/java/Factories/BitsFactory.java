@@ -4,7 +4,7 @@ import main.java.Contracts.IndividualFactory;
 import main.java.Individuals.Bits;
 import main.java.Util.RandomUtilities;
 
-import java.util.BitSet;
+import java.util.ArrayList;
 
 public class BitsFactory implements IndividualFactory {
 
@@ -16,9 +16,9 @@ public class BitsFactory implements IndividualFactory {
 
     @Override
     public Bits generate () {
-        BitSet set = new BitSet(size);
+        ArrayList<Boolean> set = new ArrayList<>();
         for (Integer i = 0; i < size; i++) {
-            set.set(i, RandomUtilities.randomBoolean());
+            set.add(RandomUtilities.randomBoolean());
         }
         return new Bits(set);
     }

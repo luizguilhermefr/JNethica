@@ -35,7 +35,7 @@ public class MetaEvolutionary extends MiPlusMi {
         globalOptimum = initialPopulation.getBetter(fitnessCalculator);
         globalGeneration = 0;
 
-        Individual localOptimum = null;
+        Individual localOptimum;
         Population currentGeneration = initialPopulation.clone();
 
         for (Integer i = 1; i <= maxGenerations; i++) {
