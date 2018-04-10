@@ -6,7 +6,7 @@ public class Main {
 
     private static final int ARGS_COUNT = 2;
     private static final int DEFAULT_POP_SIZE = 20;
-    private static final int DEFAULT_GENERATIONS_NUMBER = 50;
+    private static final int DEFAULT_GENERATIONS_NUMBER = 300;
 
     private static Boolean validNumberArgument (String argument) {
         try {

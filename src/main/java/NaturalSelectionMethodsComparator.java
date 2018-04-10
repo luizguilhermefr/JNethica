@@ -1,17 +1,13 @@
 package main.java;
 
 import main.java.Contracts.FitnessCalculator;
-import main.java.Contracts.Individual;
 import main.java.Contracts.Strategy;
 import main.java.Exceptions.EmptyPopulationException;
-import main.java.Factories.QuadriGaussianValueFactory;
-import main.java.Fitness.MaximumValueFitnessCalculator;
-import main.java.Individuals.QuadriGaussianValue;
+import main.java.Factories.BitsFactory;
+import main.java.Fitness.MaxPositiveBitsFitnessCalculator;
+import main.java.Individuals.Bits;
 import main.java.Population.Population;
-import main.java.Strategies.MetaEvolutionary;
-import main.java.Strategies.MiPlusMi;
-import main.java.Strategies.OnePlusOne;
-import main.java.Strategies.QuickIteratedLocalSearch;
+import main.java.Strategies.Crossover;
 
 class NaturalSelectionMethodsComparator {
 
@@ -19,32 +15,20 @@ class NaturalSelectionMethodsComparator {
 
     private Integer generations;
 
-    private Population<QuadriGaussianValue> initialPopulation;
+    private Population<Bits> initialPopulation;
 
     private FitnessCalculator fitnessCalculator;
 
-    private Individual bestOfOnePlusOne;
+    private Bits best = null;
 
-    private Integer bestOfOnePlusOneGeneration;
-
-    private Individual bestOfMiPlusMi;
-
-    private Integer bestOfMiPlusMiGeneration;
-
-    private Individual bestOfMetaEvolutionary;
-
-    private Integer bestOfMetaEvolutionaryGeneration;
-
-    private Individual bestOfQuickIterated;
-
-    private Integer bestOfQuickIteratedGeneration;
+    private Integer generation;
 
     NaturalSelectionMethodsComparator (Integer populationSize, Integer generations) {
         this.populationSize = populationSize;
         this.generations = generations;
         this.initialPopulation = new Population<>();
-        this.initialPopulation.generateInitialPopulation(populationSize, new QuadriGaussianValueFactory());
-        this.fitnessCalculator = new MaximumValueFitnessCalculator();
+        this.initialPopulation.generateInitialPopulation(populationSize, new BitsFactory(20));
+        this.fitnessCalculator = new MaxPositiveBitsFitnessCalculator();
     }
 
     private void printInitializer () {
@@ -52,34 +36,16 @@ class NaturalSelectionMethodsComparator {
     }
 
     private void printResults () {
-        System.out.println("1+1\t" + bestOfOnePlusOne + "\t" + bestOfOnePlusOneGeneration);
-        System.out.println("µ+µ\t" + bestOfMiPlusMi + "\t" + bestOfMiPlusMiGeneration);
-        System.out.println("MEv\t" + bestOfMetaEvolutionary + "\t" + bestOfMetaEvolutionaryGeneration);
-        System.out.println("ILS\t" + bestOfQuickIterated + "\t" + bestOfQuickIteratedGeneration);
+        System.out.println(best + "\t" + generation);
     }
 
     void compare () throws EmptyPopulationException {
         printInitializer();
 
-        Strategy onePlusOne = new OnePlusOne(initialPopulation, fitnessCalculator);
-        onePlusOne.run(generations);
-        bestOfOnePlusOne = onePlusOne.getGlobalOptimum();
-        bestOfOnePlusOneGeneration = onePlusOne.getGlobalGeneration();
-
-        Strategy miPlusMi = new MiPlusMi(initialPopulation, fitnessCalculator);
-        miPlusMi.run(generations);
-        bestOfMiPlusMi = miPlusMi.getGlobalOptimum();
-        bestOfMiPlusMiGeneration = miPlusMi.getGlobalGeneration();
-
-        Strategy metaEvolutionary = new MetaEvolutionary(initialPopulation, fitnessCalculator);
-        metaEvolutionary.run(generations);
-        bestOfMetaEvolutionary = metaEvolutionary.getGlobalOptimum();
-        bestOfMetaEvolutionaryGeneration = metaEvolutionary.getGlobalGeneration();
-
-        Strategy quickIterated = new QuickIteratedLocalSearch(initialPopulation, fitnessCalculator);
-        quickIterated.run(generations);
-        bestOfQuickIterated = quickIterated.getGlobalOptimum();
-        bestOfQuickIteratedGeneration = quickIterated.getGlobalGeneration();
+        Strategy crossOver = new Crossover(initialPopulation, fitnessCalculator);
+        crossOver.run(generations);
+        best = (Bits) crossOver.getGlobalOptimum();
+        generation = crossOver.getGlobalGeneration();
 
         printResults();
     }
