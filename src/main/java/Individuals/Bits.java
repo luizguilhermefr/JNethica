@@ -69,7 +69,7 @@ public class Bits implements Individual {
         for (Integer i = 0; i < this.size(); i++) {
             nextSet.add(this.get(i));
         }
-        for (Integer i = 0; i < this.size() + bits.size(); i++) {
+        for (Integer i = 0; i < bits.size(); i++) {
             nextSet.add(bits.get(i));
         }
         this.set = nextSet;
