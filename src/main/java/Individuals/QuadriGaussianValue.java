@@ -1,11 +1,11 @@
 package main.java.Individuals;
 
 import main.java.Contracts.FitnessCalculator;
-import main.java.Contracts.Fxy;
+import main.java.Contracts.Function;
 import main.java.Contracts.Individual;
 import main.java.Util.RandomUtilities;
 
-public class QuadriGaussianValue implements Fxy {
+public class QuadriGaussianValue implements Function {
     public static final Double MIN_X = -5.0;
 
     public static final Double MAX_X = 5.0;
