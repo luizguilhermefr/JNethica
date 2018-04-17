@@ -16,7 +16,7 @@ public class MetaEvolutionary extends MiPlusMi {
         super(initialPopulation, fitnessCalculator);
     }
 
-    private ArrayList<Double> argumentsArrayList (ArrayList<Function> individuals, Integer argumentIndex) {
+    private ArrayList<Double> argumentsArrayList (ArrayList<Function> individuals, String argumentIndex) {
         ArrayList<Double> values = new ArrayList<>();
         for (Function individual : individuals) {
             values.add(individual.getArgument(argumentIndex));

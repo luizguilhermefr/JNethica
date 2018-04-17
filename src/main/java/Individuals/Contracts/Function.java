@@ -6,9 +6,9 @@ import java.util.List;
 
 public abstract class Function extends Individual {
 
-    public abstract Double[] getArguments ();
+    public abstract String[] getArgumentsKeys ();
 
-    public abstract Double getArgument (Integer index) throws IndexOutOfBoundsException;
+    public abstract Double getArgument (String name);
 
     public abstract Integer countArguments ();
 

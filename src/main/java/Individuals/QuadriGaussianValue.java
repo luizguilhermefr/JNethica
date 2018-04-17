@@ -1,25 +1,16 @@
 package main.java.Individuals;
 
-import main.java.Individuals.Contracts.Function;
 import main.java.Mutators.Contracts.Mutator;
 
 import java.util.List;
+import java.util.Map;
 
-public class QuadriGaussianValue extends Function {
+public class QuadriGaussianValue extends GenericFunction {
 
-    public static final Integer X_INDEX = 0;
-
-    public static final Integer Y_INDEX = 1;
-
-    private Double x;
-
-    private Double y;
-
-    private Double value;
-
-    public QuadriGaussianValue (final Double x, final Double y) {
-        this.x = x;
-        this.y = y;
+    public QuadriGaussianValue (Map<String, Object> arguments) {
+        this.arguments = arguments;
+        this.format = "0.97 * e^(-((x+3)^2 + (y+3)^2) / 5) + 0.98 * e^(-((x+3)^2 + (y-3)^2) / 5) + 0.99 * e^(-((x-3)^2 + (y+3)^2) / 5)";
+        makeEvaluator();
         calculate();
     }
 
@@ -62,16 +53,6 @@ public class QuadriGaussianValue extends Function {
         Double nextX = (Double) mutators.get(X_INDEX).mutate(this.x);
         Double nextY = (Double) mutators.get(Y_INDEX).mutate(this.y);
         return new QuadriGaussianValue(nextX, nextY);
-    }
-
-    @Override
-    public Double getValue () {
-        return this.value;
-    }
-
-    @Override
-    public QuadriGaussianValue clone () {
-        return new QuadriGaussianValue(this.x, this.y);
     }
 
     @Override
