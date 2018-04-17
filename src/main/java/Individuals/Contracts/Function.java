@@ -1,11 +1,16 @@
 package main.java.Individuals.Contracts;
 
-public interface Function extends Individual {
-    Double getX ();
+import java.util.List;
 
-    Double getY ();
+public interface Function extends Individual {
+
+    Double[] getArguments ();
+
+    Double getArgument (Integer index) throws IndexOutOfBoundsException;
+
+    Integer countArguments ();
 
     Double getValue ();
 
-    Function mutate (final Double xRate, final Double yRate);
+    Function mutate (final List<Double> rates);
 }

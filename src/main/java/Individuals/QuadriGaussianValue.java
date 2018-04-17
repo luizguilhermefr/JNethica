@@ -5,6 +5,8 @@ import main.java.Individuals.Contracts.Function;
 import main.java.Individuals.Contracts.Individual;
 import main.java.Util.RandomUtilities;
 
+import java.util.List;
+
 public class QuadriGaussianValue implements Function {
     public static final Double MIN_X = -5.0;
 
@@ -13,6 +15,10 @@ public class QuadriGaussianValue implements Function {
     public static final Double MIN_Y = -5.0;
 
     public static final Double MAX_Y = 5.0;
+
+    private static final Integer X_INDEX = 0;
+
+    private static final Integer Y_INDEX = 1;
 
     private Double x;
 
@@ -36,33 +42,41 @@ public class QuadriGaussianValue implements Function {
         this.value = .97 * exp1 + .98 * exp2 + .99 * exp3 + 1 * exp4;
     }
 
-    public Double getX () {
-        return x;
+    public Double[] getArguments () {
+        return new Double[]{x, y};
     }
 
-    public Double getY () {
-        return y;
+    public Double getArgument (Integer index) throws ArrayIndexOutOfBoundsException {
+        if (index.equals(X_INDEX)) {
+            return x;
+        } else if (index.equals(Y_INDEX)) {
+            return y;
+        }
+        throw new ArrayIndexOutOfBoundsException();
+    }
+
+    public Integer countArguments () {
+        return 2;
+    }
+
+    private Double getNextValue (final Double value, final Double mutationRate, Double min, Double max) {
+        Double generated = value + RandomUtilities.doubleBetween(-mutationRate, mutationRate);
+        generated = generated > max ? max : generated;
+        generated = generated < min ? min : generated;
+        return generated;
     }
 
     @Override
     public QuadriGaussianValue mutate (final Double mutationRate) {
-        Double nextX = this.x + RandomUtilities.doubleBetween(-mutationRate, mutationRate);
-        Double nextY = this.y + RandomUtilities.doubleBetween(-mutationRate, mutationRate);
-        nextX = nextX > MAX_X ? MAX_X : nextX;
-        nextY = nextY > MAX_Y ? MAX_Y : nextY;
-        nextX = nextX < MIN_X ? MIN_X : nextX;
-        nextY = nextY < MIN_Y ? MIN_Y : nextY;
+        Double nextX = getNextValue(this.x, mutationRate, MIN_X, MAX_X);
+        Double nextY = getNextValue(this.y, mutationRate, MIN_Y, MAX_Y);
         return new QuadriGaussianValue(nextX, nextY);
     }
 
     @Override
-    public QuadriGaussianValue mutate (Double xRate, Double yRate) {
-        Double nextX = this.x + RandomUtilities.doubleBetween(-xRate, xRate);
-        Double nextY = this.y + RandomUtilities.doubleBetween(-yRate, yRate);
-        nextX = nextX > MAX_X ? MAX_X : nextX;
-        nextY = nextY > MAX_Y ? MAX_Y : nextY;
-        nextX = nextX < MIN_X ? MIN_X : nextX;
-        nextY = nextY < MIN_Y ? MIN_Y : nextY;
+    public QuadriGaussianValue mutate (final List<Double> rates) {
+        Double nextX = getNextValue(this.x, rates.get(0), MIN_X, MAX_X);
+        Double nextY = getNextValue(this.y, rates.get(1), MIN_Y, MAX_Y);
         return new QuadriGaussianValue(nextX, nextY);
     }
 
