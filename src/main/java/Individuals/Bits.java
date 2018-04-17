@@ -1,12 +1,11 @@
 package main.java.Individuals;
 
-import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individuals.Contracts.Individual;
 import main.java.Mutators.Contracts.Mutator;
 
 import java.util.ArrayList;
 
-public class Bits implements Individual {
+public class Bits extends Individual {
 
     private ArrayList<Boolean> set;
 
@@ -31,11 +30,6 @@ public class Bits implements Individual {
             value += set.get(i) ? (1L << i) : 0L;
         }
         return value.doubleValue();
-    }
-
-    @Override
-    public Boolean isBetterThan (Individual individual, FitnessCalculator fitnessFunction) {
-        return fitnessFunction.getFitness(this) > fitnessFunction.getFitness(individual);
     }
 
     @Override

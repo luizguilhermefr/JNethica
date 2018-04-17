@@ -4,15 +4,15 @@ import main.java.Mutators.Contracts.Mutator;
 
 import java.util.List;
 
-public interface Function extends Individual {
+public abstract class Function extends Individual {
 
-    Double[] getArguments ();
+    public abstract Double[] getArguments ();
 
-    Double getArgument (Integer index) throws IndexOutOfBoundsException;
+    public abstract Double getArgument (Integer index) throws IndexOutOfBoundsException;
 
-    Integer countArguments ();
+    public abstract Integer countArguments ();
 
-    Double getValue ();
+    public abstract Double getValue ();
 
-    Function mutate (final List<Mutator> mutators);
+    public abstract Function mutate (final List<Mutator> mutators);
 }

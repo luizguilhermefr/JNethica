@@ -1,20 +1,11 @@
 package main.java.Individuals;
 
-import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individuals.Contracts.Function;
-import main.java.Individuals.Contracts.Individual;
 import main.java.Mutators.Contracts.Mutator;
 
 import java.util.List;
 
-public class QuadriGaussianValue implements Function {
-    public static final Double MIN_X = -5.0;
-
-    public static final Double MAX_X = 5.0;
-
-    public static final Double MIN_Y = -5.0;
-
-    public static final Double MAX_Y = 5.0;
+public class QuadriGaussianValue extends Function {
 
     public static final Integer X_INDEX = 0;
 
@@ -76,11 +67,6 @@ public class QuadriGaussianValue implements Function {
     @Override
     public Double getValue () {
         return this.value;
-    }
-
-    @Override
-    public Boolean isBetterThan (Individual individual, FitnessCalculator fitnessFunction) {
-        return fitnessFunction.getFitness(this) > fitnessFunction.getFitness(individual);
     }
 
     @Override

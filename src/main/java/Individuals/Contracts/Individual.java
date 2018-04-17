@@ -3,14 +3,16 @@ package main.java.Individuals.Contracts;
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Mutators.Contracts.Mutator;
 
-public interface Individual {
-    Individual mutate (Mutator mutator);
+public abstract class Individual {
+    public abstract Individual mutate (Mutator mutator);
 
-    Double getValue ();
+    public abstract Double getValue ();
 
-    Boolean isBetterThan (Individual individual, FitnessCalculator fitnessFunction);
+    protected abstract Individual clone ();
 
-    Individual clone ();
+    public abstract String toString ();
 
-    String toString ();
+    public Boolean isBetterThan (Individual individual, FitnessCalculator fitnessFunction) {
+        return fitnessFunction.getFitness(this) > fitnessFunction.getFitness(individual);
+    }
 }
