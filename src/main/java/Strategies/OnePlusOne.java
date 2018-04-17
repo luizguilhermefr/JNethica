@@ -3,12 +3,12 @@ package main.java.Strategies;
 import main.java.Exceptions.EmptyPopulationException;
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individuals.Contracts.Individual;
+import main.java.Mutators.Contracts.Mutator;
+import main.java.Mutators.CreepMutator;
 import main.java.Population.Population;
 import main.java.Strategies.Contracts.Strategy;
 
 public class OnePlusOne extends Strategy {
-
-    private static final double MUTATION_RATE = 0.2;
 
     public OnePlusOne (Population initialPopulation, FitnessCalculator fitnessCalculator) {
         super(initialPopulation, fitnessCalculator);
@@ -30,13 +30,15 @@ public class OnePlusOne extends Strategy {
         Individual localOptimum = null;
         Population nextGeneration = null;
 
+        Mutator mutator = new CreepMutator(2.0);
+
         for (Integer i = 1; i <= maxGenerations; i++) {
             nextGeneration = initialPopulation.cloneEmpty();
             for (Integer j = 0; j < fixedSize; j++) {
                 Individual firstSelected = this.initialPopulation.getRandomIndividual();
                 Individual secondSelected = this.initialPopulation.getRandomIndividual();
                 Individual betterOfSelecteds = tournament(firstSelected, secondSelected);
-                nextGeneration.pushIndividual(betterOfSelecteds.mutate(MUTATION_RATE));
+                nextGeneration.pushIndividual(betterOfSelecteds.mutate(mutator));
             }
             localOptimum = nextGeneration.getBetter(fitnessCalculator);
             if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {

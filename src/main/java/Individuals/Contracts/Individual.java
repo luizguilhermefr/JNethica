@@ -1,9 +1,10 @@
 package main.java.Individuals.Contracts;
 
 import main.java.Fitness.Contracts.FitnessCalculator;
+import main.java.Mutators.Contracts.Mutator;
 
 public interface Individual {
-    Individual mutate (Double mutationRate);
+    Individual mutate (Mutator mutator);
 
     Double getValue ();
 

@@ -3,14 +3,14 @@ package main.java.Strategies;
 import main.java.Exceptions.EmptyPopulationException;
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individuals.Contracts.Individual;
+import main.java.Mutators.Contracts.Mutator;
+import main.java.Mutators.CreepMutator;
 import main.java.Population.Population;
 import main.java.Strategies.Contracts.Strategy;
 
 import java.util.ArrayList;
 
 public class MiPlusMi extends Strategy {
-
-    private static final double MUTATION_RATE = 0.2;
 
     public MiPlusMi (Population initialPopulation, FitnessCalculator fitnessCalculator) {
         super(initialPopulation, fitnessCalculator);
@@ -40,9 +40,11 @@ public class MiPlusMi extends Strategy {
         Individual localOptimum = null;
         Population currentGeneration = initialPopulation.clone();
 
+        Mutator mutator = new CreepMutator(2.0);
+
         for (Integer i = 1; i <= maxGenerations; i++) {
             currentGeneration.sort(fitnessCalculator);
-            Population descendents = currentGeneration.clone().mutateAll(MUTATION_RATE).sort(fitnessCalculator);
+            Population descendents = currentGeneration.clone().mutateAll(mutator).sort(fitnessCalculator);
             currentGeneration = combine(currentGeneration, descendents);
             localOptimum = currentGeneration.getBetter(fitnessCalculator);
             if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {

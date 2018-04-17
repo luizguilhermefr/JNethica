@@ -3,7 +3,7 @@ package main.java.Individuals;
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individuals.Contracts.Function;
 import main.java.Individuals.Contracts.Individual;
-import main.java.Util.RandomUtilities;
+import main.java.Mutators.Contracts.Mutator;
 
 import java.util.List;
 
@@ -16,9 +16,9 @@ public class QuadriGaussianValue implements Function {
 
     public static final Double MAX_Y = 5.0;
 
-    private static final Integer X_INDEX = 0;
+    public static final Integer X_INDEX = 0;
 
-    private static final Integer Y_INDEX = 1;
+    public static final Integer Y_INDEX = 1;
 
     private Double x;
 
@@ -59,24 +59,17 @@ public class QuadriGaussianValue implements Function {
         return 2;
     }
 
-    private Double getNextValue (final Double value, final Double mutationRate, Double min, Double max) {
-        Double generated = value + RandomUtilities.doubleBetween(-mutationRate, mutationRate);
-        generated = generated > max ? max : generated;
-        generated = generated < min ? min : generated;
-        return generated;
-    }
-
     @Override
-    public QuadriGaussianValue mutate (final Double mutationRate) {
-        Double nextX = getNextValue(this.x, mutationRate, MIN_X, MAX_X);
-        Double nextY = getNextValue(this.y, mutationRate, MIN_Y, MAX_Y);
+    public QuadriGaussianValue mutate (Mutator mutator) {
+        Double nextX = (Double) mutator.mutate(this.x);
+        Double nextY = (Double) mutator.mutate(this.y);
         return new QuadriGaussianValue(nextX, nextY);
     }
 
     @Override
-    public QuadriGaussianValue mutate (final List<Double> rates) {
-        Double nextX = getNextValue(this.x, rates.get(0), MIN_X, MAX_X);
-        Double nextY = getNextValue(this.y, rates.get(1), MIN_Y, MAX_Y);
+    public QuadriGaussianValue mutate (List<Mutator> mutators) {
+        Double nextX = (Double) mutators.get(X_INDEX).mutate(this.x);
+        Double nextY = (Double) mutators.get(Y_INDEX).mutate(this.y);
         return new QuadriGaussianValue(nextX, nextY);
     }
 

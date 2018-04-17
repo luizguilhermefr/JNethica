@@ -4,6 +4,7 @@ import main.java.Exceptions.EmptyPopulationException;
 import main.java.Factories.Contracts.IndividualFactory;
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individuals.Contracts.Individual;
+import main.java.Mutators.Contracts.Mutator;
 import main.java.Util.RandomUtilities;
 
 import java.util.ArrayList;
@@ -89,9 +90,9 @@ public class Population<T extends Individual> {
         return individuals;
     }
 
-    public Population<T> mutateAll (Double mutationRate) {
+    public Population<T> mutateAll (Mutator mutator) {
         for (Integer i = 0; i < individuals.size(); i++) {
-            individuals.set(i, (T) individuals.get(i).mutate(mutationRate));
+            individuals.set(i, (T) individuals.get(i).mutate(mutator));
         }
         return this;
     }

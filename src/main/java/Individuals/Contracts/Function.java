@@ -1,5 +1,7 @@
 package main.java.Individuals.Contracts;
 
+import main.java.Mutators.Contracts.Mutator;
+
 import java.util.List;
 
 public interface Function extends Individual {
@@ -12,5 +14,5 @@ public interface Function extends Individual {
 
     Double getValue ();
 
-    Function mutate (final List<Double> rates);
+    Function mutate (final List<Mutator> mutators);
 }

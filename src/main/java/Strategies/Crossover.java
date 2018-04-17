@@ -3,6 +3,8 @@ package main.java.Strategies;
 import main.java.Exceptions.EmptyPopulationException;
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individuals.Bits;
+import main.java.Mutators.Contracts.BitFlipperMutator;
+import main.java.Mutators.Contracts.Mutator;
 import main.java.Population.Population;
 import main.java.Strategies.Contracts.Strategy;
 import main.java.Util.RandomUtilities;
@@ -46,6 +48,8 @@ public class Crossover extends Strategy {
 
         Population<Bits> nextPopulation = initialPopulation;
 
+        Mutator mutator = new BitFlipperMutator(2.0);
+
         for (Integer i = 1; i <= maxGenerations; i++) {
             Population<Bits> currentPopulation = nextPopulation.clone();
             for (Integer j = 0; j < fixedSize; j++) {
@@ -55,7 +59,7 @@ public class Crossover extends Strategy {
                     secondDrawn = roulette(currentPopulation);
                 } while (secondDrawn == firstDrawn);
                 Bits crossed = cross(firstDrawn, secondDrawn);
-                crossed.mutate(MUTATION_RATE);
+                crossed.mutate(mutator);
                 nextPopulation.pushIndividual(crossed);
             }
             Bits bestOfGeneration = nextPopulation.getBetter(fitnessCalculator);

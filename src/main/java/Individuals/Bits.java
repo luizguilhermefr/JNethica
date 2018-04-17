@@ -2,7 +2,7 @@ package main.java.Individuals;
 
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individuals.Contracts.Individual;
-import main.java.Util.RandomUtilities;
+import main.java.Mutators.Contracts.Mutator;
 
 import java.util.ArrayList;
 
@@ -19,16 +19,8 @@ public class Bits implements Individual {
     }
 
     @Override
-    public Individual mutate (Double mutationRate) {
-        ArrayList<Boolean> nextSet = new ArrayList<>();
-        for (Boolean aSet : set) {
-            Boolean mustMutateThisBit = RandomUtilities.doubleBetween(0.0, 100.0) <= mutationRate;
-            if (mustMutateThisBit) {
-                nextSet.add(!aSet);
-            } else {
-                nextSet.add(aSet);
-            }
-        }
+    public Individual mutate (Mutator mutator) {
+        ArrayList<Boolean> nextSet = (ArrayList<Boolean>) mutator.mutate(set);
         return new Bits(nextSet);
     }
 
