@@ -1,6 +1,8 @@
-package main.java.Contracts;
+package main.java.Strategies.Contracts;
 
 import main.java.Exceptions.EmptyPopulationException;
+import main.java.Fitness.Contracts.FitnessCalculator;
+import main.java.Individuals.Contracts.Individual;
 import main.java.Population.Population;
 
 public abstract class Strategy {

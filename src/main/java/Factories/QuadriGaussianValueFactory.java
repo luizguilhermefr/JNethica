@@ -1,6 +1,6 @@
 package main.java.Factories;
 
-import main.java.Contracts.IndividualFactory;
+import main.java.Factories.Contracts.IndividualFactory;
 import main.java.Individuals.QuadriGaussianValue;
 import main.java.Util.RandomUtilities;
 

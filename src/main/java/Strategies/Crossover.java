@@ -1,10 +1,10 @@
 package main.java.Strategies;
 
-import main.java.Contracts.FitnessCalculator;
-import main.java.Contracts.Strategy;
 import main.java.Exceptions.EmptyPopulationException;
+import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individuals.Bits;
 import main.java.Population.Population;
+import main.java.Strategies.Contracts.Strategy;
 import main.java.Util.RandomUtilities;
 
 import java.util.ArrayList;

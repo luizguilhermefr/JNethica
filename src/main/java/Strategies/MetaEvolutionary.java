@@ -1,9 +1,9 @@
 package main.java.Strategies;
 
-import main.java.Contracts.FitnessCalculator;
-import main.java.Contracts.Function;
-import main.java.Contracts.Individual;
 import main.java.Exceptions.EmptyPopulationException;
+import main.java.Fitness.Contracts.FitnessCalculator;
+import main.java.Individuals.Contracts.Function;
+import main.java.Individuals.Contracts.Individual;
 import main.java.Population.Population;
 import main.java.Util.Statistics;
 

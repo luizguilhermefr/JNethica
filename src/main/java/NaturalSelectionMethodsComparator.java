@@ -1,12 +1,12 @@
 package main.java;
 
-import main.java.Contracts.FitnessCalculator;
-import main.java.Contracts.Strategy;
 import main.java.Exceptions.EmptyPopulationException;
 import main.java.Factories.BitsFactory;
+import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Fitness.MaxPositiveBitsFitnessCalculator;
 import main.java.Individuals.Bits;
 import main.java.Population.Population;
+import main.java.Strategies.Contracts.Strategy;
 import main.java.Strategies.Crossover;
 
 class NaturalSelectionMethodsComparator {

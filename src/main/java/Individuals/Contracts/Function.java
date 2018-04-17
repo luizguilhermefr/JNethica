@@ -1,4 +1,4 @@
-package main.java.Contracts;
+package main.java.Individuals.Contracts;
 
 public interface Function extends Individual {
     Double getX ();
