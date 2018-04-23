@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 public class Crossover extends Strategy {
 
-    private static final double MUTATION_RATE = 2.0;
-
     public Crossover (Population<Bits> initialPopulation, FitnessCalculator fitnessCalculator) {
         super(initialPopulation, fitnessCalculator);
     }

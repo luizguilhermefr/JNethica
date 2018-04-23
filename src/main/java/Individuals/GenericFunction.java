@@ -1,7 +1,6 @@
 package main.java.Individuals;
 
 import main.java.Individuals.Contracts.Function;
-import main.java.Individuals.Contracts.Individual;
 import main.java.Mutators.Contracts.Mutator;
 
 import javax.script.ScriptEngine;
@@ -9,7 +8,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GenericFunction extends Function {
@@ -61,13 +59,19 @@ public class GenericFunction extends Function {
     }
 
     @Override
-    public Individual mutate (Mutator mutator) {
-        return null;
+    public GenericFunction mutate (Mutator mutator) {
+        return (GenericFunction) mutator.mutate(this);
     }
 
     @Override
-    public Function mutate (List<Mutator> mutators) {
-        return null;
+    public GenericFunction mutate (Map<String, Mutator> mutators) {
+        Map<String, Object> nextArguments = new HashMap<>(arguments);
+        for (String key : mutators.keySet()) {
+            Double value = (Double) nextArguments.get(key);
+            Mutator mutator = mutators.get(key);
+            nextArguments.replace(key, mutator.mutate(value));
+        }
+        return new GenericFunction(format, nextArguments);
     }
 
     @Override

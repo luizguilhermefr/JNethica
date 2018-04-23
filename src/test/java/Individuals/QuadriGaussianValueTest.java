@@ -1,7 +1,10 @@
 package test.java.Individuals;
 
-import main.java.Individuals.QuadriGaussianValue;
+import main.java.Individuals.GenericFunction;
+import main.java.Util.CommonFunctions;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,7 +12,10 @@ class QuadriGaussianValueTest {
 
     @Test
     void testMaximumValue () {
-        QuadriGaussianValue quadriGaussian = new QuadriGaussianValue(-2.99538, -2.99543);
+        HashMap<String, Object> keys = new HashMap<>();
+        keys.put("x", -2.99538);
+        keys.put("y", -2.99543);
+        GenericFunction quadriGaussian = new GenericFunction(CommonFunctions.QUADRI_GAUSSIAN, keys);
         double result = quadriGaussian.getValue();
         assertEquals(0.971479, result, 0.0001);
     }

@@ -2,7 +2,7 @@ package main.java.Individuals.Contracts;
 
 import main.java.Mutators.Contracts.Mutator;
 
-import java.util.List;
+import java.util.Map;
 
 public abstract class Function extends Individual {
 
@@ -14,5 +14,5 @@ public abstract class Function extends Individual {
 
     public abstract Double getValue ();
 
-    public abstract Function mutate (final List<Mutator> mutators);
+    public abstract Function mutate (final Map<String, Mutator> mutators);
 }

@@ -10,6 +10,7 @@ import main.java.Population.Population;
 import main.java.Util.Statistics;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MetaEvolutionary extends MiPlusMi {
     public MetaEvolutionary (Population initialPopulation, FitnessCalculator fitnessCalculator) {
@@ -36,10 +37,10 @@ public class MetaEvolutionary extends MiPlusMi {
             currentGeneration.sort(fitnessCalculator);
             Population descendents = currentGeneration.clone();
             ArrayList<Function> individuals = descendents.getIndividuals();
-            ArrayList<Mutator> variances = new ArrayList<>();
-            for (Integer j = 0; j < individuals.get(0).countArguments(); j++) {
-                ArrayList<Double> values = argumentsArrayList(individuals, j);
-                variances.add(new CreepMutator(Statistics.variance(values)));
+            HashMap<String, Mutator> variances = new HashMap<>();
+            for (String key : individuals.get(0).getArgumentsKeys()) {
+                ArrayList<Double> values = argumentsArrayList(individuals, key);
+                variances.put(key, new CreepMutator(Statistics.variance(values)));
             }
             for (Integer j = 0; j < individuals.size(); j++) {
                 Function individual = individuals.get(j);
