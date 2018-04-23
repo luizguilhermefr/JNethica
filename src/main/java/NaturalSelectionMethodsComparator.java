@@ -1,13 +1,14 @@
 package main.java;
 
 import main.java.Exceptions.EmptyPopulationException;
-import main.java.Factories.BitsFactory;
+import main.java.Factories.QuadriGaussianValueFactory;
 import main.java.Fitness.Contracts.FitnessCalculator;
-import main.java.Fitness.MaxPositiveBitsFitnessCalculator;
+import main.java.Fitness.MaximumValueFitnessCalculator;
 import main.java.Individuals.Bits;
+import main.java.Individuals.Contracts.Individual;
 import main.java.Population.Population;
 import main.java.Strategies.Contracts.Strategy;
-import main.java.Strategies.Crossover;
+import main.java.Strategies.MiPlusMi;
 
 class NaturalSelectionMethodsComparator {
 
@@ -19,7 +20,7 @@ class NaturalSelectionMethodsComparator {
 
     private FitnessCalculator fitnessCalculator;
 
-    private Bits best = null;
+    private Individual best = null;
 
     private Integer generation;
 
@@ -27,8 +28,8 @@ class NaturalSelectionMethodsComparator {
         this.populationSize = populationSize;
         this.generations = generations;
         this.initialPopulation = new Population<>();
-        this.initialPopulation.generateInitialPopulation(populationSize, new BitsFactory(20));
-        this.fitnessCalculator = new MaxPositiveBitsFitnessCalculator();
+        this.initialPopulation.generateInitialPopulation(populationSize, new QuadriGaussianValueFactory());
+        this.fitnessCalculator = new MaximumValueFitnessCalculator();
     }
 
     private void printInitializer () {
@@ -42,10 +43,10 @@ class NaturalSelectionMethodsComparator {
     void compare () throws EmptyPopulationException {
         printInitializer();
 
-        Strategy crossOver = new Crossover(initialPopulation, fitnessCalculator);
-        crossOver.run(generations);
-        best = (Bits) crossOver.getGlobalOptimum();
-        generation = crossOver.getGlobalGeneration();
+        Strategy miPlusMi = new MiPlusMi(initialPopulation, fitnessCalculator);
+        miPlusMi.run(generations);
+        best = miPlusMi.getGlobalOptimum();
+        generation = miPlusMi.getGlobalGeneration();
 
         printResults();
     }

@@ -2,25 +2,21 @@ package main.java.Individuals;
 
 import main.java.Individuals.Contracts.Function;
 import main.java.Mutators.Contracts.Mutator;
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import javax.script.SimpleBindings;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GenericFunction extends Function {
 
-    Map<String, Object> arguments;
+    private Map<String, Object> arguments;
 
-    String format;
+    private String format;
 
-    Double value;
+    private Double value;
 
-    private ScriptEngine engine;
-
-    private SimpleBindings bindings;
+    private Expression engine;
 
     public GenericFunction (String format, Map<String, Object> arguments) {
         this.arguments = arguments;
@@ -31,16 +27,19 @@ public class GenericFunction extends Function {
 
     private void calculate () {
         try {
-            value = (Double) engine.eval(format, bindings);
-        } catch (ScriptException e) {
+            value = engine.evaluate();
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
             value = null;
         }
     }
 
-    void makeEvaluator () {
-        engine = new ScriptEngineManager().getEngineByName("JavaScript");
-        bindings = new SimpleBindings(arguments);
+    private void makeEvaluator () {
+        ExpressionBuilder builder = new ExpressionBuilder(format).variables(arguments.keySet());
+        engine = builder.build();
+        for (String key : arguments.keySet()) {
+            engine = engine.setVariable(key, (Double) arguments.get(key));
+        }
     }
 
     @Override
@@ -60,7 +59,12 @@ public class GenericFunction extends Function {
 
     @Override
     public GenericFunction mutate (Mutator mutator) {
-        return (GenericFunction) mutator.mutate(this);
+        Map<String, Object> nextArguments = new HashMap<>(arguments);
+        for (String key : nextArguments.keySet()) {
+            Double value = (Double) nextArguments.get(key);
+            nextArguments.replace(key, mutator.mutate(value));
+        }
+        return new GenericFunction(format, nextArguments);
     }
 
     @Override
