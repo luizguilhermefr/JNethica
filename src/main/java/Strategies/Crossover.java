@@ -6,6 +6,7 @@ import main.java.Individuals.Bits;
 import main.java.Mutators.Contracts.BitFlipperMutator;
 import main.java.Mutators.Contracts.Mutator;
 import main.java.Population.Population;
+import main.java.StopConditions.Contracts.StopCondition;
 import main.java.Strategies.Contracts.Strategy;
 import main.java.Util.RandomUtilities;
 
@@ -40,15 +41,18 @@ public class Crossover extends Strategy {
     }
 
     @Override
-    public void run (Integer maxGenerations) throws EmptyPopulationException {
+    public void run (StopCondition stopCondition) throws EmptyPopulationException {
         globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+
         globalGeneration = 0;
 
         Population<Bits> nextPopulation = initialPopulation;
 
         Mutator mutator = new BitFlipperMutator(2.0);
 
-        for (Integer i = 1; i <= maxGenerations; i++) {
+        Integer currentGenerationNumber = 1;
+
+        do {
             Population<Bits> currentPopulation = nextPopulation.clone();
             for (Integer j = 0; j < fixedSize; j++) {
                 Bits firstDrawn = roulette(currentPopulation);
@@ -63,8 +67,10 @@ public class Crossover extends Strategy {
             Bits bestOfGeneration = nextPopulation.getBetter(fitnessCalculator);
             if (bestOfGeneration.isBetterThan(globalOptimum, fitnessCalculator)) {
                 globalOptimum = bestOfGeneration;
-                globalGeneration = i;
+                globalGeneration = currentGenerationNumber;
             }
-        }
+            stopCondition.report(currentGenerationNumber, fitnessCalculator.getFitness(globalOptimum));
+            currentGenerationNumber++;
+        } while (!stopCondition.mustStop());
     }
 }

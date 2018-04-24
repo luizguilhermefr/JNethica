@@ -6,6 +6,7 @@ import main.java.Individuals.Contracts.Individual;
 import main.java.Mutators.Contracts.Mutator;
 import main.java.Mutators.CreepMutator;
 import main.java.Population.Population;
+import main.java.StopConditions.Contracts.StopCondition;
 import main.java.Strategies.Contracts.Strategy;
 
 public class QuickIteratedLocalSearch extends Strategy {
@@ -14,7 +15,7 @@ public class QuickIteratedLocalSearch extends Strategy {
     }
 
     @Override
-    public void run (Integer maxGenerations) throws IllegalArgumentException, EmptyPopulationException {
+    public void run (StopCondition stopCondition) throws IllegalArgumentException, EmptyPopulationException {
         Individual starter = this.initialPopulation.getBetter(fitnessCalculator);
 
         globalOptimum = starter;
@@ -25,7 +26,9 @@ public class QuickIteratedLocalSearch extends Strategy {
 
         Individual localBetter = starter;
 
-        for (Integer i = 1; i <= maxGenerations; i++) {
+        Integer currentGenerationNumber = 1;
+
+        do {
             do {
                 Individual neighbor = localBetter.mutate(smallMutator);
                 if (neighbor.isBetterThan(globalOptimum, fitnessCalculator)) {
@@ -37,8 +40,10 @@ public class QuickIteratedLocalSearch extends Strategy {
             localBetter = localBetter.mutate(bigMutator);
             if (localBetter.isBetterThan(globalOptimum, fitnessCalculator)) {
                 globalOptimum = localBetter;
-                globalGeneration = i;
+                globalGeneration = currentGenerationNumber;
             }
-        }
+            stopCondition.report(currentGenerationNumber, fitnessCalculator.getFitness(globalOptimum));
+            currentGenerationNumber++;
+        } while (!stopCondition.mustStop());
     }
 }

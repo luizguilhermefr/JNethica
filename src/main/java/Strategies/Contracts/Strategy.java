@@ -4,6 +4,7 @@ import main.java.Exceptions.EmptyPopulationException;
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individuals.Contracts.Individual;
 import main.java.Population.Population;
+import main.java.StopConditions.Contracts.StopCondition;
 
 public abstract class Strategy {
     protected final Population initialPopulation;
@@ -30,5 +31,5 @@ public abstract class Strategy {
         return globalGeneration;
     }
 
-    public abstract void run (Integer maxGenerations) throws IllegalArgumentException, EmptyPopulationException;
+    public abstract void run (StopCondition stopCondition) throws IllegalArgumentException, EmptyPopulationException;
 }

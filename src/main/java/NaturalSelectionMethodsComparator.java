@@ -7,6 +7,7 @@ import main.java.Fitness.MaximumValueFitnessCalculator;
 import main.java.Individuals.Bits;
 import main.java.Individuals.Contracts.Individual;
 import main.java.Population.Population;
+import main.java.StopConditions.MaximumGenerationsStopCondition;
 import main.java.Strategies.Contracts.Strategy;
 import main.java.Strategies.MiPlusMi;
 
@@ -44,7 +45,7 @@ class NaturalSelectionMethodsComparator {
         printInitializer();
 
         Strategy miPlusMi = new MiPlusMi(initialPopulation, fitnessCalculator);
-        miPlusMi.run(generations);
+        miPlusMi.run(new MaximumGenerationsStopCondition(generations));
         best = miPlusMi.getGlobalOptimum();
         generation = miPlusMi.getGlobalGeneration();
 
