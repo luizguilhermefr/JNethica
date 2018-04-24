@@ -86,8 +86,16 @@ public class Population<T extends Individual> {
         return this;
     }
 
+    public T getIndividualByIndex (Integer i) {
+        return individuals.get(i);
+    }
+
     public ArrayList<T> getIndividuals () {
         return individuals;
+    }
+
+    public T getLastIndexIndividual () {
+        return individuals.get(individuals.size() - 1);
     }
 
     public Population<T> mutateAll (Mutator mutator) {
