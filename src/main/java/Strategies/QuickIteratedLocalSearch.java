@@ -10,13 +10,19 @@ import main.java.StopConditions.Contracts.StopCondition;
 import main.java.Strategies.Contracts.Strategy;
 
 public class QuickIteratedLocalSearch extends Strategy {
-    public QuickIteratedLocalSearch (Population initialPopulation, FitnessCalculator fitnessCalculator) {
-        super(initialPopulation, fitnessCalculator);
+    public QuickIteratedLocalSearch (Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition) {
+        super(initialPopulation, fitnessCalculator, stopCondition);
     }
 
     @Override
-    public void run (StopCondition stopCondition) throws IllegalArgumentException, EmptyPopulationException {
-        Individual starter = this.initialPopulation.getBetter(fitnessCalculator);
+    public void run () {
+        Individual starter;
+        try {
+            starter = this.initialPopulation.getBetter(fitnessCalculator);
+        } catch (EmptyPopulationException e) {
+            e.printStackTrace();
+            return;
+        }
 
         globalOptimum = starter;
         globalGeneration = 0;

@@ -1,12 +1,11 @@
 package main.java.Strategies.Contracts;
 
-import main.java.Exceptions.EmptyPopulationException;
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individuals.Contracts.Individual;
 import main.java.Population.Population;
 import main.java.StopConditions.Contracts.StopCondition;
 
-public abstract class Strategy {
+public abstract class Strategy extends Thread {
     protected final Population initialPopulation;
 
     protected Integer fixedSize;
@@ -17,10 +16,13 @@ public abstract class Strategy {
 
     protected Integer globalGeneration;
 
-    public Strategy (final Population initialPopulation, FitnessCalculator fitnessCalculator) {
+    protected StopCondition stopCondition;
+
+    public Strategy (final Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition) {
         this.initialPopulation = initialPopulation;
         this.fixedSize = initialPopulation.size();
         this.fitnessCalculator = fitnessCalculator;
+        this.stopCondition = stopCondition;
     }
 
     public Individual getGlobalOptimum () {
@@ -31,5 +33,6 @@ public abstract class Strategy {
         return globalGeneration;
     }
 
-    public abstract void run (StopCondition stopCondition) throws IllegalArgumentException, EmptyPopulationException;
+    @Override
+    public abstract void run () throws IllegalArgumentException;
 }

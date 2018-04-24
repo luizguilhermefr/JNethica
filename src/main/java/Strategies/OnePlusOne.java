@@ -11,8 +11,8 @@ import main.java.Strategies.Contracts.Strategy;
 
 public class OnePlusOne extends Strategy {
 
-    public OnePlusOne (Population initialPopulation, FitnessCalculator fitnessCalculator) {
-        super(initialPopulation, fitnessCalculator);
+    public OnePlusOne (Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition) {
+        super(initialPopulation, fitnessCalculator, stopCondition);
     }
 
     private Individual tournament (Individual a, Individual b) {
@@ -24,8 +24,13 @@ public class OnePlusOne extends Strategy {
     }
 
     @Override
-    public void run (StopCondition stopCondition) throws EmptyPopulationException {
-        globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+    public void run () {
+        try {
+            globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+        } catch (EmptyPopulationException e) {
+            e.printStackTrace();
+            return;
+        }
         globalGeneration = 0;
 
         Individual localOptimum = null;
@@ -38,12 +43,24 @@ public class OnePlusOne extends Strategy {
         do {
             nextGeneration = initialPopulation.cloneEmpty();
             for (Integer j = 0; j < fixedSize; j++) {
-                Individual firstSelected = this.initialPopulation.getRandomIndividual();
-                Individual secondSelected = this.initialPopulation.getRandomIndividual();
+                Individual firstSelected = null;
+                Individual secondSelected = null;
+                try {
+                    firstSelected = this.initialPopulation.getRandomIndividual();
+                    secondSelected = this.initialPopulation.getRandomIndividual();
+                } catch (EmptyPopulationException e) {
+                    e.printStackTrace();
+                    return;
+                }
                 Individual betterOfSelecteds = tournament(firstSelected, secondSelected);
                 nextGeneration.pushIndividual(betterOfSelecteds.mutate(mutator));
             }
-            localOptimum = nextGeneration.getBetter(fitnessCalculator);
+            try {
+                localOptimum = nextGeneration.getBetter(fitnessCalculator);
+            } catch (EmptyPopulationException e) {
+                e.printStackTrace();
+                return;
+            }
             if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {
                 globalOptimum = localOptimum;
                 globalGeneration = currentGenerationNumber;

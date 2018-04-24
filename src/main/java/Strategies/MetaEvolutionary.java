@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MetaEvolutionary extends MiPlusMi {
-    public MetaEvolutionary (Population initialPopulation, FitnessCalculator fitnessCalculator) {
-        super(initialPopulation, fitnessCalculator);
+    public MetaEvolutionary (Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition) {
+        super(initialPopulation, fitnessCalculator, stopCondition);
     }
 
     private ArrayList<Double> argumentsArrayList (ArrayList<Function> individuals, String argumentIndex) {
@@ -27,8 +27,13 @@ public class MetaEvolutionary extends MiPlusMi {
     }
 
     @Override
-    public void run (StopCondition stopCondition) throws IllegalArgumentException, EmptyPopulationException {
-        globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+    public void run () throws IllegalArgumentException {
+        try {
+            globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+        } catch (EmptyPopulationException e) {
+            e.printStackTrace();
+            return;
+        }
         globalGeneration = 0;
 
         Individual localOptimum;
@@ -51,7 +56,12 @@ public class MetaEvolutionary extends MiPlusMi {
             }
             descendents.sort(fitnessCalculator);
             currentGeneration = combine(currentGeneration, descendents);
-            localOptimum = currentGeneration.getBetter(fitnessCalculator);
+            try {
+                localOptimum = currentGeneration.getBetter(fitnessCalculator);
+            } catch (EmptyPopulationException e) {
+                e.printStackTrace();
+                return;
+            }
             if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {
                 globalOptimum = localOptimum;
                 globalGeneration = currentGenerationNumber;

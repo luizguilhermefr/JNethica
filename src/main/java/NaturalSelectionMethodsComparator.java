@@ -1,6 +1,5 @@
 package main.java;
 
-import main.java.Exceptions.EmptyPopulationException;
 import main.java.Factories.QuadriGaussianValueFactory;
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Fitness.MaximumValueFitnessCalculator;
@@ -41,11 +40,18 @@ class NaturalSelectionMethodsComparator {
         System.out.println(best + "\t" + generation);
     }
 
-    void compare () throws EmptyPopulationException {
+    void compare () {
         printInitializer();
 
-        Strategy miPlusMi = new MiPlusMi(initialPopulation, fitnessCalculator);
-        miPlusMi.run(new MaximumGenerationsStopCondition(generations));
+        Strategy miPlusMi = new MiPlusMi(initialPopulation, fitnessCalculator, new MaximumGenerationsStopCondition(generations));
+        miPlusMi.start();
+
+        try {
+            miPlusMi.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         best = miPlusMi.getGlobalOptimum();
         generation = miPlusMi.getGlobalGeneration();
 

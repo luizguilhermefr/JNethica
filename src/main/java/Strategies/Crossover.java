@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class Crossover extends Strategy {
 
-    public Crossover (Population<Bits> initialPopulation, FitnessCalculator fitnessCalculator) {
-        super(initialPopulation, fitnessCalculator);
+    public Crossover (Population<Bits> initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition) {
+        super(initialPopulation, fitnessCalculator, stopCondition);
     }
 
     private Bits roulette (Population<Bits> currentPopulation) {
@@ -41,8 +41,13 @@ public class Crossover extends Strategy {
     }
 
     @Override
-    public void run (StopCondition stopCondition) throws EmptyPopulationException {
-        globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+    public void run () {
+        try {
+            globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+        } catch (EmptyPopulationException e) {
+            e.printStackTrace();
+            return;
+        }
 
         globalGeneration = 0;
 
@@ -64,7 +69,13 @@ public class Crossover extends Strategy {
                 crossed.mutate(mutator);
                 nextPopulation.pushIndividual(crossed);
             }
-            Bits bestOfGeneration = nextPopulation.getBetter(fitnessCalculator);
+            Bits bestOfGeneration = null;
+            try {
+                bestOfGeneration = nextPopulation.getBetter(fitnessCalculator);
+            } catch (EmptyPopulationException e) {
+                e.printStackTrace();
+                return;
+            }
             if (bestOfGeneration.isBetterThan(globalOptimum, fitnessCalculator)) {
                 globalOptimum = bestOfGeneration;
                 globalGeneration = currentGenerationNumber;

@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class MiPlusMi extends Strategy {
 
-    public MiPlusMi (Population initialPopulation, FitnessCalculator fitnessCalculator) {
-        super(initialPopulation, fitnessCalculator);
+    public MiPlusMi (Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition) {
+        super(initialPopulation, fitnessCalculator, stopCondition);
     }
 
     Population combine (Population ascendent, Population descendent) throws IllegalArgumentException {
@@ -34,8 +34,13 @@ public class MiPlusMi extends Strategy {
     }
 
     @Override
-    public void run (StopCondition stopCondition) throws IllegalArgumentException, EmptyPopulationException {
-        globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+    public void run () {
+        try {
+            globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+        } catch (EmptyPopulationException e) {
+            e.printStackTrace();
+            return;
+        }
         globalGeneration = 0;
 
         Individual localOptimum;
@@ -49,7 +54,12 @@ public class MiPlusMi extends Strategy {
             currentGeneration.sort(fitnessCalculator);
             Population descendents = currentGeneration.clone().mutateAll(mutator).sort(fitnessCalculator);
             currentGeneration = combine(currentGeneration, descendents);
-            localOptimum = currentGeneration.getBetter(fitnessCalculator);
+            try {
+                localOptimum = currentGeneration.getBetter(fitnessCalculator);
+            } catch (EmptyPopulationException e) {
+                e.printStackTrace();
+                return;
+            }
             if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {
                 globalOptimum = localOptimum;
                 globalGeneration = currentGenerationNumber;
