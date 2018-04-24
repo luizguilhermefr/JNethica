@@ -1,7 +1,7 @@
 package test.java.Mutators;
 
-import main.java.Individuals.GenericFunction;
-import main.java.Mutators.CreepMutator;
+import main.java.Individual.GenericFunction;
+import main.java.Mutator.CreepMutator;
 import main.java.Util.CommonFunctions;
 import org.junit.jupiter.api.Test;
 

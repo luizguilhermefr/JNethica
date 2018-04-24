@@ -1,8 +1,8 @@
 package main.java.Fitness;
 
 import main.java.Fitness.Contracts.FitnessCalculator;
-import main.java.Individuals.Bits;
-import main.java.Individuals.Contracts.Individual;
+import main.java.Individual.Bits;
+import main.java.Individual.Contracts.Individual;
 
 public class MaxPositiveBitsFitnessCalculator implements FitnessCalculator {
 

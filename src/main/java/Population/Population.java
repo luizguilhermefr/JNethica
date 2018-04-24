@@ -1,10 +1,10 @@
 package main.java.Population;
 
-import main.java.Exceptions.EmptyPopulationException;
-import main.java.Factories.Contracts.IndividualFactory;
+import main.java.Exception.EmptyPopulationException;
+import main.java.Factory.Contracts.IndividualFactory;
 import main.java.Fitness.Contracts.FitnessCalculator;
-import main.java.Individuals.Contracts.Individual;
-import main.java.Mutators.Contracts.Mutator;
+import main.java.Individual.Contracts.Individual;
+import main.java.Mutator.Contracts.Mutator;
 import main.java.Util.RandomUtilities;
 
 import java.util.ArrayList;

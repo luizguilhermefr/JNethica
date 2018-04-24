@@ -1,41 +1,55 @@
 package main.java;
 
-import main.java.Exceptions.EmptyPopulationException;
+import main.java.Factory.Contracts.IndividualFactory;
+import main.java.Factory.GenericFunctionFactory;
+import main.java.Individual.GenericFunction;
+import main.java.Population.Population;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
+    private static void testFirstProblem () {
+        // Define variables
+        ArrayList<String> variables = new ArrayList<>();
+        variables.add("x");
+        variables.add("y");
 
-    private static final int ARGS_COUNT = 2;
-    private static final int DEFAULT_POP_SIZE = 20;
-    private static final int DEFAULT_GENERATIONS_NUMBER = 100;
+        // Define maximum values for variables
+        HashMap<String, Double> maximumValues = new HashMap<>();
+        maximumValues.put("x1", 8.0);
+        maximumValues.put("x2", 8.0);
+        maximumValues.put("x3", 8.0);
 
-    private static Boolean validNumberArgument (String argument) {
-        try {
-            if (Integer.valueOf(argument) <= 0) {
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        return true;
+        // Define minimum values for variables
+        HashMap<String, Double> minimumValues = new HashMap<>();
+        maximumValues.put("x1", -8.0);
+        maximumValues.put("x2", -8.0);
+        maximumValues.put("x3", -8.0);
+
+        // Define function
+        String function = "x1 * x2 + x2 * x3";
+
+        // Define individual factory
+        IndividualFactory individualFactory;
+        individualFactory = new GenericFunctionFactory(function, variables, minimumValues, maximumValues);
+
+        // Generate initial population
+        Population<GenericFunction> initialPopulation = new Population<>();
+        initialPopulation.generateInitialPopulation(30, individualFactory);
+
+        // Submit strategies
+
     }
 
-    private static Boolean validArgs (String[] args) {
-        return args.length == ARGS_COUNT && validNumberArgument(args[0]) && validNumberArgument(args[1]);
+    private static void testSecondProblem () {
+
     }
 
-    public static void main (String[] args) throws EmptyPopulationException {
-        // Args: population size, generations
-        Integer populationSize;
-        Integer generations;
-        if (!validArgs(args)) {
-            populationSize = DEFAULT_POP_SIZE;
-            generations = DEFAULT_GENERATIONS_NUMBER;
-        } else {
-            populationSize = Integer.valueOf(args[0]);
-            generations = Integer.valueOf(args[1]);
-        }
-        NaturalSelectionMethodsComparator comparator = new NaturalSelectionMethodsComparator(populationSize, generations);
-        comparator.compare();
+
+    public static void main (String[] args) {
+        testFirstProblem();
+        testSecondProblem();
         System.exit(0);
     }
 }

@@ -1,6 +1,6 @@
 package main.java.Fitness.Contracts;
 
-import main.java.Individuals.Contracts.Individual;
+import main.java.Individual.Contracts.Individual;
 
 import java.util.Comparator;
 
