@@ -9,8 +9,8 @@ import main.java.Population.Population;
 import main.java.StopCondition.Contracts.StopCondition;
 import main.java.Strategy.Contracts.Strategy;
 
-public class QuickIteratedLocalSearch extends Strategy {
-    public QuickIteratedLocalSearch (Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition) {
+public class QuickIteratedLocalSearchStrategy extends Strategy {
+    public QuickIteratedLocalSearchStrategy(Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition) {
         super(initialPopulation, fitnessCalculator, stopCondition, null);
     }
 

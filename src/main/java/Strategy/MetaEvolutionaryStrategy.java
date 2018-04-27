@@ -13,8 +13,8 @@ import main.java.Util.Statistics;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MetaEvolutionary extends MiPlusMi {
-    public MetaEvolutionary(Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator) {
+public class MetaEvolutionaryStrategy extends MiPlusMiStrategy {
+    public MetaEvolutionaryStrategy(Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator) {
         super(initialPopulation, fitnessCalculator, stopCondition, mutator);
     }
 

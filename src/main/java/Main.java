@@ -2,14 +2,23 @@ package main.java;
 
 import main.java.Factory.Contracts.IndividualFactory;
 import main.java.Factory.GenericFunctionFactory;
+import main.java.Fitness.Contracts.FitnessCalculator;
+import main.java.Fitness.MaximumValueFitnessCalculator;
+import main.java.Individual.Contracts.Individual;
 import main.java.Individual.GenericFunction;
+import main.java.Mutator.Contracts.Mutator;
+import main.java.Mutator.CreepMutator;
 import main.java.Population.Population;
+import main.java.StopCondition.Contracts.StopCondition;
+import main.java.StopCondition.MaximumGenerationsStopCondition;
+import main.java.Strategy.ClassicGeneticStrategy;
+import main.java.Strategy.Contracts.Strategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
-    private static void testFirstProblem () {
+    private static Strategy generateFirstProblemThread() {
         // Define variables
         ArrayList<String> variables = new ArrayList<>();
         variables.add("x1");
@@ -39,18 +48,32 @@ public class Main {
         Population<GenericFunction> initialPopulation = new Population<>();
         initialPopulation.generateInitialPopulation(30, individualFactory);
 
-        // Submit strategies
+        // Define a fitness calculator
+        FitnessCalculator fitnessCalculator = new MaximumValueFitnessCalculator();
 
+        // Define a stop condition
+        StopCondition stopCondition = new MaximumGenerationsStopCondition(500);
+
+        // Define a mutator
+        Mutator mutator = new CreepMutator(2.0);
+
+        // Generate strategy
+        Double crossoverRate = 70.0;
+
+        return new ClassicGeneticStrategy(initialPopulation, fitnessCalculator, stopCondition, mutator, crossoverRate);
     }
 
-    private static void testSecondProblem () {
-
-    }
-
-
-    public static void main (String[] args) {
-        testFirstProblem();
-        testSecondProblem();
+    public static void main(String[] args) throws InterruptedException {
+        Strategy firstProblem = generateFirstProblemThread();
+        firstProblem.start();
+        firstProblem.join();
+        Individual bestOfFirstProblem = firstProblem.getGlobalOptimum();
+        Integer bestOfFirstProblemGeneration = firstProblem.getGlobalGeneration();
+        System.out.println(bestOfFirstProblem + "\t" + bestOfFirstProblemGeneration);
         System.exit(0);
+    }
+
+    private Strategy generateSecondProblemThread() {
+        return null;
     }
 }

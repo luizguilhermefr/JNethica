@@ -9,9 +9,9 @@ import main.java.Population.Population;
 import main.java.StopCondition.Contracts.StopCondition;
 import main.java.Strategy.Contracts.Strategy;
 
-public class OnePlusOne extends Strategy {
+public class OnePlusOneStrategy extends Strategy {
 
-    public OnePlusOne(Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator) {
+    public OnePlusOneStrategy(Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator) {
         super(initialPopulation, fitnessCalculator, stopCondition, mutator);
     }
 

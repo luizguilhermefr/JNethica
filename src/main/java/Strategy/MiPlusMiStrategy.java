@@ -10,9 +10,9 @@ import main.java.Strategy.Contracts.Strategy;
 
 import java.util.ArrayList;
 
-public class MiPlusMi extends Strategy {
+public class MiPlusMiStrategy extends Strategy {
 
-    public MiPlusMi(Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator) {
+    public MiPlusMiStrategy(Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator) {
         super(initialPopulation, fitnessCalculator, stopCondition, mutator);
     }
 
