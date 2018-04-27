@@ -1,7 +1,8 @@
 build:
     environment:
-        java: 'java-8-oracle'
+      java: 'java-8-oracle'
     tests:
         override:
-                coverage:
-                    format: 'jacoco'
+          -
+            coverage:
+              format: 'jacoco'

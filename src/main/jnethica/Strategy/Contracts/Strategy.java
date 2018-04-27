@@ -1,5 +1,6 @@
 package main.jnethica.Strategy.Contracts;
 
+import main.jnethica.Crossover.Contracts.Crossover;
 import main.jnethica.Exception.EmptyPopulationException;
 import main.jnethica.Fitness.Contracts.FitnessCalculator;
 import main.jnethica.Individual.Contracts.Individual;
@@ -11,22 +12,22 @@ import main.jnethica.StopCondition.Contracts.StopCondition;
 public abstract class Strategy extends Thread {
     private final Population initialPopulation;
     protected Selector selector;
-
+    protected Crossover crosser;
     protected FitnessCalculator fitnessCalculator;
-    private Population currentPopulation;
+    protected Population currentPopulation;
     private Individual globalOptimum;
     private Individual localOptimum;
     private Integer globalGeneration;
     private StopCondition stopCondition;
-
     protected Mutator mutator;
     private Integer currentGenerationNumber;
 
-    public Strategy(final Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator) {
+    public Strategy(final Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator, Crossover crosser) {
         this.initialPopulation = initialPopulation;
         this.fitnessCalculator = fitnessCalculator;
         this.stopCondition = stopCondition;
         this.mutator = mutator;
+        this.crosser = crosser;
     }
 
     public Individual getGlobalOptimum() {
@@ -44,8 +45,9 @@ public abstract class Strategy extends Thread {
         generateSelector();
     }
 
-    private void afterEach(Individual localOptimum) {
-        setLocalOptimum(localOptimum);
+    private void afterEach() throws EmptyPopulationException {
+        updateLocalOptimum();
+        updateGlobalOptimumIfNecessary();
         reportStopConditionAndIncrementGeneration();
     }
 
@@ -58,8 +60,11 @@ public abstract class Strategy extends Thread {
         globalGeneration = 0;
     }
 
-    private void setLocalOptimum(Individual individual) {
-        localOptimum = individual;
+    private void updateLocalOptimum() throws EmptyPopulationException {
+        localOptimum = currentPopulation.getBetter(fitnessCalculator);
+    }
+
+    private void updateGlobalOptimumIfNecessary() {
         if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {
             globalOptimum = localOptimum;
             globalGeneration = currentGenerationNumber;
@@ -82,7 +87,7 @@ public abstract class Strategy extends Thread {
             beforeAll();
             while (stopCondition.mustContinue()) {
                 execute();
-                afterEach(localOptimum);
+                afterEach();
             }
         } catch (EmptyPopulationException e) {
             e.printStackTrace();

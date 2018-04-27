@@ -20,11 +20,6 @@ public class Population<T extends Individual> {
         return this.individuals.size();
     }
 
-    public Population<T> insertIndividual (T individual) {
-        individuals.add(individual);
-        return this;
-    }
-
     public Population<T> generateInitialPopulation (Integer size, IndividualFactory factory) {
         individuals.clear();
         for (Integer i = 0; i < size; i++) {
@@ -103,10 +98,6 @@ public class Population<T extends Individual> {
             individuals.set(i, (T) individuals.get(i).mutate(mutator));
         }
         return this;
-    }
-
-    public Population<T> cloneEmpty () {
-        return new Population<T>();
     }
 
     public Population<T> clone () {

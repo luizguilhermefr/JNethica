@@ -1,5 +1,7 @@
 package main.jnethica;
 
+import main.jnethica.Crossover.ArithmeticCrossover;
+import main.jnethica.Crossover.Contracts.Crossover;
 import main.jnethica.Factory.Contracts.IndividualFactory;
 import main.jnethica.Factory.GenericFunctionFactory;
 import main.jnethica.Fitness.Contracts.FitnessCalculator;
@@ -57,10 +59,13 @@ public class Main {
         // Define a mutator
         Mutator mutator = new CreepMutator(2.0);
 
+        // Define crossover method
+        Crossover crossover = new ArithmeticCrossover();
+
         // Generate strategy
         Double crossoverRate = 70.0;
 
-        return new ClassicGeneticStrategy(initialPopulation, fitnessCalculator, stopCondition, mutator, crossoverRate);
+        return new ClassicGeneticStrategy(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, crossoverRate);
     }
 
     public static void main(String[] args) throws InterruptedException {

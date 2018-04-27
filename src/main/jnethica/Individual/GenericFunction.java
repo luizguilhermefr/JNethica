@@ -7,6 +7,7 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class GenericFunction extends Function {
 
@@ -48,7 +49,8 @@ public class GenericFunction extends Function {
 
     @Override
     public String[] getArgumentsKeys () {
-        return (String[]) arguments.keySet().toArray();
+        Set<String> keys = arguments.keySet();
+        return keys.toArray(new String[keys.size()]);
     }
 
     @Override
