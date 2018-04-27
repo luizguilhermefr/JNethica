@@ -11,28 +11,22 @@ import main.java.Strategy.Contracts.Strategy;
 
 public class QuickIteratedLocalSearch extends Strategy {
     public QuickIteratedLocalSearch (Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition) {
-        super(initialPopulation, fitnessCalculator, stopCondition);
+        super(initialPopulation, fitnessCalculator, stopCondition, null);
     }
 
     @Override
     public void run () {
-        Individual starter;
         try {
-            starter = this.initialPopulation.getBetter(fitnessCalculator);
+            setInitialBest();
         } catch (EmptyPopulationException e) {
             e.printStackTrace();
             return;
         }
 
-        globalOptimum = starter;
-        globalGeneration = 0;
-
         Mutator smallMutator = new CreepMutator(0.125);
         Mutator bigMutator = new CreepMutator(1.0);
 
-        Individual localBetter = starter;
-
-        Integer currentGenerationNumber = 1;
+        Individual localBetter = globalOptimum;
 
         do {
             do {
@@ -44,12 +38,8 @@ public class QuickIteratedLocalSearch extends Strategy {
                 }
             } while (true);
             localBetter = localBetter.mutate(bigMutator);
-            if (localBetter.isBetterThan(globalOptimum, fitnessCalculator)) {
-                globalOptimum = localBetter;
-                globalGeneration = currentGenerationNumber;
-            }
-            stopCondition.report(currentGenerationNumber, fitnessCalculator.getFitness(globalOptimum));
-            currentGenerationNumber++;
+            setLocalOptimum(localBetter);
+            reportStopConditionAndIncrementGeneration();
         } while (!stopCondition.mustStop());
     }
 }

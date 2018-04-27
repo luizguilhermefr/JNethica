@@ -4,7 +4,6 @@ import main.java.Exception.EmptyPopulationException;
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individual.Contracts.Individual;
 import main.java.Mutator.Contracts.Mutator;
-import main.java.Mutator.CreepMutator;
 import main.java.Population.Population;
 import main.java.StopCondition.Contracts.StopCondition;
 import main.java.Strategy.Contracts.Strategy;
@@ -13,8 +12,8 @@ import java.util.ArrayList;
 
 public class MiPlusMi extends Strategy {
 
-    public MiPlusMi (Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition) {
-        super(initialPopulation, fitnessCalculator, stopCondition);
+    public MiPlusMi(Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator) {
+        super(initialPopulation, fitnessCalculator, stopCondition, mutator);
     }
 
     Population combine (Population ascendent, Population descendent) throws IllegalArgumentException {
@@ -36,19 +35,14 @@ public class MiPlusMi extends Strategy {
     @Override
     public void run () {
         try {
-            globalOptimum = initialPopulation.getBetter(fitnessCalculator);
+            setInitialBest();
         } catch (EmptyPopulationException e) {
             e.printStackTrace();
             return;
         }
-        globalGeneration = 0;
 
         Individual localOptimum;
         Population currentGeneration = initialPopulation.clone();
-
-        Mutator mutator = new CreepMutator(2.0);
-
-        Integer currentGenerationNumber = 1;
 
         do {
             currentGeneration.sort(fitnessCalculator);
@@ -60,12 +54,8 @@ public class MiPlusMi extends Strategy {
                 e.printStackTrace();
                 return;
             }
-            if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {
-                globalOptimum = localOptimum;
-                globalGeneration = currentGenerationNumber;
-            }
-            stopCondition.report(currentGenerationNumber, fitnessCalculator.getFitness(globalOptimum));
-            currentGenerationNumber++;
+            setLocalOptimum(localOptimum);
+            reportStopConditionAndIncrementGeneration();
         } while (!stopCondition.mustStop());
     }
 

@@ -11,8 +11,8 @@ import main.java.Strategy.Contracts.Strategy;
 
 public class OnePlusOne extends Strategy {
 
-    public OnePlusOne (Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition) {
-        super(initialPopulation, fitnessCalculator, stopCondition);
+    public OnePlusOne(Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator) {
+        super(initialPopulation, fitnessCalculator, stopCondition, mutator);
     }
 
     private Individual tournament (Individual a, Individual b) {
