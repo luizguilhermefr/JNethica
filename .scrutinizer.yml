@@ -1,0 +1,6 @@
+build:
+    tests:
+        override:
+            -
+                coverage:
+                    format: 'jacoco'
