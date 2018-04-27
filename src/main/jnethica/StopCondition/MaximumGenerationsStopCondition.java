@@ -19,6 +19,11 @@ public class MaximumGenerationsStopCondition implements StopCondition {
     }
 
     @Override
+    public Boolean mustContinue() {
+        return !mustStop();
+    }
+
+    @Override
     public Boolean mustStop () {
         return currentGeneration >= maximumGenerations;
     }

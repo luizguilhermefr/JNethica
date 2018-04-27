@@ -5,4 +5,6 @@ public interface StopCondition {
     void report (Integer currentGeneration, Double currentMaximumFitness);
 
     Boolean mustStop ();
+
+    Boolean mustContinue();
 }
