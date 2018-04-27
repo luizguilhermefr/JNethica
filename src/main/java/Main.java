@@ -12,20 +12,21 @@ public class Main {
     private static void testFirstProblem () {
         // Define variables
         ArrayList<String> variables = new ArrayList<>();
-        variables.add("x");
-        variables.add("y");
+        variables.add("x1");
+        variables.add("x2");
+        variables.add("x3");
+
+        // Define minimum values for variables
+        HashMap<String, Double> minimumValues = new HashMap<>();
+        minimumValues.put("x1", -8.0);
+        minimumValues.put("x2", -8.0);
+        minimumValues.put("x3", -8.0);
 
         // Define maximum values for variables
         HashMap<String, Double> maximumValues = new HashMap<>();
         maximumValues.put("x1", 8.0);
         maximumValues.put("x2", 8.0);
         maximumValues.put("x3", 8.0);
-
-        // Define minimum values for variables
-        HashMap<String, Double> minimumValues = new HashMap<>();
-        maximumValues.put("x1", -8.0);
-        maximumValues.put("x2", -8.0);
-        maximumValues.put("x3", -8.0);
 
         // Define function
         String function = "x1 * x2 + x2 * x3";
