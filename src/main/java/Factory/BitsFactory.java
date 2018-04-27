@@ -2,7 +2,7 @@ package main.java.Factory;
 
 import main.java.Factory.Contracts.IndividualFactory;
 import main.java.Individual.Bits;
-import main.java.Util.RandomUtilities;
+import main.java.Util.RandomSingleton;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ public class BitsFactory implements IndividualFactory {
     public Bits generate () {
         ArrayList<Boolean> set = new ArrayList<>();
         for (Integer i = 0; i < size; i++) {
-            set.add(RandomUtilities.randomBoolean());
+            set.add(RandomSingleton.getInstance().randomBoolean());
         }
         return new Bits(set);
     }

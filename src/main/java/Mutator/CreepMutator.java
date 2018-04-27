@@ -1,7 +1,7 @@
 package main.java.Mutator;
 
 import main.java.Mutator.Contracts.Mutator;
-import main.java.Util.RandomUtilities;
+import main.java.Util.RandomSingleton;
 
 public class CreepMutator implements Mutator {
 
@@ -31,11 +31,11 @@ public class CreepMutator implements Mutator {
     }
 
     private Double simpleMutation (final Double early) {
-        return early + RandomUtilities.doubleBetween(-mutationRate, mutationRate);
+        return early + RandomSingleton.getInstance().doubleBetween(-mutationRate, mutationRate);
     }
 
     private Double limitedMutation (final Double early) {
-        Double value = early + RandomUtilities.doubleBetween(-mutationRate, mutationRate);
+        Double value = early + RandomSingleton.getInstance().doubleBetween(-mutationRate, mutationRate);
         value = value > maxValue ? maxValue : value;
         value = value < minValue ? minValue : value;
         return value;

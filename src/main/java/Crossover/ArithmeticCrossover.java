@@ -4,13 +4,13 @@ import main.java.Crossover.Contracts.Crossover;
 import main.java.Individual.Contracts.Function;
 import main.java.Individual.Contracts.Individual;
 import main.java.Individual.GenericFunction;
-import main.java.Util.RandomUtilities;
+import main.java.Util.RandomSingleton;
 
 import java.util.HashMap;
 
 public class ArithmeticCrossover implements Crossover {
     private Double applyFormula (Double v1, Double v2) {
-        Double beta = RandomUtilities.doubleBetween(0.0, 1.0);
+        Double beta = RandomSingleton.getInstance().doubleBetween(0.0, 1.0);
         return beta * v1 + (1 - beta) * v2;
     }
 

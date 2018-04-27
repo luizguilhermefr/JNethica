@@ -5,7 +5,7 @@ import main.java.Factory.Contracts.IndividualFactory;
 import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individual.Contracts.Individual;
 import main.java.Mutator.Contracts.Mutator;
-import main.java.Util.RandomUtilities;
+import main.java.Util.RandomSingleton;
 
 import java.util.ArrayList;
 
@@ -45,7 +45,7 @@ public class Population<T extends Individual> {
     public T getRandomIndividual () throws EmptyPopulationException {
         checkNonEmptyPopulation();
         Integer popSize = individuals.size();
-        Integer randomIndex = RandomUtilities.integerBetween(0, popSize - 1);
+        Integer randomIndex = RandomSingleton.getInstance().integerBetween(0, popSize - 1);
         return individuals.get(randomIndex);
     }
 

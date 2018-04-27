@@ -2,7 +2,7 @@ package main.java.Factory;
 
 import main.java.Factory.Contracts.IndividualFactory;
 import main.java.Individual.GenericFunction;
-import main.java.Util.RandomUtilities;
+import main.java.Util.RandomSingleton;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +36,7 @@ public class GenericFunctionFactory implements IndividualFactory {
         for (String variable : variables) {
             Double minimumValue = minimumValues != null ? minimumValues.get(variable) : Double.NEGATIVE_INFINITY;
             Double maximumValue = maximumValues != null ? maximumValues.get(variable) : Double.POSITIVE_INFINITY;
-            Double generatedValue = RandomUtilities.doubleBetween(minimumValue, maximumValue);
+            Double generatedValue = RandomSingleton.getInstance().doubleBetween(minimumValue, maximumValue);
             values.put(variable, generatedValue);
         }
         return new GenericFunction(function, values);

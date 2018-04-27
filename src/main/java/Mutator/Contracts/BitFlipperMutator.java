@@ -1,6 +1,6 @@
 package main.java.Mutator.Contracts;
 
-import main.java.Util.RandomUtilities;
+import main.java.Util.RandomSingleton;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public class BitFlipperMutator implements Mutator {
         ArrayList<Boolean> currentSet = (ArrayList<Boolean>) early;
         ArrayList<Boolean> nextSet = new ArrayList<>();
         for (Boolean aSet : currentSet) {
-            Boolean mustMutateThisBit = RandomUtilities.doubleBetween(0.0, 100.0) <= mutationRate;
+            Boolean mustMutateThisBit = RandomSingleton.getInstance().doubleBetween(0.0, 100.0) <= mutationRate;
             if (mustMutateThisBit) {
                 nextSet.add(!aSet);
             } else {

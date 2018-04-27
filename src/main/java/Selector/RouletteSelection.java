@@ -4,7 +4,7 @@ import main.java.Fitness.Contracts.FitnessCalculator;
 import main.java.Individual.Contracts.Individual;
 import main.java.Population.Population;
 import main.java.Selector.Contracts.Selector;
-import main.java.Util.RandomUtilities;
+import main.java.Util.RandomSingleton;
 
 import java.util.ArrayList;
 
@@ -58,7 +58,7 @@ public class RouletteSelection<T extends Individual> implements Selector {
         ArrayList<Double> normalizedFitness = getFitnessValuesNormalizedIfNecessary(population);
 
         Double sumOfFitness = sumOfFitness(normalizedFitness);
-        Double randomFitness = RandomUtilities.doubleBetween(0.0, sumOfFitness);
+        Double randomFitness = RandomSingleton.getInstance().doubleBetween(0.0, sumOfFitness);
 
         for (Integer i = 0; i < normalizedFitness.size() - 1; i++) {
             Double fitnessOfCurrentIndividual = normalizedFitness.get(i);
