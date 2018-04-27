@@ -1,8 +1,8 @@
 package test.java.Factories;
 
-import main.java.Factory.GenericFunctionFactory;
-import main.java.Individual.GenericFunction;
-import main.java.Util.CommonFunctions;
+import main.jnethica.Factory.GenericFunctionFactory;
+import main.jnethica.Individual.GenericFunction;
+import main.jnethica.Util.CommonFunctions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

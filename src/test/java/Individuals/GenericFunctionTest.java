@@ -1,6 +1,6 @@
 package test.java.Individuals;
 
-import main.java.Individual.GenericFunction;
+import main.jnethica.Individual.GenericFunction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

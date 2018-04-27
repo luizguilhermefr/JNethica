@@ -1,6 +1,6 @@
 package test.java.Individuals;
 
-import main.java.Individual.Bits;
+import main.jnethica.Individual.Bits;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

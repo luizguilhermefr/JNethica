@@ -1,11 +1,11 @@
 package test.java.Selectors;
 
-import main.java.Factory.GenericFunctionFactory;
-import main.java.Fitness.Contracts.FitnessCalculator;
-import main.java.Fitness.MaximumValueFitnessCalculator;
-import main.java.Individual.GenericFunction;
-import main.java.Population.Population;
-import main.java.Selector.RouletteSelection;
+import main.jnethica.Factory.GenericFunctionFactory;
+import main.jnethica.Fitness.Contracts.FitnessCalculator;
+import main.jnethica.Fitness.MaximumValueFitnessCalculator;
+import main.jnethica.Individual.GenericFunction;
+import main.jnethica.Population.Population;
+import main.jnethica.Selector.RouletteSelection;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

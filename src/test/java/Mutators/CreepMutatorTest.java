@@ -1,8 +1,8 @@
 package test.java.Mutators;
 
-import main.java.Individual.GenericFunction;
-import main.java.Mutator.CreepMutator;
-import main.java.Util.CommonFunctions;
+import main.jnethica.Individual.GenericFunction;
+import main.jnethica.Mutator.CreepMutator;
+import main.jnethica.Util.CommonFunctions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
