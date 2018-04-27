@@ -9,14 +9,14 @@ import main.jnethica.Population.Population;
 import main.jnethica.Selector.Contracts.Selector;
 import main.jnethica.StopCondition.Contracts.StopCondition;
 
-public abstract class Strategy extends Thread {
-    private final Population initialPopulation;
+public abstract class Strategy<T extends Individual> extends Thread {
+    private final Population<T> initialPopulation;
     protected Selector selector;
     protected Crossover crosser;
     protected FitnessCalculator fitnessCalculator;
-    protected Population currentPopulation;
-    private Individual globalOptimum;
-    private Individual localOptimum;
+    protected Population<T> currentPopulation;
+    private T globalOptimum;
+    private T localOptimum;
     private Integer globalGeneration;
     private StopCondition stopCondition;
     protected Mutator mutator;
@@ -30,7 +30,7 @@ public abstract class Strategy extends Thread {
         this.crosser = crosser;
     }
 
-    public Individual getGlobalOptimum() {
+    public T getGlobalOptimum() {
         return globalOptimum;
     }
 

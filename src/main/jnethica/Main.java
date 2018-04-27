@@ -43,8 +43,7 @@ public class Main {
         String function = "x1 * x2 + x2 * x3";
 
         // Define individual factory
-        IndividualFactory individualFactory;
-        individualFactory = new GenericFunctionFactory(function, variables, minimumValues, maximumValues);
+        IndividualFactory individualFactory = new GenericFunctionFactory(function, variables, minimumValues, maximumValues);
 
         // Generate initial population
         Population<GenericFunction> initialPopulation = new Population<>();
@@ -65,7 +64,7 @@ public class Main {
         // Generate strategy
         Double crossoverRate = 70.0;
 
-        return new ClassicGeneticStrategy(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, crossoverRate);
+        return new ClassicGeneticStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, crossoverRate);
     }
 
     public static void main(String[] args) throws InterruptedException {

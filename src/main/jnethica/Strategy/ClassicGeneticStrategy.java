@@ -10,7 +10,7 @@ import main.jnethica.StopCondition.Contracts.StopCondition;
 import main.jnethica.Strategy.Contracts.Strategy;
 import main.jnethica.Util.RandomSingleton;
 
-public class ClassicGeneticStrategy<T extends Individual> extends Strategy {
+public class ClassicGeneticStrategy<T extends Individual> extends Strategy<T> {
     private Double crossoverRate;
 
     public ClassicGeneticStrategy(Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator, Crossover crosser, Double crossoverRate) {
