@@ -15,7 +15,7 @@ public class BoundaryRestriction implements Restriction {
     private Double value;
     private Modes mode;
 
-    BoundaryRestriction (String pattern, Set<String> variables, Double value, Modes mode) {
+    public BoundaryRestriction (String pattern, Set<String> variables, Double value, Modes mode) {
         this.pattern = pattern;
         this.variables = variables;
         this.value = value;
@@ -28,16 +28,52 @@ public class BoundaryRestriction implements Restriction {
         engine = builder.build();
     }
 
+    private Double lessThan (Double result) {
+        if (result < value) {
+            return .0;
+        } else if (result.equals(value)) {
+            return .01;
+        } else {
+            return result - value;
+        }
+    }
+
+    private Double higherThan (Double result) {
+        if (result > value) {
+            return .0;
+        } else if (result.equals(value)) {
+            return .01;
+        } else {
+            return value - result;
+        }
+    }
+
+    private Double lessOrEqualThan (Double result) {
+        if (result <= value) {
+            return .0;
+        }
+
+        return result - value;
+    }
+
+    private Double higherOrEqualThan (Double result) {
+        if (result >= value) {
+            return .0;
+        }
+
+        return value - result;
+    }
+
     private Double getDifference (Double result) {
         switch (mode) {
             case LESS_THAN:
-                return (result < value) ? .0 : result - value + .01;
+                return lessThan(result);
             case HIGHER_THAN:
-                return (result > value) ? .0 : value - result + .01;
+                return higherThan(result);
             case LESS_OR_EQUAL_THAN:
-                return (result <= value) ? .0 : result - value;
+                return lessOrEqualThan(result);
             case HIGHER_OR_EQUAL_THAN:
-                return (result >= value) ? .0 : value - result;
+                return higherOrEqualThan(result);
         }
         return .0;
     }
