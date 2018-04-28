@@ -95,6 +95,6 @@ class ClassicGeneticStrategyTest {
     void testAcceptableThroughput() {
         ClassicGeneticStrategy<GenericFunction> classicGeneticStrategy;
         classicGeneticStrategy = new ClassicGeneticStrategy<>(initialPopulation(), fitnessCalculator(), stopCondition(), mutator(), crossover(), crossoverRate());
-        assertTimeout(Duration.ofMillis(100), classicGeneticStrategy::run);
+        assertTimeout(Duration.ofMillis(130), classicGeneticStrategy::run);
     }
 }

@@ -31,12 +31,7 @@ public class GenericFunction extends Function {
     }
 
     private void calculate () {
-        try {
-            value = engine.evaluate();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            value = null;
-        }
+        value = engine.evaluate();
     }
 
     private void makeEvaluator () {
