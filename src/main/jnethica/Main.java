@@ -6,6 +6,10 @@ import main.jnethica.Factory.Contracts.IndividualFactory;
 import main.jnethica.Factory.GenericFunctionFactory;
 import main.jnethica.Fitness.Contracts.FitnessCalculator;
 import main.jnethica.Fitness.MaximumValueFitnessCalculator;
+import main.jnethica.Fitness.Penalizer.Contracts.Penalizer;
+import main.jnethica.Fitness.Penalizer.LinearPenalizer;
+import main.jnethica.Fitness.Restriction.BoundaryRestriction;
+import main.jnethica.Fitness.Restriction.Contracts.Restriction;
 import main.jnethica.Individual.Contracts.Individual;
 import main.jnethica.Individual.GenericFunction;
 import main.jnethica.Mutator.Contracts.Mutator;
@@ -18,9 +22,11 @@ import main.jnethica.Strategy.Contracts.Strategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
-    private static Strategy generateFirstProblemThread() {
+    private static Strategy generateFirstProblemThread () {
         // Define variables
         ArrayList<String> variables = new ArrayList<>();
         variables.add("x1");
@@ -49,8 +55,20 @@ public class Main {
         Population<GenericFunction> initialPopulation = new Population<>();
         initialPopulation.generateInitialPopulation(30, individualFactory);
 
+        // Define problem restrictions
+        Set<Restriction> restrictions = new HashSet<>();
+        Set<String> restrictionVariables = new HashSet<>();
+        restrictionVariables.add("x1");
+        restrictionVariables.add("x2");
+        restrictionVariables.add("x3");
+        restrictions.add(new BoundaryRestriction("x1^2 * x2^2 + x2^2 * x3^2", restrictionVariables, 2.0, BoundaryRestriction.Modes.LESS_OR_EQUAL_THAN));
+        restrictions.add(new BoundaryRestriction("x1^2 + x2^2 + x3^2", restrictionVariables, 10.0, BoundaryRestriction.Modes.LESS_OR_EQUAL_THAN));
+
+        // Define a penalizer
+        Penalizer penalizer = new LinearPenalizer();
+
         // Define a fitness calculator
-        FitnessCalculator fitnessCalculator = new MaximumValueFitnessCalculator();
+        FitnessCalculator fitnessCalculator = new MaximumValueFitnessCalculator(penalizer, restrictions);
 
         // Define a stop condition
         StopCondition stopCondition = new MaximumGenerationsStopCondition(500);
@@ -67,7 +85,7 @@ public class Main {
         return new ClassicGeneticStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, crossoverRate);
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main (String[] args) throws InterruptedException {
         Strategy firstProblem = generateFirstProblemThread();
         firstProblem.start();
         firstProblem.join();
@@ -77,7 +95,7 @@ public class Main {
         System.exit(0);
     }
 
-    private Strategy generateSecondProblemThread() {
+    private Strategy generateSecondProblemThread () {
         return null;
     }
 }
