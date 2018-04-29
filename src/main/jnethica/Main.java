@@ -7,7 +7,7 @@ import main.jnethica.Factory.GenericFunctionFactory;
 import main.jnethica.Fitness.Contracts.FitnessCalculator;
 import main.jnethica.Fitness.MaximumValueFitnessCalculator;
 import main.jnethica.Fitness.Penalizer.Contracts.Penalizer;
-import main.jnethica.Fitness.Penalizer.LogarithmicPenalizer;
+import main.jnethica.Fitness.Penalizer.PowerPenalizer;
 import main.jnethica.Fitness.Restriction.BoundaryRestriction;
 import main.jnethica.Fitness.Restriction.Contracts.Restriction;
 import main.jnethica.Individual.Contracts.Individual;
@@ -60,7 +60,7 @@ public class Main {
         restrictions.add(new BoundaryRestriction("x1^2 + x2^2 + x3^2", restrictionVariables, 10.0, BoundaryRestriction.Modes.LESS_OR_EQUAL_THAN));
 
         // Define a penalizer
-        Penalizer penalizer = new LogarithmicPenalizer();
+        Penalizer penalizer = new PowerPenalizer(8.0);
 
         // Define a fitness calculator
         FitnessCalculator fitnessCalculator = new MaximumValueFitnessCalculator(penalizer, restrictions);
