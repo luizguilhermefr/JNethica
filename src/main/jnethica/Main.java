@@ -7,7 +7,7 @@ import main.jnethica.Factory.GenericFunctionFactory;
 import main.jnethica.Fitness.Contracts.FitnessCalculator;
 import main.jnethica.Fitness.MaximumValueFitnessCalculator;
 import main.jnethica.Fitness.Penalizer.Contracts.Penalizer;
-import main.jnethica.Fitness.Penalizer.LinearPenalizer;
+import main.jnethica.Fitness.Penalizer.LogarithmicPenalizer;
 import main.jnethica.Fitness.Restriction.BoundaryRestriction;
 import main.jnethica.Fitness.Restriction.Contracts.Restriction;
 import main.jnethica.Individual.Contracts.Individual;
@@ -19,6 +19,7 @@ import main.jnethica.StopCondition.Contracts.StopCondition;
 import main.jnethica.StopCondition.MaximumGenerationsStopCondition;
 import main.jnethica.Strategy.ClassicGeneticStrategy;
 import main.jnethica.Strategy.Contracts.Strategy;
+import main.jnethica.Util.Tuple;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,23 +34,17 @@ public class Main {
         variables.add("x2");
         variables.add("x3");
 
-        // Define minimum values for variables
-        HashMap<String, Double> minimumValues = new HashMap<>();
-        minimumValues.put("x1", -8.0);
-        minimumValues.put("x2", -8.0);
-        minimumValues.put("x3", -8.0);
-
-        // Define maximum values for variables
-        HashMap<String, Double> maximumValues = new HashMap<>();
-        maximumValues.put("x1", 8.0);
-        maximumValues.put("x2", 8.0);
-        maximumValues.put("x3", 8.0);
+        // Define minimum and values for variables
+        HashMap<String, Tuple<Double>> boundaries = new HashMap<>();
+        boundaries.put("x1", new Tuple<>(-8.0, 8.0));
+        boundaries.put("x2", new Tuple<>(-8.0, 8.0));
+        boundaries.put("x3", new Tuple<>(-8.0, 8.0));
 
         // Define function
         String function = "x1 * x2 + x2 * x3";
 
         // Define individual factory
-        IndividualFactory individualFactory = new GenericFunctionFactory(function, variables, minimumValues, maximumValues);
+        IndividualFactory individualFactory = new GenericFunctionFactory(function, variables, boundaries);
 
         // Generate initial population
         Population<GenericFunction> initialPopulation = new Population<>();
@@ -65,7 +60,7 @@ public class Main {
         restrictions.add(new BoundaryRestriction("x1^2 + x2^2 + x3^2", restrictionVariables, 10.0, BoundaryRestriction.Modes.LESS_OR_EQUAL_THAN));
 
         // Define a penalizer
-        Penalizer penalizer = new LinearPenalizer();
+        Penalizer penalizer = new LogarithmicPenalizer();
 
         // Define a fitness calculator
         FitnessCalculator fitnessCalculator = new MaximumValueFitnessCalculator(penalizer, restrictions);

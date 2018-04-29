@@ -3,6 +3,7 @@ package main.jnethica.Factory;
 import main.jnethica.Factory.Contracts.IndividualFactory;
 import main.jnethica.Individual.GenericFunction;
 import main.jnethica.Util.RandomSingleton;
+import main.jnethica.Util.Tuple;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,28 +15,26 @@ public class GenericFunctionFactory implements IndividualFactory {
 
     private List<String> variables;
 
-    private Map<String, Double> minimumValues = null;
-
-    private Map<String, Double> maximumValues = null;
+    private Map<String, Tuple<Double>> boundaries;
 
     public GenericFunctionFactory (String function, List<String> variables) {
         this.function = function;
         this.variables = variables;
+        this.boundaries = null;
     }
 
-    public GenericFunctionFactory (String function, List<String> variables, Map<String, Double> minimumValues, Map<String, Double> maximumValues) {
+    public GenericFunctionFactory (String function, List<String> variables, Map<String, Tuple<Double>> boundaries) {
         this.function = function;
         this.variables = variables;
-        this.minimumValues = minimumValues;
-        this.maximumValues = maximumValues;
+        this.boundaries = boundaries;
     }
 
     @Override
     public GenericFunction generate () {
         HashMap<String, Object> values = new HashMap<>();
         for (String variable : variables) {
-            Double minimumValue = minimumValues != null ? minimumValues.get(variable) : Double.NEGATIVE_INFINITY;
-            Double maximumValue = maximumValues != null ? maximumValues.get(variable) : Double.POSITIVE_INFINITY;
+            Double minimumValue = boundaries != null ? boundaries.get(variable).x : Double.NEGATIVE_INFINITY;
+            Double maximumValue = boundaries != null ? boundaries.get(variable).y : Double.POSITIVE_INFINITY;
             Double generatedValue = RandomSingleton.getInstance().doubleBetween(minimumValue, maximumValue);
             values.put(variable, generatedValue);
         }

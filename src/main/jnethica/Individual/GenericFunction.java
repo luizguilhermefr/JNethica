@@ -2,6 +2,7 @@ package main.jnethica.Individual;
 
 import main.jnethica.Individual.Contracts.Function;
 import main.jnethica.Mutator.Contracts.Mutator;
+import main.jnethica.Util.Tuple;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
@@ -13,6 +14,8 @@ public class GenericFunction extends Function {
 
     private Map<String, Object> arguments;
 
+    private Map<String, Tuple<Double>> boundaries;
+
     private String format;
 
     private Double value;
@@ -22,6 +25,15 @@ public class GenericFunction extends Function {
     public GenericFunction (String format, Map<String, Object> arguments) {
         this.arguments = arguments;
         this.format = format;
+        this.boundaries = null;
+        makeEvaluator();
+        calculate();
+    }
+
+    public GenericFunction (String format, Map<String, Object> arguments, Map<String, Tuple<Double>> boundaries) {
+        this.arguments = arguments;
+        this.format = format;
+        this.boundaries = boundaries;
         makeEvaluator();
         calculate();
     }
@@ -63,7 +75,18 @@ public class GenericFunction extends Function {
         Map<String, Object> nextArguments = new HashMap<>(arguments);
         for (String key : nextArguments.keySet()) {
             Double value = (Double) nextArguments.get(key);
-            nextArguments.replace(key, mutator.mutate(value));
+            Double valueMutated = (Double) mutator.mutate(value);
+            if (boundaries != null) {
+                Double minimum = boundaries.get(key).x;
+                Double maximum = boundaries.get(key).y;
+                if (valueMutated > maximum) {
+                    valueMutated = maximum;
+                }
+                if (valueMutated < minimum) {
+                    valueMutated = minimum;
+                }
+            }
+            nextArguments.replace(key, valueMutated);
         }
         return new GenericFunction(format, nextArguments);
     }
