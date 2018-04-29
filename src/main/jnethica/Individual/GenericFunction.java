@@ -42,6 +42,10 @@ public class GenericFunction extends Function {
         return format;
     }
 
+    public Map<String, Tuple<Double>> getBoundaries () {
+        return boundaries;
+    }
+
     private void calculate () {
         value = engine.evaluate();
     }
@@ -52,6 +56,22 @@ public class GenericFunction extends Function {
         for (String key : arguments.keySet()) {
             engine = engine.setVariable(key, (Double) arguments.get(key));
         }
+    }
+
+    public Double forceMinimum (String key, Double nextValue) {
+        Double minimum = boundaries.get(key).x;
+        if (nextValue < minimum) {
+            return minimum;
+        }
+        return nextValue;
+    }
+
+    public Double forceMaximum (String key, Double nextValue) {
+        Double maximum = boundaries.get(key).y;
+        if (nextValue > maximum) {
+            return maximum;
+        }
+        return nextValue;
     }
 
     @Override
@@ -77,18 +97,12 @@ public class GenericFunction extends Function {
             Double value = (Double) nextArguments.get(key);
             Double valueMutated = (Double) mutator.mutate(value);
             if (boundaries != null) {
-                Double minimum = boundaries.get(key).x;
-                Double maximum = boundaries.get(key).y;
-                if (valueMutated > maximum) {
-                    valueMutated = maximum;
-                }
-                if (valueMutated < minimum) {
-                    valueMutated = minimum;
-                }
+                valueMutated = forceMinimum(key, valueMutated);
+                valueMutated = forceMaximum(key, valueMutated);
             }
             nextArguments.replace(key, valueMutated);
         }
-        return new GenericFunction(format, nextArguments);
+        return new GenericFunction(format, nextArguments, boundaries);
     }
 
     @Override
@@ -97,9 +111,14 @@ public class GenericFunction extends Function {
         for (String key : mutators.keySet()) {
             Double value = (Double) nextArguments.get(key);
             Mutator mutator = mutators.get(key);
-            nextArguments.replace(key, mutator.mutate(value));
+            Double valueMutated = (Double) mutator.mutate(value);
+            if (boundaries != null) {
+                valueMutated = forceMinimum(key, valueMutated);
+                valueMutated = forceMaximum(key, valueMutated);
+            }
+            nextArguments.replace(key, valueMutated);
         }
-        return new GenericFunction(format, nextArguments);
+        return new GenericFunction(format, nextArguments, boundaries);
     }
 
     @Override
@@ -110,7 +129,7 @@ public class GenericFunction extends Function {
     @Override
     public GenericFunction clone () {
         Map<String, Object> nextArguments = new HashMap<>(arguments);
-        return new GenericFunction(format, nextArguments);
+        return new GenericFunction(format, nextArguments, boundaries);
     }
 
     @Override

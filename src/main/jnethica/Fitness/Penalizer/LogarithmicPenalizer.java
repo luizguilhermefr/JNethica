@@ -13,6 +13,9 @@ public class LogarithmicPenalizer implements Penalizer {
         for (Restriction restriction : restrictions) {
             sum += restriction.apply(target);
         }
+        if (sum.equals(.0)) {
+            return .0;
+        }
         return -Math.log(sum);
     }
 }

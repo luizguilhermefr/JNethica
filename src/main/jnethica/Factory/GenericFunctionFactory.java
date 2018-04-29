@@ -38,6 +38,6 @@ public class GenericFunctionFactory implements IndividualFactory {
             Double generatedValue = RandomSingleton.getInstance().doubleBetween(minimumValue, maximumValue);
             values.put(variable, generatedValue);
         }
-        return new GenericFunction(function, values);
+        return new GenericFunction(function, values, boundaries);
     }
 }

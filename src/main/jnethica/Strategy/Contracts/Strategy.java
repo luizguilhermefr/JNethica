@@ -22,7 +22,7 @@ public abstract class Strategy<T extends Individual> extends Thread {
     protected Mutator mutator;
     private Integer currentGenerationNumber;
 
-    public Strategy(final Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator, Crossover crosser) {
+    public Strategy (final Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator, Crossover crosser) {
         this.initialPopulation = initialPopulation;
         this.fitnessCalculator = fitnessCalculator;
         this.stopCondition = stopCondition;
@@ -30,59 +30,63 @@ public abstract class Strategy<T extends Individual> extends Thread {
         this.crosser = crosser;
     }
 
-    public T getGlobalOptimum() {
+    public Double getGlobalOptimumFitness () {
+        return fitnessCalculator.getFitness(globalOptimum);
+    }
+
+    public T getGlobalOptimum () {
         return globalOptimum;
     }
 
-    public Integer getGlobalGeneration() {
+    public Integer getGlobalOptimumGeneration () {
         return globalGeneration;
     }
 
-    private void beforeAll() throws EmptyPopulationException {
+    private void beforeAll () throws EmptyPopulationException {
         setInitialCurrentPopulation();
         setInitialBest();
         initializeStopCondition();
         generateSelector();
     }
 
-    private void afterEach() throws EmptyPopulationException {
+    private void afterEach () throws EmptyPopulationException {
         updateLocalOptimum();
         updateGlobalOptimumIfNecessary();
         reportStopConditionAndIncrementGeneration();
     }
 
-    private void setInitialCurrentPopulation() {
+    private void setInitialCurrentPopulation () {
         currentPopulation = initialPopulation.clone();
     }
 
-    private void setInitialBest() throws EmptyPopulationException {
+    private void setInitialBest () throws EmptyPopulationException {
         globalOptimum = currentPopulation.getBetter(fitnessCalculator);
         globalGeneration = 0;
     }
 
-    private void updateLocalOptimum() throws EmptyPopulationException {
+    private void updateLocalOptimum () throws EmptyPopulationException {
         localOptimum = currentPopulation.getBetter(fitnessCalculator);
     }
 
-    private void updateGlobalOptimumIfNecessary() {
+    private void updateGlobalOptimumIfNecessary () {
         if (localOptimum.isBetterThan(globalOptimum, fitnessCalculator)) {
             globalOptimum = localOptimum;
             globalGeneration = currentGenerationNumber;
         }
     }
 
-    private void initializeStopCondition() {
+    private void initializeStopCondition () {
         currentGenerationNumber = 1;
         stopCondition.report(currentGenerationNumber, fitnessCalculator.getFitness(globalOptimum));
     }
 
-    private void reportStopConditionAndIncrementGeneration() {
+    private void reportStopConditionAndIncrementGeneration () {
         stopCondition.report(currentGenerationNumber, fitnessCalculator.getFitness(globalOptimum));
         currentGenerationNumber++;
     }
 
     @Override
-    public void run() throws IllegalArgumentException {
+    public void run () throws IllegalArgumentException {
         try {
             beforeAll();
             while (stopCondition.mustContinue()) {
@@ -94,7 +98,7 @@ public abstract class Strategy<T extends Individual> extends Thread {
         }
     }
 
-    protected abstract void generateSelector();
+    protected abstract void generateSelector ();
 
-    protected abstract void execute();
+    protected abstract void execute ();
 }

@@ -26,9 +26,12 @@ public class ArithmeticCrossover implements Crossover {
         for (String key : keysFirst) {
             Double v1 = f1.getArgument(key);
             Double v2 = f2.getArgument(key);
-            nextValues.put(key, applyFormula(v1, v2));
+            Double formulaResult = applyFormula(v1, v2);
+            formulaResult = f1.forceMinimum(key, formulaResult);
+            formulaResult = f1.forceMaximum(key, formulaResult);
+            nextValues.put(key, formulaResult);
         }
 
-        return new GenericFunction(f1.getFormat(), nextValues);
+        return new GenericFunction(f1.getFormat(), nextValues, f1.getBoundaries());
     }
 }

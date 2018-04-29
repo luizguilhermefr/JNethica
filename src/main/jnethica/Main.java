@@ -75,7 +75,7 @@ public class Main {
         Crossover crossover = new ArithmeticCrossover();
 
         // Generate strategy
-        Double crossoverRate = 70.0;
+        Double crossoverRate = 80.0;
 
         return new ClassicGeneticStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, crossoverRate);
     }
@@ -85,8 +85,9 @@ public class Main {
         firstProblem.start();
         firstProblem.join();
         Individual bestOfFirstProblem = firstProblem.getGlobalOptimum();
-        Integer bestOfFirstProblemGeneration = firstProblem.getGlobalGeneration();
-        System.out.println(bestOfFirstProblem + "\t" + bestOfFirstProblemGeneration);
+        Integer bestOfFirstProblemGeneration = firstProblem.getGlobalOptimumGeneration();
+        Double fitnessOfFirstProblem = firstProblem.getGlobalOptimumFitness();
+        System.out.println(bestOfFirstProblem + "\tgen=" + bestOfFirstProblemGeneration + "\tfitness=" + fitnessOfFirstProblem);
         System.exit(0);
     }
 
