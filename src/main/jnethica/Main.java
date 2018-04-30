@@ -56,7 +56,7 @@ public class Main {
         restrictionVariables.add("x1");
         restrictionVariables.add("x2");
         restrictionVariables.add("x3");
-        restrictions.add(new BoundaryRestriction("x1^2 * x2^2 + x2^2 * x3^2", restrictionVariables, 2.0, BoundaryRestriction.Modes.LESS_OR_EQUAL_THAN));
+        restrictions.add(new BoundaryRestriction("x1^2 - x2^2 + x3^2", restrictionVariables, 2.0, BoundaryRestriction.Modes.LESS_OR_EQUAL_THAN));
         restrictions.add(new BoundaryRestriction("x1^2 + x2^2 + x3^2", restrictionVariables, 10.0, BoundaryRestriction.Modes.LESS_OR_EQUAL_THAN));
 
         // Define a penalizer
