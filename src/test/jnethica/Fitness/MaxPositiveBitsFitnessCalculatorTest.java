@@ -1,4 +1,4 @@
-package test.java.Fitness;
+package test.jnethica.Fitness;
 
 import main.jnethica.Fitness.MaxPositiveBitsFitnessCalculator;
 import main.jnethica.Individual.Bits;
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MaxPositiveBitsFitnessCalculatorTest {
 
-    private ArrayList<Boolean> bitSet() {
+    private ArrayList<Boolean> bitSet () {
         ArrayList<Boolean> bitSet = new ArrayList<>(5);
         bitSet.add(true);
         bitSet.add(false);
@@ -21,7 +21,7 @@ class MaxPositiveBitsFitnessCalculatorTest {
     }
 
     @Test
-    void getFitness() {
+    void getFitness () {
         Bits bits = new Bits(bitSet());
         MaxPositiveBitsFitnessCalculator fitnessCalculator = new MaxPositiveBitsFitnessCalculator();
         Double fitness = fitnessCalculator.getFitness(bits);

@@ -1,4 +1,4 @@
-package test.java.Strategies;
+package test.jnethica.Strategies;
 
 import main.jnethica.Crossover.ArithmeticCrossover;
 import main.jnethica.Crossover.Contracts.Crossover;
@@ -25,31 +25,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ClassicGeneticStrategyTest {
 
-    private HashMap<String, Tuple<Double>> boundaries () {
+    private HashMap<String, Tuple<Double>> quadriGaussianBoundaries () {
         HashMap<String, Tuple<Double>> boundaries = new HashMap<>();
         boundaries.put("x", new Tuple<>(-5.0, 5.0));
         boundaries.put("y", new Tuple<>(-5.0, 5.0));
         return boundaries;
     }
 
-    private ArrayList<String> variables () {
+    private ArrayList<String> quadriGaussianVariables () {
         ArrayList<String> variables = new ArrayList<>();
         variables.add("x");
         variables.add("y");
         return variables;
     }
 
-    private String function () {
+    private String quadriGaussianFunction () {
         return CommonFunctions.QUADRI_GAUSSIAN;
     }
 
-    private IndividualFactory individualFactory () {
-        return new GenericFunctionFactory(function(), variables(), boundaries());
+    private IndividualFactory quadriGaussianFactory () {
+        return new GenericFunctionFactory(quadriGaussianFunction(), quadriGaussianVariables(), quadriGaussianBoundaries());
     }
 
-    private Population initialPopulation () {
+    private Population quadriGaussianInitialPopulation () {
         Population<GenericFunction> initialPopulation = new Population<>();
-        initialPopulation.generateInitialPopulation(20, individualFactory());
+        initialPopulation.generateInitialPopulation(20, quadriGaussianFactory());
         return initialPopulation;
     }
 
@@ -57,7 +57,7 @@ class ClassicGeneticStrategyTest {
         return new MaximumValueFitnessCalculator();
     }
 
-    private StopCondition stopCondition () {
+    private StopCondition quadriGaussianStopCondition () {
         return new MaximumGenerationsStopCondition(10);
     }
 
@@ -76,7 +76,7 @@ class ClassicGeneticStrategyTest {
     @Test
     void testAcceptableResult () throws InterruptedException {
         ClassicGeneticStrategy<GenericFunction> classicGeneticStrategy;
-        classicGeneticStrategy = new ClassicGeneticStrategy<>(initialPopulation(), fitnessCalculator(), stopCondition(), mutator(), crossover(), crossoverRate());
+        classicGeneticStrategy = new ClassicGeneticStrategy<>(quadriGaussianInitialPopulation(), fitnessCalculator(), quadriGaussianStopCondition(), mutator(), crossover(), crossoverRate());
         classicGeneticStrategy.start();
         classicGeneticStrategy.join();
         GenericFunction best = classicGeneticStrategy.getGlobalOptimum();
@@ -88,7 +88,7 @@ class ClassicGeneticStrategyTest {
     @Test
     void testAcceptableThroughput () {
         ClassicGeneticStrategy<GenericFunction> classicGeneticStrategy;
-        classicGeneticStrategy = new ClassicGeneticStrategy<>(initialPopulation(), fitnessCalculator(), stopCondition(), mutator(), crossover(), crossoverRate());
+        classicGeneticStrategy = new ClassicGeneticStrategy<>(quadriGaussianInitialPopulation(), fitnessCalculator(), quadriGaussianStopCondition(), mutator(), crossover(), crossoverRate());
         assertTimeout(Duration.ofMillis(130), classicGeneticStrategy::run);
     }
 }

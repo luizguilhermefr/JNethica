@@ -1,4 +1,4 @@
-package test.java.Factories;
+package test.jnethica.Factories;
 
 import main.jnethica.Factory.GenericFunctionFactory;
 import main.jnethica.Individual.GenericFunction;

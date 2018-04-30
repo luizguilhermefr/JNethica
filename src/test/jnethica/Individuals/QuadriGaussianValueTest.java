@@ -1,4 +1,4 @@
-package test.java.Individuals;
+package test.jnethica.Individuals;
 
 import main.jnethica.Individual.GenericFunction;
 import main.jnethica.Util.CommonFunctions;

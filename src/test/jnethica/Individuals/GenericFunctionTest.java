@@ -1,4 +1,4 @@
-package test.java.Individuals;
+package test.jnethica.Individuals;
 
 import main.jnethica.Individual.GenericFunction;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,20 +17,22 @@ class GenericFunctionTest {
     @BeforeEach
     void prepare () {
         Map<String, Object> values = new HashMap<>();
-        values.put("x1", -8.0);
-        values.put("x2", -8.0);
-        values.put("x3", -8.0);
+        values.put("x1", 1.5811394321);
+        values.put("x2", 2.2360671257);
+        values.put("x3", 1.5811394321);
         linearProgrammingExample = new GenericFunction("x1 * x2 + x2 * x3", values);
     }
 
     @Test
     void testValue () {
-        assertEquals(128.0, (double) linearProgrammingExample.getValue());
+        assertEquals(7.0710678106, linearProgrammingExample.getValue(), 0.001);
     }
 
     @Test
     void testGetArgument () {
-        assertEquals(-8.0, (double) linearProgrammingExample.getArgument("x1"));
+        assertEquals(1.5811394321, (double) linearProgrammingExample.getArgument("x1"));
+        assertEquals(2.2360671257, (double) linearProgrammingExample.getArgument("x2"));
+        assertEquals(1.5811394321, (double) linearProgrammingExample.getArgument("x3"));
     }
 
     @Test
@@ -45,7 +47,7 @@ class GenericFunctionTest {
 
     @Test
     void testToString () {
-        assertEquals("x1=-8.0\tx2=-8.0\tx3=-8.0\tf(args)=128.0", linearProgrammingExample.toString());
+        assertEquals("x1=1.5811394321\tx2=2.2360671257\tx3=1.5811394321\tf(args)=7.071067810533555", linearProgrammingExample.toString());
     }
 
     @Test

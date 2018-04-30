@@ -1,4 +1,4 @@
-package test.java.Fitness.Penalizer;
+package test.jnethica.Fitness.Penalizer;
 
 import main.jnethica.Fitness.Penalizer.LogarithmicPenalizer;
 import org.junit.jupiter.api.Test;

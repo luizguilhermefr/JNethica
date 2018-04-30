@@ -1,4 +1,4 @@
-package test.java.Fitness.Penalizer;
+package test.jnethica.Fitness.Penalizer;
 
 import main.jnethica.Fitness.Restriction.Contracts.Restriction;
 import main.jnethica.Individual.GenericFunction;

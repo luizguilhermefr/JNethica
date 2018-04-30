@@ -1,4 +1,4 @@
-package test.java.Mutators;
+package test.jnethica.Mutators;
 
 import main.jnethica.Individual.GenericFunction;
 import main.jnethica.Mutator.CreepMutator;

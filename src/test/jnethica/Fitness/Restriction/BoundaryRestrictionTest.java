@@ -1,4 +1,4 @@
-package test.java.Fitness.Restriction;
+package test.jnethica.Fitness.Restriction;
 
 import main.jnethica.Fitness.Restriction.BoundaryRestriction;
 import main.jnethica.Individual.GenericFunction;
@@ -29,16 +29,22 @@ class BoundaryRestrictionTest {
         return variables;
     }
 
-    private String pattern () {
+    private String firstPattern () {
         // -83 with x1 = 6, x2 = 12, x3 = 5
         // 868 with x1 = 30, x2 = 6, x3 = 2
         // 2 with x1 = 1, x2 = 0, x2 = -1
+        // 7.617E-6 with x1 = 1.5811394321, x2 = 2.2360671257, x3 = 1.5811394321
         return "x1^2 - x2^2 + x3^2";
+    }
+
+    private String secondPattern () {
+        // 10 with x1 = 1.5811394321, x2 = 2.2360671257, x3 = 1.5811394321
+        return "x1^2 + x2^2 + x3^2";
     }
 
     @Test
     void testLessThan () {
-        BoundaryRestriction restriction = new BoundaryRestriction(pattern(), variables(), 2.0, BoundaryRestriction.Modes.LESS_THAN);
+        BoundaryRestriction restriction = new BoundaryRestriction(firstPattern(), variables(), 2.0, BoundaryRestriction.Modes.LESS_THAN);
         Double distance;
         distance = restriction.apply(individual(6.0, 12.0, 5.0));
         assertEquals(.0, (double) distance);
@@ -50,7 +56,7 @@ class BoundaryRestrictionTest {
 
     @Test
     void testHigherThan () {
-        BoundaryRestriction restriction = new BoundaryRestriction(pattern(), variables(), 2.0, BoundaryRestriction.Modes.HIGHER_THAN);
+        BoundaryRestriction restriction = new BoundaryRestriction(firstPattern(), variables(), 2.0, BoundaryRestriction.Modes.HIGHER_THAN);
         Double distance;
         distance = restriction.apply(individual(6.0, 12.0, 5.0));
         assertEquals(85.0, (double) distance);
@@ -62,7 +68,7 @@ class BoundaryRestrictionTest {
 
     @Test
     void testHigherEqualThan () {
-        BoundaryRestriction restriction = new BoundaryRestriction(pattern(), variables(), 2.0, BoundaryRestriction.Modes.HIGHER_OR_EQUAL_THAN);
+        BoundaryRestriction restriction = new BoundaryRestriction(firstPattern(), variables(), 2.0, BoundaryRestriction.Modes.HIGHER_OR_EQUAL_THAN);
         Double distance;
         distance = restriction.apply(individual(6.0, 12.0, 5.0));
         assertEquals(85.0, (double) distance);
@@ -74,13 +80,20 @@ class BoundaryRestrictionTest {
 
     @Test
     void testLessEqualThan () {
-        BoundaryRestriction restriction = new BoundaryRestriction(pattern(), variables(), 2.0, BoundaryRestriction.Modes.LESS_OR_EQUAL_THAN);
+        BoundaryRestriction restriction;
+        restriction = new BoundaryRestriction(firstPattern(), variables(), 2.0, BoundaryRestriction.Modes.LESS_OR_EQUAL_THAN);
         Double distance;
         distance = restriction.apply(individual(6.0, 12.0, 5.0));
         assertEquals(.0, (double) distance);
         distance = restriction.apply(individual(30.0, 6.0, 2.0));
         assertEquals(866.0, (double) distance);
         distance = restriction.apply(individual(1.0, 0.0, 1.0));
+        assertEquals(.0, (double) distance);
+        /* Special cases of interest: */
+        distance = restriction.apply(individual(1.5811394321, 2.2360671257, 1.5811394321));
+        assertEquals(.0, (double) distance);
+        restriction = new BoundaryRestriction(secondPattern(), variables(), 10.0, BoundaryRestriction.Modes.LESS_OR_EQUAL_THAN);
+        distance = restriction.apply(individual(1.5811394321, 2.2360671257, 1.5811394321));
         assertEquals(.0, (double) distance);
     }
 }

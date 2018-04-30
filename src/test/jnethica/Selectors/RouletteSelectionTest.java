@@ -1,4 +1,4 @@
-package test.java.Selectors;
+package test.jnethica.Selectors;
 
 import main.jnethica.Factory.GenericFunctionFactory;
 import main.jnethica.Fitness.Contracts.FitnessCalculator;
