@@ -16,9 +16,10 @@ public class RouletteSelection<T extends Individual> implements Selector {
         this.fitnessCalculator = fitnessCalculator;
     }
 
-    private ArrayList<Double> normalize (ArrayList<Double> fitnessValues, Double smallerFitness) {
+    private ArrayList<Double> normalize (ArrayList<Double> fitnessValues, Double smallestFitness) {
+        Double absSmallestFitness = Math.abs(smallestFitness);
         for (Integer i = 0; i < fitnessValues.size(); i++) {
-            fitnessValues.set(i, fitnessValues.get(i) + smallerFitness);
+            fitnessValues.set(i, fitnessValues.get(i) + absSmallestFitness);
         }
         return fitnessValues;
     }
@@ -33,21 +34,22 @@ public class RouletteSelection<T extends Individual> implements Selector {
 
     private ArrayList<Double> getFitnessValuesNormalizedIfNecessary (Population population) {
         ArrayList<T> individuals = population.getIndividuals();
-        ArrayList<Double> fitnessValues = new ArrayList<>();
+        ArrayList<Double> fitnessValues = new ArrayList<>(individuals.size());
         Boolean negativeFitnessFound = Boolean.FALSE;
-        Double smallerFitness = Double.POSITIVE_INFINITY;
-        for (T individual : individuals) {
+        Double smallestFitness = Double.POSITIVE_INFINITY;
+        for (Integer i = 0; i < individuals.size(); i++) {
+            T individual = individuals.get(i);
             Double fitness = fitnessCalculator.getFitness(individual);
             if (fitness < 0) {
                 negativeFitnessFound = Boolean.TRUE;
             }
-            if (fitness < smallerFitness) {
-                smallerFitness = fitness;
+            if (fitness < smallestFitness) {
+                smallestFitness = fitness;
             }
-            fitnessValues.add(fitness);
+            fitnessValues.add(i, fitness);
         }
         if (negativeFitnessFound) {
-            return normalize(fitnessValues, smallerFitness);
+            return normalize(fitnessValues, smallestFitness);
         }
 
         return fitnessValues;
