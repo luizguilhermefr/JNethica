@@ -50,7 +50,7 @@ public class Population<T extends Individual> {
         T maxFitnessIndividual = null;
         for (T individual : individuals) {
             Double fitnessOfThisElement = fitnessCalculator.getFitness(individual);
-            if (fitnessOfThisElement > maxFitnessValue) {
+            if (fitnessOfThisElement >= maxFitnessValue) {
                 maxFitnessValue = fitnessOfThisElement;
                 maxFitnessIndividual = individual;
             }
