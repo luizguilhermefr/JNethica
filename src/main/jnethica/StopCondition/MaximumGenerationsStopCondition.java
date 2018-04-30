@@ -14,8 +14,13 @@ public class MaximumGenerationsStopCondition implements StopCondition {
     }
 
     @Override
-    public void report (Integer currentGeneration, Double currentMaximumFitness) {
-        this.currentGeneration = currentGeneration;
+    public void reset () {
+        this.currentGeneration = 0;
+    }
+
+    @Override
+    public void report (Double currentMaximumFitness) {
+        this.currentGeneration++;
     }
 
     @Override

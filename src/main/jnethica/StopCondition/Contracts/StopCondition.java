@@ -2,9 +2,11 @@ package main.jnethica.StopCondition.Contracts;
 
 public interface StopCondition {
 
-    void report (Integer currentGeneration, Double currentMaximumFitness);
+    void reset ();
+
+    void report (Double currentMaximumFitness);
 
     Boolean mustStop ();
 
-    Boolean mustContinue();
+    Boolean mustContinue ();
 }

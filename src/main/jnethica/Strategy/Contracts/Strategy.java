@@ -57,6 +57,7 @@ public abstract class Strategy<T extends Individual> extends Thread {
 
     private void setInitialCurrentPopulation () {
         currentPopulation = initialPopulation.clone();
+        currentGenerationNumber = 0;
     }
 
     private void setInitialBest () throws EmptyPopulationException {
@@ -76,12 +77,11 @@ public abstract class Strategy<T extends Individual> extends Thread {
     }
 
     private void initializeStopCondition () {
-        currentGenerationNumber = 1;
-        stopCondition.report(currentGenerationNumber, fitnessCalculator.getFitness(globalOptimum));
+        stopCondition.reset();
     }
 
     private void reportStopConditionAndIncrementGeneration () {
-        stopCondition.report(currentGenerationNumber, fitnessCalculator.getFitness(globalOptimum));
+        stopCondition.report(fitnessCalculator.getFitness(globalOptimum));
         currentGenerationNumber++;
     }
 
