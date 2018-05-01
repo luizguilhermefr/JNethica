@@ -220,19 +220,19 @@ public class Main {
 
         // Print results
         System.out.println("\nP1");
-        System.out.println("ELITISM=Y,POP=30,500GEN,MUT=2\t" + p1WithElitism30.getGlobalOptimum() + "\tgen=" + p1WithElitism30.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism30.getGlobalOptimumFitness());
-        System.out.println("ELITISM=N,POP=30,500GEN,MUT=2\t" + p1WithoutElitism30.getGlobalOptimum() + "\tgen=" + p1WithoutElitism30.getGlobalOptimumGeneration() + "\tfitness=" + p1WithoutElitism30.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=20,500GEN,MUT=2\t" + p1WithElitism20.getGlobalOptimum() + "\tgen=" + p1WithElitism20.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism20.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=50,500GEN,MUT=2\t" + p1WithElitism50.getGlobalOptimum() + "\tgen=" + p1WithElitism50.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism50.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=30,100IDL,MUT=2\t" + p1WithElitism30Idle100.getGlobalOptimum() + "\tgen=" + p1WithElitism30Idle100.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism30Idle100.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=30,500GEN,MUT=5\t" + p1WithElitism30Mut5.getGlobalOptimum() + "\tgen=" + p1WithElitism30Mut5.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism30Mut5.getGlobalOptimumFitness());
+        System.out.println(p1WithElitism30.getGlobalOptimum() + "\t" + p1WithElitism30.getGlobalOptimumGeneration() + "\t" + p1WithElitism30.getGlobalOptimumFitness());
+        System.out.println(p1WithoutElitism30.getGlobalOptimum() + "\t" + p1WithoutElitism30.getGlobalOptimumGeneration() + "\t" + p1WithoutElitism30.getGlobalOptimumFitness());
+        System.out.println(p1WithElitism20.getGlobalOptimum() + "\t" + p1WithElitism20.getGlobalOptimumGeneration() + "\t" + p1WithElitism20.getGlobalOptimumFitness());
+        System.out.println(p1WithElitism50.getGlobalOptimum() + "\t" + p1WithElitism50.getGlobalOptimumGeneration() + "\t" + p1WithElitism50.getGlobalOptimumFitness());
+        System.out.println(p1WithElitism30Idle100.getGlobalOptimum() + "\t" + p1WithElitism30Idle100.getGlobalOptimumGeneration() + "\t" + p1WithElitism30Idle100.getGlobalOptimumFitness());
+        System.out.println(p1WithElitism30Mut5.getGlobalOptimum() + "\t" + p1WithElitism30Mut5.getGlobalOptimumGeneration() + "\t" + p1WithElitism30Mut5.getGlobalOptimumFitness());
         System.out.println("\nP2");
-        System.out.println("ELITISM=Y,POP=30,500GEN,MUT=2\t" + p2WithElitism30.getGlobalOptimum() + "\tgen=" + p2WithElitism30.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism30.getGlobalOptimumFitness());
-        System.out.println("ELITISM=N,POP=30,500GEN,MUT=2\t" + p2WithoutElitism30.getGlobalOptimum() + "\tgen=" + p2WithoutElitism30.getGlobalOptimumGeneration() + "\tfitness=" + p2WithoutElitism30.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=20,500GEN,MUT=2\t" + p2WithElitism20.getGlobalOptimum() + "\tgen=" + p2WithElitism20.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism20.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=50,500GEN,MUT=2\t" + p2WithElitism50.getGlobalOptimum() + "\tgen=" + p2WithElitism50.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism50.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=30,100IDL,MUT=2\t" + p2WithElitism30Idle100.getGlobalOptimum() + "\tgen=" + p2WithElitism30Idle100.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism30Idle100.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=30,500GEN,MUT=5\t" + p2WithElitism30Mut5.getGlobalOptimum() + "\tgen=" + p2WithElitism30Mut5.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism30Mut5.getGlobalOptimumFitness());
+        System.out.println(p2WithElitism30.getGlobalOptimum() + "\t" + p2WithElitism30.getGlobalOptimumGeneration() + "\t" + p2WithElitism30.getGlobalOptimumFitness());
+        System.out.println(p2WithoutElitism30.getGlobalOptimum() + "\t" + p2WithoutElitism30.getGlobalOptimumGeneration() + "\t" + p2WithoutElitism30.getGlobalOptimumFitness());
+        System.out.println(p2WithElitism20.getGlobalOptimum() + "\t" + p2WithElitism20.getGlobalOptimumGeneration() + "\t" + p2WithElitism20.getGlobalOptimumFitness());
+        System.out.println(p2WithElitism50.getGlobalOptimum() + "\t" + p2WithElitism50.getGlobalOptimumGeneration() + "\t" + p2WithElitism50.getGlobalOptimumFitness());
+        System.out.println(p2WithElitism30Idle100.getGlobalOptimum() + "\t" + p2WithElitism30Idle100.getGlobalOptimumGeneration() + "\t" + p2WithElitism30Idle100.getGlobalOptimumFitness());
+        System.out.println(p2WithElitism30Mut5.getGlobalOptimum() + "\t" + p2WithElitism30Mut5.getGlobalOptimumGeneration() + "\t" + p2WithElitism30Mut5.getGlobalOptimumFitness());
 
         // Say goodbye
         System.exit(0);
