@@ -1,0 +1,7 @@
+build:
+    tests:
+        override:
+            -
+                command: mvn clean package
+                coverage:
+                    format: 'jacoco'
