@@ -17,6 +17,7 @@ import jnethica.Population.Population;
 import jnethica.StopCondition.Contracts.StopCondition;
 import jnethica.StopCondition.MaximumGenerationsStopCondition;
 import jnethica.Strategy.ClassicGeneticStrategy;
+import jnethica.Strategy.ClassicGeneticWithElitismStrategy;
 import jnethica.Strategy.Contracts.Strategy;
 import jnethica.Util.Tuple;
 
@@ -90,7 +91,7 @@ public class Main {
         restrictionVariables.add("x2");
         restrictionVariables.add("x3");
         restrictions.add(new BoundaryRestriction(P1_R1, restrictionVariables, P1_R1_V, P1_R1_OP));
-        restrictions.add(new BoundaryRestriction(P1_R2, restrictionVariables, P1_R2_V, P2_R2_OP));
+        restrictions.add(new BoundaryRestriction(P1_R2, restrictionVariables, P1_R2_V, P1_R2_OP));
 
         // Define a penalizer
         Penalizer penalizer = new ExponentialPenalizer();
@@ -107,7 +108,11 @@ public class Main {
         // Define crossover method
         Crossover crossover = new ArithmeticCrossover();
 
-        return new ClassicGeneticStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, CROSSOVER_RATE, elitism);
+        if (elitism) {
+            return new ClassicGeneticWithElitismStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, CROSSOVER_RATE);
+        } else {
+            return new ClassicGeneticStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, CROSSOVER_RATE);
+        }
     }
 
     private static Strategy generateSecondProblemThread (Integer population, Boolean elitism) {
@@ -151,7 +156,11 @@ public class Main {
         // Define crossover method
         Crossover crossover = new ArithmeticCrossover();
 
-        return new ClassicGeneticStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, CROSSOVER_RATE, elitism);
+        if (elitism) {
+            return new ClassicGeneticWithElitismStrategy(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, CROSSOVER_RATE);
+        } else {
+            return new ClassicGeneticStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, CROSSOVER_RATE);
+        }
     }
 
     public static void main (String[] args) throws InterruptedException {

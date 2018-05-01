@@ -12,15 +12,13 @@ import jnethica.Util.RandomSingleton;
 
 public class ClassicGeneticStrategy<T extends Individual> extends Strategy<T> {
     private final Double crossoverRate;
-    private final Boolean elitism;
 
-    public ClassicGeneticStrategy (Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator, Crossover crosser, Double crossoverRate, Boolean elitism) {
+    public ClassicGeneticStrategy (Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator, Crossover crosser, Double crossoverRate) {
         super(initialPopulation, fitnessCalculator, stopCondition, mutator, crosser);
         this.crossoverRate = crossoverRate;
-        this.elitism = elitism;
     }
 
-    private Population selectIndividualsToCross () {
+    Population selectIndividualsToCross () {
         Population<T> selectedToCross = new Population<>();
         for (Integer i = 0; i < currentPopulation.size(); i++) {
             T selected = (T) selector.select(currentPopulation);
@@ -29,7 +27,7 @@ public class ClassicGeneticStrategy<T extends Individual> extends Strategy<T> {
         return selectedToCross;
     }
 
-    private Population crossIndividuals (Population toCross) {
+    Population crossIndividuals (Population toCross) {
         Population<T> crossedOrCopiedIndividuals = new Population<>();
         for (Integer i = 0; i < toCross.size(); i += 2) {
             T i1 = (T) toCross.getIndividualByIndex(i);
@@ -59,10 +57,6 @@ public class ClassicGeneticStrategy<T extends Individual> extends Strategy<T> {
     protected void execute () {
         Population toCross = selectIndividualsToCross();
         Population crossed = crossIndividuals(toCross);
-        if (elitism) {
-            currentPopulation = crossed.mutateAllWithElitism(mutator, fitnessCalculator);
-        } else {
-            currentPopulation = crossed.mutateAll(mutator);
-        }
+        currentPopulation = crossed.mutateAll(mutator);
     }
 }
