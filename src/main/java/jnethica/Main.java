@@ -15,6 +15,7 @@ import jnethica.Mutator.Contracts.Mutator;
 import jnethica.Mutator.CreepMutator;
 import jnethica.Population.Population;
 import jnethica.StopCondition.Contracts.StopCondition;
+import jnethica.StopCondition.IdleGenerationsStopCondition;
 import jnethica.StopCondition.MaximumGenerationsStopCondition;
 import jnethica.Strategy.ClassicGeneticStrategy;
 import jnethica.Strategy.ClassicGeneticWithElitismStrategy;
@@ -28,8 +29,6 @@ import java.util.Set;
 
 public class Main {
     // General
-    private static final int GENERATIONS = 500;
-    private static final double MUTATION_RATE = 2.0;
     private static final double CROSSOVER_RATE = 80.0;
 
     /* P1 */
@@ -64,7 +63,7 @@ public class Main {
     private static final BoundaryRestriction.Modes P2_R2_OP = BoundaryRestriction.Modes.LESS_OR_EQUAL_THAN;
     private static final double P2_R2_V = .0;
 
-    private static Strategy generateFirstProblemThread (Integer population, Boolean elitism) {
+    private static Strategy generateFirstProblemThread (Integer population, Boolean elitism, Boolean use100Idle, Double mutationRate) {
         // Define variables
         ArrayList<String> variables = new ArrayList<>();
         variables.add("x1");
@@ -100,10 +99,15 @@ public class Main {
         FitnessCalculator fitnessCalculator = new MaximumValueFitnessCalculator(penalizer, restrictions);
 
         // Define a stop condition
-        StopCondition stopCondition = new MaximumGenerationsStopCondition(GENERATIONS);
+        StopCondition stopCondition;
+        if (use100Idle) {
+            stopCondition = new IdleGenerationsStopCondition(100);
+        } else {
+            stopCondition = new MaximumGenerationsStopCondition(500);
+        }
 
         // Define a mutator
-        Mutator mutator = new CreepMutator(MUTATION_RATE);
+        Mutator mutator = new CreepMutator(mutationRate);
 
         // Define crossover method
         Crossover crossover = new ArithmeticCrossover();
@@ -115,7 +119,7 @@ public class Main {
         }
     }
 
-    private static Strategy generateSecondProblemThread (Integer population, Boolean elitism) {
+    private static Strategy generateSecondProblemThread (Integer population, Boolean elitism, Boolean use100Idle, Double mutationRate) {
         // Define variables
         ArrayList<String> variables = new ArrayList<>();
         variables.add("x1");
@@ -148,10 +152,15 @@ public class Main {
         FitnessCalculator fitnessCalculator = new MaximumValueFitnessCalculator(penalizer, restrictions);
 
         // Define a stop condition
-        StopCondition stopCondition = new MaximumGenerationsStopCondition(GENERATIONS);
+        StopCondition stopCondition;
+        if (use100Idle) {
+            stopCondition = new IdleGenerationsStopCondition(100);
+        } else {
+            stopCondition = new MaximumGenerationsStopCondition(500);
+        }
 
         // Define a mutator
-        Mutator mutator = new CreepMutator(MUTATION_RATE);
+        Mutator mutator = new CreepMutator(mutationRate);
 
         // Define crossover method
         Crossover crossover = new ArithmeticCrossover();
@@ -165,49 +174,65 @@ public class Main {
 
     public static void main (String[] args) throws InterruptedException {
         // Create threads
-        Strategy p1WithElitism = generateFirstProblemThread(30, Boolean.TRUE);
-        Strategy p1WithoutElitism = generateFirstProblemThread(30, Boolean.FALSE);
-        Strategy p1WithElitism20 = generateFirstProblemThread(20, Boolean.TRUE);
-        Strategy p1WithElitism50 = generateFirstProblemThread(50, Boolean.TRUE);
+        Strategy p1WithElitism30 = generateFirstProblemThread(30, Boolean.TRUE, Boolean.FALSE, 2.0);
+        Strategy p1WithoutElitism30 = generateFirstProblemThread(30, Boolean.FALSE, Boolean.FALSE, 2.0);
+        Strategy p1WithElitism20 = generateFirstProblemThread(20, Boolean.TRUE, Boolean.FALSE, 2.0);
+        Strategy p1WithElitism50 = generateFirstProblemThread(50, Boolean.TRUE, Boolean.FALSE, 2.0);
+        Strategy p1WithElitism30Idle100 = generateFirstProblemThread(30, Boolean.TRUE, Boolean.TRUE, 2.0);
+        Strategy p1WithElitism30Mut5 = generateFirstProblemThread(30, Boolean.TRUE, Boolean.FALSE, 5.0);
 
-        Strategy p2WithElitism = generateSecondProblemThread(30, Boolean.TRUE);
-        Strategy p2WithoutElitism = generateSecondProblemThread(30, Boolean.FALSE);
-        Strategy p2WithElitism20 = generateSecondProblemThread(20, Boolean.TRUE);
-        Strategy p2WithElitism50 = generateSecondProblemThread(50, Boolean.TRUE);
+        Strategy p2WithElitism30 = generateSecondProblemThread(30, Boolean.TRUE, Boolean.FALSE, 2.0);
+        Strategy p2WithoutElitism30 = generateSecondProblemThread(30, Boolean.FALSE, Boolean.FALSE, 2.0);
+        Strategy p2WithElitism20 = generateSecondProblemThread(20, Boolean.TRUE, Boolean.FALSE, 2.0);
+        Strategy p2WithElitism50 = generateSecondProblemThread(50, Boolean.TRUE, Boolean.FALSE, 2.0);
+        Strategy p2WithElitism30Idle100 = generateSecondProblemThread(30, Boolean.TRUE, Boolean.TRUE, 2.0);
+        Strategy p2WithElitism30Mut5 = generateSecondProblemThread(30, Boolean.TRUE, Boolean.FALSE, 5.0);
 
         // Start threads
-        p1WithElitism.start();
-        p1WithoutElitism.start();
+        p1WithElitism30.start();
+        p1WithoutElitism30.start();
         p1WithElitism20.start();
         p1WithElitism50.start();
+        p1WithElitism30Idle100.start();
+        p1WithElitism30Mut5.start();
 
-        p2WithElitism.start();
-        p2WithoutElitism.start();
+        p2WithElitism30.start();
+        p2WithoutElitism30.start();
         p2WithElitism20.start();
         p2WithElitism50.start();
+        p2WithElitism30Idle100.start();
+        p2WithElitism30Mut5.start();
 
         // Join threads
-        p1WithElitism.join();
-        p1WithoutElitism.join();
+        p1WithElitism30.join();
+        p1WithoutElitism30.join();
         p1WithElitism20.join();
         p1WithElitism50.join();
+        p1WithElitism30Idle100.join();
+        p1WithElitism30Mut5.join();
 
-        p2WithElitism.join();
-        p2WithoutElitism.join();
-        p1WithElitism20.join();
-        p1WithElitism50.join();
+        p2WithElitism30.join();
+        p2WithoutElitism30.join();
+        p2WithElitism20.join();
+        p2WithElitism50.join();
+        p2WithElitism30Idle100.join();
+        p2WithElitism30Mut5.join();
 
         // Print results
         System.out.println("\nP1");
-        System.out.println("ELITISM=Y,POP=30\t" + p1WithElitism.getGlobalOptimum() + "\tgen=" + p1WithElitism.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism.getGlobalOptimumFitness());
-        System.out.println("ELITISM=N,POP=30\t" + p1WithoutElitism.getGlobalOptimum() + "\tgen=" + p1WithoutElitism.getGlobalOptimumGeneration() + "\tfitness=" + p1WithoutElitism.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=20\t" + p1WithElitism20.getGlobalOptimum() + "\tgen=" + p1WithElitism20.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism20.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=50\t" + p1WithElitism50.getGlobalOptimum() + "\tgen=" + p1WithElitism50.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism50.getGlobalOptimumFitness());
+        System.out.println("ELITISM=Y,POP=30,500GEN,MUT=2\t" + p1WithElitism30.getGlobalOptimum() + "\tgen=" + p1WithElitism30.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism30.getGlobalOptimumFitness());
+        System.out.println("ELITISM=N,POP=30,500GEN,MUT=2\t" + p1WithoutElitism30.getGlobalOptimum() + "\tgen=" + p1WithoutElitism30.getGlobalOptimumGeneration() + "\tfitness=" + p1WithoutElitism30.getGlobalOptimumFitness());
+        System.out.println("ELITISM=Y,POP=20,500GEN,MUT=2\t" + p1WithElitism20.getGlobalOptimum() + "\tgen=" + p1WithElitism20.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism20.getGlobalOptimumFitness());
+        System.out.println("ELITISM=Y,POP=50,500GEN,MUT=2\t" + p1WithElitism50.getGlobalOptimum() + "\tgen=" + p1WithElitism50.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism50.getGlobalOptimumFitness());
+        System.out.println("ELITISM=Y,POP=30,100IDL,MUT=2\t" + p1WithElitism30Idle100.getGlobalOptimum() + "\tgen=" + p1WithElitism30Idle100.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism30Idle100.getGlobalOptimumFitness());
+        System.out.println("ELITISM=Y,POP=30,500GEN,MUT=5\t" + p1WithElitism30Mut5.getGlobalOptimum() + "\tgen=" + p1WithElitism30Mut5.getGlobalOptimumGeneration() + "\tfitness=" + p1WithElitism30Mut5.getGlobalOptimumFitness());
         System.out.println("\nP2");
-        System.out.println("ELITISM=Y,POP=30\t" + p2WithElitism.getGlobalOptimum() + "\tgen=" + p2WithElitism.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism.getGlobalOptimumFitness());
-        System.out.println("ELITISM=N,POP=30\t" + p2WithoutElitism.getGlobalOptimum() + "\tgen=" + p2WithoutElitism.getGlobalOptimumGeneration() + "\tfitness=" + p2WithoutElitism.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=20\t" + p2WithElitism20.getGlobalOptimum() + "\tgen=" + p2WithElitism20.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism20.getGlobalOptimumFitness());
-        System.out.println("ELITISM=Y,POP=50\t" + p2WithElitism50.getGlobalOptimum() + "\tgen=" + p2WithElitism50.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism50.getGlobalOptimumFitness());
+        System.out.println("ELITISM=Y,POP=30,500GEN,MUT=2\t" + p2WithElitism30.getGlobalOptimum() + "\tgen=" + p2WithElitism30.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism30.getGlobalOptimumFitness());
+        System.out.println("ELITISM=N,POP=30,500GEN,MUT=2\t" + p2WithoutElitism30.getGlobalOptimum() + "\tgen=" + p2WithoutElitism30.getGlobalOptimumGeneration() + "\tfitness=" + p2WithoutElitism30.getGlobalOptimumFitness());
+        System.out.println("ELITISM=Y,POP=20,500GEN,MUT=2\t" + p2WithElitism20.getGlobalOptimum() + "\tgen=" + p2WithElitism20.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism20.getGlobalOptimumFitness());
+        System.out.println("ELITISM=Y,POP=50,500GEN,MUT=2\t" + p2WithElitism50.getGlobalOptimum() + "\tgen=" + p2WithElitism50.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism50.getGlobalOptimumFitness());
+        System.out.println("ELITISM=Y,POP=30,100IDL,MUT=2\t" + p2WithElitism30Idle100.getGlobalOptimum() + "\tgen=" + p2WithElitism30Idle100.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism30Idle100.getGlobalOptimumFitness());
+        System.out.println("ELITISM=Y,POP=30,500GEN,MUT=5\t" + p2WithElitism30Mut5.getGlobalOptimum() + "\tgen=" + p2WithElitism30Mut5.getGlobalOptimumGeneration() + "\tfitness=" + p2WithElitism30Mut5.getGlobalOptimumFitness());
 
         // Say goodbye
         System.exit(0);
