@@ -107,7 +107,7 @@ public class Main {
         // Define crossover method
         Crossover crossover = new ArithmeticCrossover();
 
-        return new ClassicGeneticStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, CROSSOVER_RATE);
+        return new ClassicGeneticStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, CROSSOVER_RATE, elitism);
     }
 
     private static Strategy generateSecondProblemThread (Integer population, Boolean elitism) {
@@ -151,7 +151,7 @@ public class Main {
         // Define crossover method
         Crossover crossover = new ArithmeticCrossover();
 
-        return new ClassicGeneticStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, CROSSOVER_RATE);
+        return new ClassicGeneticStrategy<GenericFunction>(initialPopulation, fitnessCalculator, stopCondition, mutator, crossover, CROSSOVER_RATE, elitism);
     }
 
     public static void main (String[] args) throws InterruptedException {

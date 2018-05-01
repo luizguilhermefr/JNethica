@@ -6,6 +6,8 @@ import jnethica.Mutator.Contracts.Mutator;
 public abstract class Individual {
     public abstract Individual mutate (Mutator mutator);
 
+    public abstract Individual mutateWithElitism (Mutator mutator, FitnessCalculator fitnessCalculator);
+
     public abstract Double getValue ();
 
     protected abstract Individual clone ();

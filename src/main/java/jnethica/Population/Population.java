@@ -95,7 +95,16 @@ public class Population<T extends Individual> {
 
     public Population<T> mutateAll (Mutator mutator) {
         for (Integer i = 0; i < individuals.size(); i++) {
-            individuals.set(i, (T) individuals.get(i).mutate(mutator));
+            T nextIndividual = (T) individuals.get(i).mutate(mutator);
+            individuals.set(i, nextIndividual);
+        }
+        return this;
+    }
+
+    public Population<T> mutateAllWithElitism (Mutator mutator, FitnessCalculator fitnessCalculator) {
+        for (Integer i = 0; i < individuals.size(); i++) {
+            T nextIndividual = (T) individuals.get(i).mutateWithElitism(mutator, fitnessCalculator);
+            individuals.set(i, nextIndividual);
         }
         return this;
     }

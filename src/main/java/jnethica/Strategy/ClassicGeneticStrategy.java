@@ -11,14 +11,16 @@ import jnethica.Strategy.Contracts.Strategy;
 import jnethica.Util.RandomSingleton;
 
 public class ClassicGeneticStrategy<T extends Individual> extends Strategy<T> {
-    private Double crossoverRate;
+    private final Double crossoverRate;
+    private final Boolean elitism;
 
-    public ClassicGeneticStrategy(Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator, Crossover crosser, Double crossoverRate) {
+    public ClassicGeneticStrategy (Population initialPopulation, FitnessCalculator fitnessCalculator, StopCondition stopCondition, Mutator mutator, Crossover crosser, Double crossoverRate, Boolean elitism) {
         super(initialPopulation, fitnessCalculator, stopCondition, mutator, crosser);
         this.crossoverRate = crossoverRate;
+        this.elitism = elitism;
     }
 
-    private Population selectIndividualsToCross() {
+    private Population selectIndividualsToCross () {
         Population<T> selectedToCross = new Population<>();
         for (Integer i = 0; i < currentPopulation.size(); i++) {
             T selected = (T) selector.select(currentPopulation);
@@ -27,7 +29,7 @@ public class ClassicGeneticStrategy<T extends Individual> extends Strategy<T> {
         return selectedToCross;
     }
 
-    private Population crossIndividuals(Population toCross) {
+    private Population crossIndividuals (Population toCross) {
         Population<T> crossedOrCopiedIndividuals = new Population<>();
         for (Integer i = 0; i < toCross.size(); i += 2) {
             T i1 = (T) toCross.getIndividualByIndex(i);
@@ -43,20 +45,24 @@ public class ClassicGeneticStrategy<T extends Individual> extends Strategy<T> {
         return crossedOrCopiedIndividuals;
     }
 
-    private Boolean shouldCross() {
+    private Boolean shouldCross () {
         Double randDrawn = RandomSingleton.getInstance().doubleBetween(0.0, 100.0);
         return randDrawn <= crossoverRate;
     }
 
     @Override
-    protected void generateSelector() {
+    protected void generateSelector () {
         selector = new RouletteSelection(fitnessCalculator);
     }
 
     @Override
-    protected void execute() {
+    protected void execute () {
         Population toCross = selectIndividualsToCross();
         Population crossed = crossIndividuals(toCross);
-        currentPopulation = crossed.mutateAll(mutator);
+        if (elitism) {
+            currentPopulation = crossed.mutateAllWithElitism(mutator, fitnessCalculator);
+        } else {
+            currentPopulation = crossed.mutateAll(mutator);
+        }
     }
 }

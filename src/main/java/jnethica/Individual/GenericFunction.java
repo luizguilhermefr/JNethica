@@ -1,5 +1,6 @@
 package jnethica.Individual;
 
+import jnethica.Fitness.Contracts.FitnessCalculator;
 import jnethica.Individual.Contracts.Function;
 import jnethica.Mutator.Contracts.Mutator;
 import jnethica.Util.Tuple;
@@ -119,6 +120,15 @@ public class GenericFunction extends Function {
             nextArguments.replace(key, valueMutated);
         }
         return new GenericFunction(format, nextArguments, boundaries);
+    }
+
+    @Override
+    public GenericFunction mutateWithElitism (Mutator mutator, FitnessCalculator fitnessCalculator) {
+        GenericFunction nextIndividual = mutate(mutator);
+        if (nextIndividual.isBetterThan(this, fitnessCalculator)) {
+            return nextIndividual;
+        }
+        return this.clone();
     }
 
     @Override

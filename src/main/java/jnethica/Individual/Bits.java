@@ -1,5 +1,6 @@
 package jnethica.Individual;
 
+import jnethica.Fitness.Contracts.FitnessCalculator;
 import jnethica.Individual.Contracts.Individual;
 import jnethica.Mutator.Contracts.Mutator;
 
@@ -18,9 +19,18 @@ public class Bits extends Individual {
     }
 
     @Override
-    public Individual mutate (Mutator mutator) {
+    public Bits mutate (Mutator mutator) {
         ArrayList<Boolean> nextSet = (ArrayList<Boolean>) mutator.mutate(set);
         return new Bits(nextSet);
+    }
+
+    @Override
+    public Individual mutateWithElitism (Mutator mutator, FitnessCalculator fitnessCalculator) {
+        Bits nextIndividual = mutate(mutator);
+        if (nextIndividual.isBetterThan(this, fitnessCalculator)) {
+            return nextIndividual;
+        }
+        return this.clone();
     }
 
     @Override

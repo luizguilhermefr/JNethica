@@ -1,8 +1,0 @@
-build:
-    tests:
-        override:
-            -
-                command: mvn clean package
-                coverage:
-                    file: 'target/coverage-reports/jacoco-ut.exec'
-                    format: 'jacoco'

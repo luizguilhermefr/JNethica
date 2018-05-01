@@ -76,7 +76,7 @@ class ClassicGeneticStrategyTest {
     @Test
     void testAcceptableResult () throws InterruptedException {
         ClassicGeneticStrategy<GenericFunction> classicGeneticStrategy;
-        classicGeneticStrategy = new ClassicGeneticStrategy<>(quadriGaussianInitialPopulation(), fitnessCalculator(), quadriGaussianStopCondition(), mutator(), crossover(), crossoverRate());
+        classicGeneticStrategy = new ClassicGeneticStrategy<>(quadriGaussianInitialPopulation(), fitnessCalculator(), quadriGaussianStopCondition(), mutator(), crossover(), crossoverRate(), Boolean.FALSE);
         classicGeneticStrategy.start();
         classicGeneticStrategy.join();
         GenericFunction best = classicGeneticStrategy.getGlobalOptimum();
@@ -88,7 +88,7 @@ class ClassicGeneticStrategyTest {
     @Test
     void testAcceptableThroughput () {
         ClassicGeneticStrategy<GenericFunction> classicGeneticStrategy;
-        classicGeneticStrategy = new ClassicGeneticStrategy<>(quadriGaussianInitialPopulation(), fitnessCalculator(), quadriGaussianStopCondition(), mutator(), crossover(), crossoverRate());
+        classicGeneticStrategy = new ClassicGeneticStrategy<>(quadriGaussianInitialPopulation(), fitnessCalculator(), quadriGaussianStopCondition(), mutator(), crossover(), crossoverRate(), Boolean.FALSE);
         assertTimeout(Duration.ofMillis(130), classicGeneticStrategy::run);
     }
 }
