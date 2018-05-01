@@ -1,4 +1,4 @@
-package Factories;
+package jnethica.Factories;
 
 import jnethica.Factory.GenericFunctionFactory;
 import jnethica.Individual.GenericFunction;

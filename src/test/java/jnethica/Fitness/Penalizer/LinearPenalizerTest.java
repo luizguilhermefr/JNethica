@@ -1,11 +1,10 @@
-package Fitness.Penalizer;
+package jnethica.Fitness.Penalizer;
 
-import jnethica.Fitness.Penalizer.LinearPenalizer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class LinearPenalizerTest extends PenalizerTest {
+class LinearPenalizerTest extends PenalizerTestGenerator {
     @Test
     void testPenalization () {
         LinearPenalizer penalizer = new LinearPenalizer();

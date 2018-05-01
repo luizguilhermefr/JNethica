@@ -1,4 +1,4 @@
-package Individuals;
+package jnethica.Individuals;
 
 import jnethica.Individual.GenericFunction;
 import jnethica.Util.CommonFunctions;

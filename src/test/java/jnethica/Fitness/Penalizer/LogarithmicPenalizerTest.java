@@ -1,11 +1,10 @@
-package Fitness.Penalizer;
+package jnethica.Fitness.Penalizer;
 
-import jnethica.Fitness.Penalizer.LogarithmicPenalizer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class LogarithmicPenalizerTest extends PenalizerTest {
+class LogarithmicPenalizerTest extends PenalizerTestGenerator {
     @Test
     void testPenalization () {
         LogarithmicPenalizer penalizer = new LogarithmicPenalizer();

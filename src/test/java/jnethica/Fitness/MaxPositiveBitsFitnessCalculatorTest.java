@@ -1,6 +1,5 @@
-package Fitness;
+package jnethica.Fitness;
 
-import jnethica.Fitness.MaxPositiveBitsFitnessCalculator;
 import jnethica.Individual.Bits;
 import org.junit.jupiter.api.Test;
 

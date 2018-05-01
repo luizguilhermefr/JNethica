@@ -1,6 +1,5 @@
-package StopCondition;
+package jnethica.StopCondition;
 
-import jnethica.StopCondition.IdleGenerationsStopCondition;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

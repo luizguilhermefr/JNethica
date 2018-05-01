@@ -1,4 +1,4 @@
-package Selectors;
+package jnethica.Selectors;
 
 import jnethica.Factory.GenericFunctionFactory;
 import jnethica.Fitness.Contracts.FitnessCalculator;

@@ -1,6 +1,5 @@
-package Fitness.Restriction;
+package jnethica.Fitness.Restriction;
 
-import jnethica.Fitness.Restriction.BoundaryRestriction;
 import jnethica.Individual.GenericFunction;
 import org.junit.jupiter.api.Test;
 

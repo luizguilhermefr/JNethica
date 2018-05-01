@@ -1,4 +1,4 @@
-package Mutators;
+package jnethica.Mutators;
 
 import jnethica.Individual.GenericFunction;
 import jnethica.Mutator.CreepMutator;

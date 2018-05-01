@@ -1,4 +1,4 @@
-package Strategies;
+package jnethica.Strategies;
 
 import jnethica.Crossover.ArithmeticCrossover;
 import jnethica.Crossover.Contracts.Crossover;

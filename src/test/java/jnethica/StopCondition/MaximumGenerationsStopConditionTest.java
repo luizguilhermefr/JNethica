@@ -1,6 +1,5 @@
-package StopCondition;
+package jnethica.StopCondition;
 
-import jnethica.StopCondition.MaximumGenerationsStopCondition;
 import jnethica.Util.RandomSingleton;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package Individuals;
+package jnethica.Individuals;
 
 import jnethica.Individual.Bits;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,5 @@
-package Fitness;
+package jnethica.Fitness;
 
-import jnethica.Fitness.MaximumValueFitnessCalculator;
 import jnethica.Individual.GenericFunction;
 import org.junit.jupiter.api.Test;
 
